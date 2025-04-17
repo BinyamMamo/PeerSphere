@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { FaStar, FaFilter, FaSearch, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaStar, FaSearch, FaHeart, FaRegHeart } from 'react-icons/fa';
+import FilterTag from '../../components/shared/FilterTag';
 
 const StudentHome = () => {
   const {
@@ -37,11 +38,10 @@ const StudentHome = () => {
   };
 
   // Handle filter changes
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
+  const handleFilterChange = (filterType, value) => {
     setTutorFilters({
       ...tutorFilters,
-      [name]: value
+      [filterType]: value
     });
   };
 
@@ -56,107 +56,173 @@ const StudentHome = () => {
     setSearchQuery('');
   };
 
+  // Determine if any filters are active
+  const hasActiveFilters =
+    tutorFilters.subject ||
+    tutorFilters.gender ||
+    tutorFilters.yearOfStudy ||
+    tutorFilters.availability ||
+    searchQuery;
+
   return (
     <div className="h-full">
-      {/* <h1 className="text-2xl font-bold mb-6">Find a Tutor</h1> */}
+      {/* Search Bar */}
+      <div className="relative mb-6">
+        <input
+          type="text"
+          className="w-full pl-10 pr-4 py-3 bg-white rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-primary-500"
+          placeholder="Search by tutor name or subject..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <FaSearch className="text-gray-400" />
+        </div>
+
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery('')}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+          >
+            ✕
+          </button>
+        )}
+      </div>
 
       {/* Filters Section */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="flex flex-wrap items-center mb-4">
-          <div className="flex items-center mr-2">
-            <FaFilter className="text-primary-600 mr-2" />
-            <h2 className="font-medium">Filters</h2>
+      <div className="bg-white p-5 rounded-lg shadow mb-6 space-y-4">
+        {/* Subject Filter */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-sm font-medium text-gray-700">Subject</h3>
+            {tutorFilters.subject && (
+              <button
+                className="text-xs text-primary-600 hover:text-primary-800"
+                onClick={() => handleFilterChange('subject', '')}
+              >
+                Clear
+              </button>
+            )}
           </div>
+          <div className="flex flex-wrap gap-2">
+            <FilterTag
+              isActive={!tutorFilters.subject}
+              onClick={() => handleFilterChange('subject', '')}
+            >
+              All Subjects
+            </FilterTag>
 
-          <button
-            onClick={clearFilters}
-            className="text-sm text-primary-600 hover:text-primary-800"
-          >
-            Clear all
-          </button>
+            {allSubjects.map((subject, index) => (
+              <FilterTag
+                key={index}
+                isActive={tutorFilters.subject === subject}
+                onClick={() => handleFilterChange('subject', subject)}
+              >
+                {subject}
+              </FilterTag>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* Search */}
-          <div>
-            <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
-              Search
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                id="search"
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                placeholder="Search by name or subject"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaSearch className="text-gray-400" />
-              </div>
-            </div>
+        {/* Gender Filter */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-sm font-medium text-gray-700">Gender</h3>
+            {tutorFilters.gender && (
+              <button
+                className="text-xs text-primary-600 hover:text-primary-800"
+                onClick={() => handleFilterChange('gender', '')}
+              >
+                Clear
+              </button>
+            )}
           </div>
-
-          {/* Subject Filter */}
-          <div>
-            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-              Subject
-            </label>
-            <select
-              id="subject"
-              name="subject"
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-              value={tutorFilters.subject}
-              onChange={handleFilterChange}
+          <div className="flex gap-2">
+            <FilterTag
+              isActive={!tutorFilters.gender}
+              onClick={() => handleFilterChange('gender', '')}
             >
-              <option value="">All Subjects</option>
-              {allSubjects.map((subject, index) => (
-                <option key={index} value={subject}>
-                  {subject}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Gender Filter */}
-          <div>
-            <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
-              Gender
-            </label>
-            <select
-              id="gender"
-              name="gender"
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-              value={tutorFilters.gender}
-              onChange={handleFilterChange}
+              All
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.gender === 'Male'}
+              onClick={() => handleFilterChange('gender', 'Male')}
             >
-              <option value="">All</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-
-          {/* Year of Study Filter */}
-          <div>
-            <label htmlFor="yearOfStudy" className="block text-sm font-medium text-gray-700 mb-1">
-              Year of Study
-            </label>
-            <select
-              id="yearOfStudy"
-              name="yearOfStudy"
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-              value={tutorFilters.yearOfStudy}
-              onChange={handleFilterChange}
+              Male
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.gender === 'Female'}
+              onClick={() => handleFilterChange('gender', 'Female')}
             >
-              <option value="">All Years</option>
-              <option value="1">1st Year</option>
-              <option value="2">2nd Year</option>
-              <option value="3">3rd Year</option>
-              <option value="4">4th Year</option>
-              <option value="5">Graduate</option>
-            </select>
+              Female
+            </FilterTag>
           </div>
         </div>
+
+        {/* Year of Study Filter */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-sm font-medium text-gray-700">Year of Study</h3>
+            {tutorFilters.yearOfStudy && (
+              <button
+                className="text-xs text-primary-600 hover:text-primary-800"
+                onClick={() => handleFilterChange('yearOfStudy', '')}
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <FilterTag
+              isActive={!tutorFilters.yearOfStudy}
+              onClick={() => handleFilterChange('yearOfStudy', '')}
+            >
+              All Years
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.yearOfStudy === '1'}
+              onClick={() => handleFilterChange('yearOfStudy', '1')}
+            >
+              1st Year
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.yearOfStudy === '2'}
+              onClick={() => handleFilterChange('yearOfStudy', '2')}
+            >
+              2nd Year
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.yearOfStudy === '3'}
+              onClick={() => handleFilterChange('yearOfStudy', '3')}
+            >
+              3rd Year
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.yearOfStudy === '4'}
+              onClick={() => handleFilterChange('yearOfStudy', '4')}
+            >
+              4th Year
+            </FilterTag>
+            <FilterTag
+              isActive={tutorFilters.yearOfStudy === '5'}
+              onClick={() => handleFilterChange('yearOfStudy', '5')}
+            >
+              Graduate
+            </FilterTag>
+          </div>
+        </div>
+
+        {/* Clear All Filters Button - Only show when at least one filter is active */}
+        {hasActiveFilters && (
+          <div className="pt-2 border-t">
+            <button
+              onClick={clearFilters}
+              className="text-sm text-primary-600 hover:text-primary-800 font-medium"
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Tutors List */}
@@ -198,7 +264,6 @@ const StudentHome = () => {
 
                 {/* Subjects */}
                 <div className="mt-3">
-                  {/* <h4 className="text-xs text-gray-500 uppercase mb-1">Subjects</h4> */}
                   <div className="flex flex-wrap gap-1">
                     {tutor.subjects.map((subject, index) => (
                       <span
@@ -211,13 +276,8 @@ const StudentHome = () => {
                   </div>
                 </div>
 
-                {/* Price & Book Button */}
+                {/* Ratings & Book Button */}
                 <div className="mt-4 flex justify-between items-center">
-                  {/* <div>
-                    <span className="font-bold text-lg">{tutor.hourlyRate} AED</span>
-                    <span className="text-xs text-gray-500">/hour</span>
-                  </div> */}
-
                   <div className="flex items-center mt-1">
                     <FaStar className="text-yellow-500 mr-1" />
                     <span className="text-sm">{tutor.rating.toFixed(1)}</span>

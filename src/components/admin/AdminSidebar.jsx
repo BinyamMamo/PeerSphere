@@ -56,16 +56,16 @@ const AdminSidebar = () => {
               <span>Peer Tutors</span>
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/admin/sessions"
-              className={({ isActive }) => `flex items-center p-2 rounded-lg ${isActive ? 'bg-accent-100 text-accent-700' : 'text-gray-600 hover:bg-gray-100'
-                }`}
-            >
-              <FaCalendarCheck className="mr-3" />
-              <span>Sessions</span>
-            </NavLink>
-          </li>
+            <li>
+              <NavLink
+                to="/admin/sessions"
+                className={({ isActive }) => `flex items-center p-2 rounded-lg ${isActive ? 'bg-accent-100 text-accent-700' : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+              >
+                <FaCalendarCheck className="mr-3" />
+                <span>Sessions</span>
+              </NavLink>
+            </li>
           <li>
             <NavLink
               to="/admin/analytics"

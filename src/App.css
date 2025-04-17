@@ -82,3 +82,59 @@ body {
   background: #94a3b8;
   background: transparent;
 }
+/* Add these styles to your App.css file for better filter tag appearance */
+
+/* Filter tag styling */
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-tag:hover {
+  transform: translateY(-1px);
+}
+
+.filter-tag.inactive {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.filter-tag.inactive:hover {
+  background-color: #e5e7eb;
+}
+
+.filter-tag.active {
+  background-color: #eef7ff;
+  color: #1e71f5;
+}
+
+/* For scrollable filter lists when there are many options */
+.filter-tags-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .filter-tags-container.scrollable {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .filter-tags-container.scrollable::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+  }
+}

@@ -20,7 +20,7 @@ const MainLayout = () => {
         return (
           <>
             <StudentSidebar />
-            <div className="flex-grow overflow-auto p-4">
+            <div className="w-3/4 overflow-auto p-4">
               <div className="mb-4">
                 <RoleToggle />
               </div>
@@ -33,7 +33,7 @@ const MainLayout = () => {
         return (
           <>
             <TutorSidebar />
-            <div className="flex-grow overflow-auto p-4">
+            <div className="w-3/4 overflow-auto p-4">
               <div className="mb-4">
                 <RoleToggle />
               </div>
@@ -46,7 +46,7 @@ const MainLayout = () => {
         return (
           <>
             <AdminSidebar />
-            <div className="flex-grow overflow-auto p-4">
+            <div className="w-3/4 overflow-auto p-4">
               <div className="mb-4">
                 <RoleToggle />
               </div>
@@ -59,7 +59,7 @@ const MainLayout = () => {
         return (
           <>
             <StudentSidebar />
-            <div className="flex-grow overflow-auto p-4">
+            <div className="w-3/4 overflow-auto p-4">
               <div className="mb-4">
                 <RoleToggle />
               </div>
