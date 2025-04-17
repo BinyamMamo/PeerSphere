@@ -1,0 +1,156 @@
+[
+  {
+    "id": 1,
+    "firstName": "Khalid",
+    "lastName": "Al-Nuaimi",
+    "gender": "Male",
+    "email": "khalid.alnuaimi@peersphere.ae",
+    "interestedSubjects": [
+      "Calculus I",
+      "Physics I",
+      "Computer Science 101"
+    ],
+    "yearOfStudy": 2,
+    "favoriteTutors": [
+      1,
+      7
+    ],
+    "sessionsBooked": 5,
+    "avatar": "https://i.pravatar.cc/150?img=4",
+    "isTutor": false
+  },
+  {
+    "id": 2,
+    "firstName": "Mariam",
+    "lastName": "Al-Maktoum",
+    "gender": "Female",
+    "email": "mariam.almaktoum@peersphere.ae",
+    "interestedSubjects": [
+      "Introduction to Psychology",
+      "Introduction to Biology",
+      "Islamic Studies"
+    ],
+    "yearOfStudy": 2,
+    "favoriteTutors": [
+      3,
+      8
+    ],
+    "sessionsBooked": 7,
+    "avatar": "https://i.pravatar.cc/150?img=21",
+    "isTutor": false
+  },
+  {
+    "id": 3,
+    "firstName": "Yusuf",
+    "lastName": "Al-Falasi",
+    "gender": "Male",
+    "email": "yusuf.alfalasi@peersphere.ae",
+    "interestedSubjects": [
+      "Microeconomics",
+      "Financial Accounting",
+      "Statistics"
+    ],
+    "yearOfStudy": 3,
+    "favoriteTutors": [
+      5
+    ],
+    "sessionsBooked": 4,
+    "avatar": "https://i.pravatar.cc/150?img=22",
+    "isTutor": true
+  },
+  {
+    "id": 4,
+    "firstName": "Sara",
+    "lastName": "Al-Qubaisi",
+    "gender": "Female",
+    "email": "sara.alqubaisi@peersphere.ae",
+    "interestedSubjects": [
+      "Data Structures",
+      "Algorithms",
+      "Web Development"
+    ],
+    "yearOfStudy": 2,
+    "favoriteTutors": [
+      2
+    ],
+    "sessionsBooked": 9,
+    "avatar": "https://i.pravatar.cc/150?img=23",
+    "isTutor": false
+  },
+  {
+    "id": 5,
+    "firstName": "Chen",
+    "lastName": "Wang",
+    "gender": "Male",
+    "email": "chen.wang@peersphere.ae",
+    "interestedSubjects": [
+      "Calculus II",
+      "Linear Algebra",
+      "Physics II"
+    ],
+    "yearOfStudy": 2,
+    "favoriteTutors": [
+      1,
+      6,
+      7
+    ],
+    "sessionsBooked": 8,
+    "avatar": "https://i.pravatar.cc/150?img=24",
+    "isTutor": true
+  },
+  {
+    "id": 6,
+    "firstName": "Amina",
+    "lastName": "Al-Ali",
+    "gender": "Female",
+    "email": "amina.alali@peersphere.ae",
+    "interestedSubjects": [
+      "Organic Chemistry",
+      "Introduction to Biology"
+    ],
+    "yearOfStudy": 1,
+    "favoriteTutors": [
+      4
+    ],
+    "sessionsBooked": 3,
+    "avatar": "https://i.pravatar.cc/150?img=25",
+    "isTutor": false
+  },
+  {
+    "id": 7,
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "gender": "Male",
+    "email": "michael.brown@peersphere.ae",
+    "interestedSubjects": [
+      "Introduction to AI",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "yearOfStudy": 3,
+    "favoriteTutors": [
+      2
+    ],
+    "sessionsBooked": 6,
+    "avatar": "https://i.pravatar.cc/150?img=26",
+    "isTutor": false
+  },
+  {
+    "id": 8,
+    "firstName": "Zainab",
+    "lastName": "Al-Mazrouei",
+    "gender": "Female",
+    "email": "zainab.almazrouei@peersphere.ae",
+    "interestedSubjects": [
+      "Arabic Literature",
+      "Islamic Studies"
+    ],
+    "yearOfStudy": 1,
+    "favoriteTutors": [
+      3
+    ],
+    "sessionsBooked": 4,
+    "avatar": "https://i.pravatar.cc/150?img=27",
+    "isTutor": false
+  }
+]

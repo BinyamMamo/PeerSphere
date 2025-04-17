@@ -1,0 +1,162 @@
+{
+  "sessionsPerWeek": [
+    {
+      "week": "Apr 1-7",
+      "count": 18
+    },
+    {
+      "week": "Apr 8-14",
+      "count": 22
+    },
+    {
+      "week": "Apr 15-21",
+      "count": 28
+    },
+    {
+      "week": "Apr 22-28",
+      "count": 25
+    },
+    {
+      "week": "Apr 29-May 5",
+      "count": 32
+    }
+  ],
+  "subjectPopularity": [
+    {
+      "subject": "Calculus I",
+      "sessions": 24
+    },
+    {
+      "subject": "Computer Science 101",
+      "sessions": 19
+    },
+    {
+      "subject": "Physics I",
+      "sessions": 22
+    },
+    {
+      "subject": "Data Structures",
+      "sessions": 18
+    },
+    {
+      "subject": "Islamic Studies",
+      "sessions": 15
+    },
+    {
+      "subject": "Organic Chemistry",
+      "sessions": 12
+    },
+    {
+      "subject": "Introduction to Psychology",
+      "sessions": 14
+    },
+    {
+      "subject": "Microeconomics",
+      "sessions": 10
+    }
+  ],
+  "tutorPerformance": [
+    {
+      "id": 1,
+      "name": "Ahmed Al-Mansoori",
+      "rating": 4.8,
+      "sessions": 24
+    },
+    {
+      "id": 2,
+      "name": "Fatima Al-Hashimi",
+      "rating": 4.9,
+      "sessions": 32
+    },
+    {
+      "id": 3,
+      "name": "Mohammed Al-Zaabi",
+      "rating": 4.7,
+      "sessions": 19
+    },
+    {
+      "id": 4,
+      "name": "Aisha Al-Suwaidi",
+      "rating": 4.6,
+      "sessions": 16
+    },
+    {
+      "id": 5,
+      "name": "Omar Al-Marzooqi",
+      "rating": 4.5,
+      "sessions": 22
+    },
+    {
+      "id": 6,
+      "name": "Priya Sharma",
+      "rating": 4.9,
+      "sessions": 35
+    },
+    {
+      "id": 7,
+      "name": "Ali Al-Dhaheri",
+      "rating": 4.7,
+      "sessions": 20
+    },
+    {
+      "id": 8,
+      "name": "Layla Al-Shamsi",
+      "rating": 4.8,
+      "sessions": 26
+    }
+  ],
+  "revenueByMonth": [
+    {
+      "month": "Jan",
+      "amount": 15200
+    },
+    {
+      "month": "Feb",
+      "amount": 18500
+    },
+    {
+      "month": "Mar",
+      "amount": 22300
+    },
+    {
+      "month": "Apr",
+      "amount": 24100
+    }
+  ],
+  "sessionsByLocation": [
+    {
+      "location": "Online",
+      "count": 36
+    },
+    {
+      "location": "Library",
+      "count": 18
+    },
+    {
+      "location": "Study Rooms",
+      "count": 12
+    },
+    {
+      "location": "Other",
+      "count": 6
+    }
+  ],
+  "tutorGrowth": [
+    {
+      "month": "Jan",
+      "count": 15
+    },
+    {
+      "month": "Feb",
+      "count": 19
+    },
+    {
+      "month": "Mar",
+      "count": 22
+    },
+    {
+      "month": "Apr",
+      "count": 25
+    }
+  ]
+}

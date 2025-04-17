@@ -1,0 +1,197 @@
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary color */
+  --color-primary-50: #eef7ff;
+  --color-primary-100: #d9edff;
+  --color-primary-200: #bce0ff;
+  --color-primary-300: #8ecbff;
+  --color-primary-400: #59adff;
+  --color-primary-500: #3490ff;
+  --color-primary-600: #1e71f5;
+  --color-primary-700: #165ce4;
+  --color-primary-800: #1a4cb9;
+  --color-primary-900: #1c4292;
+  --color-primary-950: #172a54;
+
+  /* Secondary color */
+  --color-secondary-50: #f0f9ff;
+  --color-secondary-100: #e0f2fe;
+  --color-secondary-200: #b9e6fe;
+  --color-secondary-300: #7dd1fd;
+  --color-secondary-400: #39b7fa;
+  --color-secondary-500: #0e9deb;
+  --color-secondary-600: #017dc9;
+  --color-secondary-700: #0264a3;
+  --color-secondary-800: #065586;
+  --color-secondary-900: #0b4970;
+  --color-secondary-950: #082d49;
+
+  /* Accent color */
+  --color-accent-50: #fffaeb;
+  --color-accent-100: #fff0c7;
+  --color-accent-200: #ffdc8a;
+  --color-accent-300: #ffc34a;
+  --color-accent-400: #ffa91f;
+  --color-accent-500: #ff8b00;
+  --color-accent-600: #e06000;
+  --color-accent-700: #bc4308;
+  --color-accent-800: #983410;
+  --color-accent-900: #7c2d0f;
+  --color-accent-950: #471504;
+
+  /* Green */
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+  --color-green-950: #052e16;
+
+  /* Yellow */
+  --color-yellow-50: #fefce8;
+  --color-yellow-100: #fef9c3;
+  --color-yellow-200: #fef08a;
+  --color-yellow-300: #fde047;
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #eab308;
+  --color-yellow-600: #ca8a04;
+  --color-yellow-700: #a16207;
+  --color-yellow-800: #854d0e;
+  --color-yellow-900: #713f12;
+  --color-yellow-950: #422006;
+
+  /* Red */
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Helper classes */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Specific component styles */
+.rating-star {
+  transition: color 0.2s ease;
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Active navigation styling */
+.nav-link.active {
+  position: relative;
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background-color: var(--color-primary-600);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Form styling */
+.form-input:focus {
+  box-shadow: 0 0 0 2px rgba(52, 144, 255, 0.2);
+}
+
+/* Loading state */
+.loading-pulse {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  body {
+    background-color: white;
+  }
+
+  #root {
+    min-height: auto;
+  }
+}

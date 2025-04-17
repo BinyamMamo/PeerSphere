@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1,
+    "firstName": "Ahmed",
+    "lastName": "Al-Mansoori",
+    "gender": "Male",
+    "email": "ahmed.almansoori@peersphere.ae",
+    "subjects": [
+      "Calculus I",
+      "Physics I"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-20",
+        "startTime": "2:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-21",
+        "startTime": "4:30 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-23",
+        "startTime": "10:00 AM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.8,
+    "hourlyRate": 120,
+    "bio": "Senior engineering student with a passion for mathematics and physics. I've been tutoring for 2 years.",
+    "yearOfStudy": 4,
+    "totalSessions": 24,
+    "reviews": 18,
+    "avatar": "https://i.pravatar.cc/150?img=1",
+    "status": "Approved"
+  },
+  {
+    "id": 2,
+    "firstName": "Fatima",
+    "lastName": "Al-Hashimi",
+    "gender": "Female",
+    "email": "fatima.alhashimi@peersphere.ae",
+    "subjects": [
+      "Computer Science 101",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-22",
+        "startTime": "3:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-24",
+        "startTime": "5:30 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-26",
+        "startTime": "11:00 AM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.9,
+    "hourlyRate": 150,
+    "bio": "Computer Science graduate student specializing in algorithms and data structures.",
+    "yearOfStudy": 5,
+    "totalSessions": 32,
+    "reviews": 26,
+    "avatar": "https://i.pravatar.cc/150?img=28",
+    "status": "Approved"
+  },
+  {
+    "id": 3,
+    "firstName": "Mohammed",
+    "lastName": "Al-Zaabi",
+    "gender": "Male",
+    "email": "mohammed.alzaabi@peersphere.ae",
+    "subjects": [
+      "Islamic Studies",
+      "Arabic Literature"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-19",
+        "startTime": "10:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-21",
+        "startTime": "2:30 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-25",
+        "startTime": "4:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.7,
+    "hourlyRate": 110,
+    "bio": "Graduate student in Islamic Studies with a strong background in Arabic literature and language.",
+    "yearOfStudy": 3,
+    "totalSessions": 19,
+    "reviews": 15,
+    "avatar": "https://i.pravatar.cc/150?img=3",
+    "status": "Approved"
+  },
+  {
+    "id": 4,
+    "firstName": "Aisha",
+    "lastName": "Al-Suwaidi",
+    "gender": "Female",
+    "email": "aisha.alsuwaidi@peersphere.ae",
+    "subjects": [
+      "Organic Chemistry",
+      "Introduction to Biology"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-20",
+        "startTime": "9:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-22",
+        "startTime": "1:30 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-24",
+        "startTime": "3:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.6,
+    "hourlyRate": 130,
+    "bio": "Biochemistry major with experience in teaching science subjects to undergraduate students.",
+    "yearOfStudy": 3,
+    "totalSessions": 16,
+    "reviews": 12,
+    "avatar": "https://i.pravatar.cc/150?img=32",
+    "status": "Approved"
+  },
+  {
+    "id": 5,
+    "firstName": "Omar",
+    "lastName": "Al-Marzooqi",
+    "gender": "Male",
+    "email": "omar.almarzooqi@peersphere.ae",
+    "subjects": [
+      "Microeconomics",
+      "Macroeconomics",
+      "Financial Accounting"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-21",
+        "startTime": "11:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-23",
+        "startTime": "2:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-25",
+        "startTime": "5:30 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.5,
+    "hourlyRate": 140,
+    "bio": "Business student with a strong foundation in economics and accounting principles.",
+    "yearOfStudy": 4,
+    "totalSessions": 22,
+    "reviews": 17,
+    "avatar": "https://i.pravatar.cc/150?img=12",
+    "status": "Approved"
+  },
+  {
+    "id": 6,
+    "firstName": "Priya",
+    "lastName": "Sharma",
+    "gender": "Female",
+    "email": "priya.sharma@peersphere.ae",
+    "subjects": [
+      "Linear Algebra",
+      "Statistics",
+      "Calculus II"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-19",
+        "startTime": "4:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-22",
+        "startTime": "10:30 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-24",
+        "startTime": "1:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.9,
+    "hourlyRate": 160,
+    "bio": "Mathematics graduate student with extensive tutoring experience in various math subjects.",
+    "yearOfStudy": 5,
+    "totalSessions": 35,
+    "reviews": 29,
+    "avatar": "https://i.pravatar.cc/150?img=10",
+    "status": "Approved"
+  },
+  {
+    "id": 7,
+    "firstName": "Ali",
+    "lastName": "Al-Dhaheri",
+    "gender": "Male",
+    "email": "ali.aldhaheri@peersphere.ae",
+    "subjects": [
+      "Physics II",
+      "Calculus I",
+      "Linear Algebra"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-20",
+        "startTime": "1:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-23",
+        "startTime": "3:30 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-26",
+        "startTime": "10:00 AM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.7,
+    "hourlyRate": 135,
+    "bio": "Engineering student with a strong background in physics and mathematics.",
+    "yearOfStudy": 3,
+    "totalSessions": 20,
+    "reviews": 15,
+    "avatar": "https://i.pravatar.cc/150?img=7",
+    "status": "Approved"
+  },
+  {
+    "id": 8,
+    "firstName": "Layla",
+    "lastName": "Al-Shamsi",
+    "gender": "Female",
+    "email": "layla.alshamsi@peersphere.ae",
+    "subjects": [
+      "Introduction to Psychology",
+      "Statistics"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-19",
+        "startTime": "12:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-21",
+        "startTime": "3:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-24",
+        "startTime": "4:30 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.8,
+    "hourlyRate": 125,
+    "bio": "Psychology major with expertise in research methods and statistical analysis.",
+    "yearOfStudy": 4,
+    "totalSessions": 26,
+    "reviews": 22,
+    "avatar": "https://i.pravatar.cc/150?img=44",
+    "status": "Approved"
+  }
+]

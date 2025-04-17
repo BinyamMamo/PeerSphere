@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "studentId": 4,
+    "subjects": ["Web Development", "Data Structures"],
+    "proposedRate": 130,
+    "status": "Pending",
+    "dateApplied": "2025-04-15",
+    "resume": "resume_link.pdf",
+    "coverLetter": "I have experience in web development and would like to help other students learn these valuable skills.",
+    "academicStanding": "GPA: 3.8"
+  },
+  {
+    "id": 2,
+    "studentId": 1,
+    "subjects": ["Physics I"],
+    "proposedRate": 120,
+    "status": "Pending",
+    "dateApplied": "2025-04-16",
+    "resume": "resume_link.pdf",
+    "coverLetter": "I'm passionate about physics and want to help first-year students understand the fundamental concepts.",
+    "academicStanding": "GPA: 3.9"
+  },
+  {
+    "id": 3,
+    "studentId": 8,
+    "subjects": ["Arabic Literature"],
+    "proposedRate": 110,
+    "status": "Approved",
+    "dateApplied": "2025-04-10",
+    "resume": "resume_link.pdf",
+    "coverLetter": "Arabic literature is my passion and I would love to share this with other students.",
+    "academicStanding": "GPA: 4.0"
+  },
+  {
+    "id": 4,
+    "studentId": 6,
+    "subjects": ["Introduction to Biology"],
+    "proposedRate": 125,
+    "status": "Pending",
+    "dateApplied": "2025-04-17",
+    "resume": "resume_link.pdf",
+    "coverLetter": "Biology has always been my strongest subject and I enjoy explaining scientific concepts to others.",
+    "academicStanding": "GPA: 3.7"
+  },
+  {
+    "id": 5,
+    "studentId": 7,
+    "subjects": ["Introduction to AI", "Data Structures"],
+    "proposedRate": 145,
+    "status": "Pending",
+    "dateApplied": "2025-04-14",
+    "resume": "resume_link.pdf",
+    "coverLetter": "I have professional experience working on AI projects and would like to help students understand this emerging field.",
+    "academicStanding": "GPA: 3.9"
+  }
+]
+
