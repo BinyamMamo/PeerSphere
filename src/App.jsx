@@ -26,6 +26,14 @@ import AdminTutors from './pages/admin/AdminTutors';
 import AdminSessions from './pages/admin/AdminSessions';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 
+import BookSession from './pages/BookSession';
+import AvailableTutors from './pages/AvailableTutors.jsx';
+import SuggestedTutors from './pages/SuggestedTutors';
+import BookWithTutor from './pages/BookWithTutor';
+import BookingConfirmation from './pages/BookingConfirmation';
+import SessionRoom from './pages/SessionRoom';
+import SessionFeedback from './pages/SessionFeedback';
+
 // Styling
 import './App.css';
 
@@ -36,6 +44,19 @@ function App() {
         <Routes>
           {/* Redirect root to student home */}
           <Route path="/" element={<Navigate to="/student" replace />} />
+
+
+          {/* Booking Flow */}
+          {/* Student Routes */}
+          <Route path="/" element={<MainLayout />}>
+            <Route path="/book-session" element={<BookSession />} />
+            <Route path="/available-tutors" element={<AvailableTutors />} />
+            <Route path="/suggested-tutors" element={<SuggestedTutors />} />
+            <Route path="/book-with-tutor" element={<BookWithTutor />} />
+            <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+            <Route path="/session-room/:tutorId" element={<SessionRoom />} />
+            <Route path="/session-feedback" element={<SessionFeedback />} />
+          </Route>
 
           {/* Student Routes */}
           <Route path="/student" element={<MainLayout />}>

@@ -39,7 +39,7 @@ const StudentRightbar = () => {
       {/* Quick Actions */}
       <div className="mb-6 space-y-2.5">
         <Link
-          to="/student/book"
+          to="/book-session"
           className="flex items-center justify-center w-full bg-primary-600 text-white rounded-lg py-3 px-4 font-medium text-center mb-3 hover:bg-primary-700 transition"
         >
           <FaCalendarPlus className="mr-2" />
