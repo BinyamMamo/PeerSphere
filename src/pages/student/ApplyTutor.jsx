@@ -170,9 +170,9 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
                 onClick={handleAddCustomSubject}
                 disabled={!customSubject.trim()}
                 // Improved Button Styling
-                className="inline-flex items-center px-5 py-3 bg-primary-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-700 active:bg-primary-800 focus:outline-none focus:border-primary-900 focus:ring focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition ease-in-out duration-150 shadow-sm"
+                className="inline-flex items-center px-5 py-3 bg-primary-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-primary-700 active:bg-primary-800 focus:outline-none focus:border-primary-900 focus:ring focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition ease-in-out duration-150 shadow-sm"
               >
-                <BiSolidBookAdd className="-ml-1 mr-2 h-4 w-4" /> {/* Added Icon */}
+                <BiSolidBookAdd className="-ml-1 mr-1 text-sm" /> {/* Added Icon */}
                 Add
               </button>
             </div>
@@ -233,7 +233,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
             {/* Academic Year */}
             <div>
               <label htmlFor="academicYear" className="block text-sm font-medium text-gray-700">
-                <FaGraduationCap className="inline mr-2 text-gray-500" />
+                {/* <FaGraduationCap className="inline mr-2 text-gray-500" /> */}
                 Academic Year <span className="text-red-500">*</span>
               </label>
               <div className="relative mt-1">
@@ -266,7 +266,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
             <div>
               <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
                 {/* Changed Icon */}
-                <FaVenusMars className="inline mr-2 text-gray-500" />
+                {/* <FaVenusMars className="inline mr-2 text-gray-500" /> */}
                 Gender <span className="text-red-500">*</span>
               </label>
               <div className="relative mt-1">
@@ -298,7 +298,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
           {/* Academic Standing */}
           <div>
             <label htmlFor="academicStanding" className="block text-sm font-medium text-gray-700">
-              <FaGraduationCap className="inline mr-2 text-gray-500" />
+              {/* <FaGraduationCap className="inline mr-2 text-gray-500" /> */}
               Academic Standing <span className="text-red-500">*</span>
             </label>
             <div className="relative mt-1">

@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { FiVideo, FiVideoOff, FiMic, FiMicOff, FiMessageSquare, FiX, FiSend, FiUsers, FiClock, FiBook, FiMaximize, FiMinimize } from 'react-icons/fi';
 
@@ -16,26 +15,24 @@ const SessionRoom = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [sessionTime, setSessionTime] = useState(0); // in seconds
+  const [sessionTime, setSessionTime] = useState(0);
   const [isSessionActive, setIsSessionActive] = useState(true);
-
-  // Mock tutor data - in a real app, you'd fetch this from your API
   const [tutor, setTutor] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [stream, setStream] = useState(null); // State for webcam stream
+
+  const videoRef = useRef(null); // Reference to the video element
 
   // Fetch tutor data
   useEffect(() => {
     const fetchTutor = async () => {
       try {
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Mock tutor data
         setTutor({
           id: parseInt(tutorId),
           name: "Jane Doe",
           subject: formData.subject || "Mathematics",
-          avatar: "/api/placeholder/100/100", // placeholder image
+          avatar: "/api/placeholder/100/100",
         });
       } catch (error) {
         console.error('Error fetching tutor:', error);
@@ -43,31 +40,71 @@ const SessionRoom = () => {
         setLoading(false);
       }
     };
-
     fetchTutor();
   }, [tutorId, formData.subject]);
 
   // Session timer
   useEffect(() => {
     let interval = null;
-
     if (isSessionActive) {
       interval = setInterval(() => {
         setSessionTime(prevTime => prevTime + 1);
       }, 1000);
     }
-
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [isSessionActive]);
+
+  // Initialize webcam
+  useEffect(() => {
+    let currentStream = null;
+
+    const startWebcam = async () => {
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false, // Set to true if you want to include audio
+        });
+        setStream(mediaStream);
+        currentStream = mediaStream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = mediaStream;
+          videoRef.current.play();
+        }
+      } catch (error) {
+        console.error('Error accessing webcam:', error);
+        setIsVideoOn(false); // Disable video if access fails
+      }
+    };
+
+    if (isVideoOn) {
+      startWebcam();
+    }
+
+    // Cleanup function to stop the stream
+    return () => {
+      if (currentStream) {
+        currentStream.getTracks().forEach(track => track.stop());
+        setStream(null);
+      }
+    };
+  }, [isVideoOn]);
+
+  // Handle video toggle
+  const toggleVideo = () => {
+    if (isVideoOn && stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setIsVideoOn(!isVideoOn);
+  };
 
   // Format session time
   const formatTime = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
-
     return [
       hours.toString().padStart(2, '0'),
       minutes.toString().padStart(2, '0'),
@@ -82,19 +119,16 @@ const SessionRoom = () => {
         id: messages.length + 1,
         sender: 'You',
         text: message.trim(),
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-
       setMessages([...messages, newMessage]);
       setMessage('');
-
-      // Simulate tutor response after a delay
       setTimeout(() => {
         const tutorResponse = {
           id: messages.length + 2,
           sender: tutor?.name || 'Tutor',
           text: 'I understand your question. Let me explain this concept...',
-          timestamp: new Date()
+          timestamp: new Date(),
         };
         setMessages(prevMessages => [...prevMessages, tutorResponse]);
       }, 3000);
@@ -113,14 +147,16 @@ const SessionRoom = () => {
   const handleEndSession = () => {
     if (window.confirm('Are you sure you want to end this session?')) {
       setIsSessionActive(false);
-
-      // Navigate to post-session feedback
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        setStream(null);
+      }
       navigate('/session-feedback', {
         state: {
           tutorId,
           sessionDuration: sessionTime,
-          subject: formData.subject
-        }
+          subject: formData.subject,
+        },
       });
     }
   };
@@ -129,7 +165,7 @@ const SessionRoom = () => {
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+        console.error(`Error enabling full-screen mode: ${err.message}`);
       });
     } else {
       if (document.exitFullscreen) {
@@ -161,9 +197,7 @@ const SessionRoom = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <h3 className="mt-2 text-xl font-medium">Session Not Found</h3>
-          <p className="mt-1 text-gray-300">
-            We couldn't connect to your tutoring session.
-          </p>
+          <p className="mt-1 text-gray-300">We couldn't connect to your tutoring session.</p>
           <button
             onClick={() => navigate('/book-session')}
             className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-900 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
@@ -225,12 +259,13 @@ const SessionRoom = () => {
             )}
           </div>
 
-          {/* Student Video (Small overlay) */}
+          {/* Student Video (Webcam Preview) */}
           <div className="absolute bottom-4 right-4 w-1/4 h-1/4 bg-gray-800 border-2 border-gray-700 rounded-lg overflow-hidden">
-            {isVideoOn ? (
-              <img
-                src="/api/placeholder/200/150"
-                alt="Your video"
+            {isVideoOn && stream ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -255,7 +290,6 @@ const SessionRoom = () => {
                 <FiX />
               </button>
             </div>
-
             <div className="flex-grow p-3 overflow-y-auto">
               {messages.length === 0 ? (
                 <div className="text-center text-gray-500 py-6">
@@ -268,8 +302,8 @@ const SessionRoom = () => {
                     <div
                       key={msg.id}
                       className={`p-2 rounded-lg max-w-xs ${msg.sender === 'You'
-                          ? 'ml-auto bg-primary-100 text-primary-900'
-                          : 'bg-gray-100 text-gray-900'
+                        ? 'ml-auto bg-primary-100 text-primary-900'
+                        : 'bg-gray-100 text-gray-900'
                         }`}
                     >
                       <p className="text-xs font-medium">{msg.sender}</p>
@@ -282,7 +316,6 @@ const SessionRoom = () => {
                 </div>
               )}
             </div>
-
             <div className="p-3 border-t border-gray-300">
               <div className="flex">
                 <textarea
@@ -316,7 +349,7 @@ const SessionRoom = () => {
             {isMicOn ? <FiMic /> : <FiMicOff />}
           </button>
           <button
-            onClick={() => setIsVideoOn(!isVideoOn)}
+            onClick={toggleVideo}
             className={`p-3 rounded-full ${isVideoOn ? 'bg-primary-600 hover:bg-primary-700' : 'bg-red-600 hover:bg-red-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
           >
             {isVideoOn ? <FiVideo /> : <FiVideoOff />}
@@ -328,7 +361,6 @@ const SessionRoom = () => {
             <FiMessageSquare />
           </button>
         </div>
-
         <button
           onClick={handleEndSession}
           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"

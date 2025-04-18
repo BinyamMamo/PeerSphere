@@ -921,9 +921,9 @@ const StudentCalendar = () => {
           <div className="inline-flex bg-gray-100 rounded-md overflow-hidden">
             <button
               onClick={() => setCalendarView('month')}
-              className={`px-4 flex items-center py-2 text-sm ${calendarView === 'month'
+              className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'month'
                 ? 'text-primary-600 ring font-bold ring-primary-600/5'
-                : 'text-gray-700 hover:bg-gray-200  font-medium'
+                : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
               <FaCalendarAlt className="inline mr-1" />
@@ -933,9 +933,9 @@ const StudentCalendar = () => {
             </button>
             <button
               onClick={() => setCalendarView('week')}
-              className={`px-4 flex items-center py-2 text-sm ${calendarView === 'week'
+              className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'week'
                 ? 'text-primary-600 ring font-bold ring-primary-600/5'
-                : 'text-gray-700 hover:bg-gray-200  font-medium'
+                : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
               <FaCalendarWeek className="inline mr-1" />
@@ -945,9 +945,9 @@ const StudentCalendar = () => {
             </button>
             <button
               onClick={() => setCalendarView('day')}
-              className={`px-4 flex items-center py-2 text-sm ${calendarView === 'day'
+              className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'day'
                 ? 'text-primary-600 ring font-bold ring-primary-600/5'
-                : 'text-gray-700 hover:bg-gray-200  font-medium'
+                : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
               <FaCalendarDay className="inline mr-1" />

@@ -11,7 +11,7 @@ import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
 const AdminSidebar = () => {
   return (
-    <div className="h-full w-64 bg-white shadow-md flex flex-col">
+    <div className="h-full w-64 flex flex-col">
       {/* Logo */}
       <div className="p-4 py-2 border-b pb-4">
         <div className="flex items-center border-0 border-neutral-700"> {/* Changed yellow to neutral */}
@@ -82,7 +82,7 @@ const AdminSidebar = () => {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t">
+      <div className="p-4 border-t-0">
         <p className="text-xs text-gray-500">© 2025 PeerSphere</p>
       </div>
     </div>

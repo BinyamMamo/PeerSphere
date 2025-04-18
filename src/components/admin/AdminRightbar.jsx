@@ -3,9 +3,9 @@ import { FaUserCircle, FaBell, FaQuestion, FaCog } from 'react-icons/fa';
 
 const AdminRightbar = () => {
   return (
-    <div className="h-full w-80 bg-white shadow-md flex flex-col p-4 overflow-auto">
+    <div className="h-full w-80 flex flex-col p-4 overflow-auto">
       {/* Profile Section */}
-      <div className="flex items-center mb-6">
+      <div className="flex items-center mb-6 mt-3">
         <img
           src="https://i.pravatar.cc/150?img=1"
           alt="Admin Profile"
@@ -52,13 +52,13 @@ const AdminRightbar = () => {
         </h3>
 
         <div className="space-y-3">
-          <div className="bg-gray-50 rounded-lg p-3">
+          <div className="bg-gray-100 rounded-lg p-3">
             <p className="text-sm font-medium">New Tutor Application</p>
             <p className="text-xs text-gray-600">Sara Al-Qubaisi has applied to become a tutor.</p>
             <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-3">
+          <div className="bg-gray-100 rounded-lg p-3">
             <p className="text-sm font-medium">Session Report</p>
             <p className="text-xs text-gray-600">Weekly session report is now available.</p>
             <p className="text-xs text-gray-400 mt-1">Yesterday</p>

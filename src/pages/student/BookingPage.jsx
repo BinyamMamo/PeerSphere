@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { FaStar, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaStar, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaArrowLeft, FaChalkboardTeacher } from 'react-icons/fa';
 
 const BookingPage = () => {
   const { tutorId } = useParams();
@@ -160,8 +160,13 @@ const BookingPage = () => {
             </div>
             
             <div className="mt-4">
-              <h4 className="text-xs text-gray-500 uppercase mb-1">Rate</h4>
-              <p className="font-bold text-lg">{tutor.hourlyRate} AED<span className="text-xs font-normal text-gray-500">/hour</span></p>
+              <h4 className="text-xs text-gray-500 uppercase mb-1">Teaching Style</h4>
+              <div className="flex items-center gap-2">
+                {/* <FaChalkboardTeacher className="text-primary-600" /> */}
+                <p className="text-sm text-gray-700">
+                  {tutor.teachingStyle || 'Interactive, hands-on approach with real-world examples'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -181,7 +186,7 @@ const BookingPage = () => {
             <form onSubmit={handleSubmit}>
               {/* Subject selection */}
               <div className="mb-4">
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                   Subject*
                 </label>
                 <select
@@ -202,7 +207,7 @@ const BookingPage = () => {
               </div>
               
               {/* Date selection */}
-              <div className="mb-4">
+              <div className="mb-,param4">
                 <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
                   Date*
                 </label>
@@ -229,7 +234,7 @@ const BookingPage = () => {
               </div>
               
               {/* Time slot selection */}
-              <div className="mb-4">
+              <div className="my-4">
                 <label htmlFor="timeSlot" className="block text-sm font-medium text-gray-700 mb-1">
                   Time Slot*
                 </label>
@@ -288,12 +293,7 @@ const BookingPage = () => {
               </div>
               
               {/* Submit button */}
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium">Total: {tutor.hourlyRate} AED</p>
-                  <p className="text-xs text-gray-500">1 hour session</p>
-                </div>
-                
+              <div className="flex justify-end">
                 <button
                   type="submit"
                   className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-md font-medium disabled:opacity-50"

@@ -40,7 +40,7 @@ const StudentRightbar = () => {
       <div className="mb-6 space-y-2.5">
         <Link
           to="/book-session"
-          className="flex items-center justify-center w-full bg-primary-600 text-white rounded-lg py-3 px-4 font-medium text-center mb-3 hover:bg-primary-700 transition"
+          className="flex items-center justify-center w-full bg-primary-600 text-white rounded-lg py-3 px-4 font-medium text-center mb-3 hover:bg-primary-700  hover:shadow transition ease-in-out"
         >
           <FaCalendarPlus className="mr-2" />
           <span className="">
@@ -49,9 +49,9 @@ const StudentRightbar = () => {
         </Link>
         <Link
           to="/student/apply-tutor"
-          className="flex items-center justify-center w-full bg-white border border-primary-600 text-primary-600 rounded-lg py-3 px-4 font-medium text-center hover:bg-neutral-100 transition"
+          className="flex items-center justify-center w-full bg-white border border-primary-600 text-primary-600 rounded-lg py-3 px-4 font-medium text-center hover:shadow transition ease-in-out"
         >
-          <FaChalkboardTeacher className="mr-2" />
+          <FaChalkboardTeacher className="mr-2 text-sm" />
           <span className="">
             Become a Tutor
           </span>

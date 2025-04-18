@@ -68,7 +68,7 @@ const AdminTutors = () => {
       <h1 className="text-2xl font-bold mb-6">Tutors Management</h1>
 
       {/* Search & Filters */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
+      <div className="hidden bg-white p-4 rounded-lg shadow mb-6">
         <div className="flex flex-wrap items-center mb-4">
           <div className="flex items-center mr-4 w-full md:w-auto mb-2 md:mb-0">
             <div className="relative flex-grow">

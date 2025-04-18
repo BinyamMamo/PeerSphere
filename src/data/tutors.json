@@ -436,5 +436,437 @@
     "reviews": 10,
     "avatar": "https://i.pravatar.cc/150?img=54",
     "status": "Approved"
+    },
+    {
+      "id": 13,
+      "firstName": "Noura",
+      "lastName": "Al-Mutairi",
+      "gender": "Female",
+      "email": "noura.almutairi@peersphere.ae",
+      "subjects": [
+        "Chemistry",
+        "Physics II"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-20",
+          "startTime": "3:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-22",
+          "startTime": "11:00 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-24",
+          "startTime": "2:00 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.8,
+      "hourlyRate": 140,
+      "bio": "Physics and chemistry tutor with 3 years of experience helping students excel in science.",
+      "yearOfStudy": 4,
+      "totalSessions": 25,
+      "reviews": 18,
+      "avatar": "https://i.pravatar.cc/150?img=15",
+      "status": "Approved"
+    },
+    {
+      "id": 14,
+      "firstName": "Khalid",
+      "lastName": "Al-Falasi",
+      "gender": "Male",
+      "email": "khalid.alfalasi@peersphere.ae",
+      "subjects": [
+        "Econometrics",
+        "Statistics"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-21",
+          "startTime": "1:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-23",
+          "startTime": "10:00 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-25",
+          "startTime": "3:30 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.7,
+      "hourlyRate": 150,
+      "bio": "Economics graduate student with a focus on econometrics and statistical modeling.",
+      "yearOfStudy": 5,
+      "totalSessions": 30,
+      "reviews": 22,
+      "avatar": "https://i.pravatar.cc/150?img=20",
+      "status": "Approved"
+    },
+    {
+      "id": 15,
+      "firstName": "Huda",
+      "lastName": "Al-Mazrouei",
+      "gender": "Female",
+      "email": "huda.almazrouei@peersphere.ae",
+      "subjects": [
+        "Biology",
+        "Genetics"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-20",
+          "startTime": "10:30 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-22",
+          "startTime": "4:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-24",
+          "startTime": "1:30 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.9,
+      "hourlyRate": 160,
+      "bio": "Biology major with a specialization in genetics and molecular biology.",
+      "yearOfStudy": 5,
+      "totalSessions": 28,
+      "reviews": 24,
+      "avatar": "https://i.pravatar.cc/150?img=25",
+      "status": "Approved"
+    },
+    {
+      "id": 16,
+      "firstName": "Salem",
+      "lastName": "Al-Rashidi",
+      "gender": "Male",
+      "email": "salem.alrashidi@peersphere.ae",
+      "subjects": [
+        "Philosophy",
+        "Ethics"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-21",
+          "startTime": "11:30 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-23",
+          "startTime": "2:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-25",
+          "startTime": "5:00 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.6,
+      "hourlyRate": 120,
+      "bio": "Philosophy student with a passion for teaching critical thinking and ethics.",
+      "yearOfStudy": 4,
+      "totalSessions": 20,
+      "reviews": 15,
+      "avatar": "https://i.pravatar.cc/150?img=30",
+      "status": "Approved"
+    },
+    {
+      "id": 17,
+      "firstName": "Mariam",
+      "lastName": "Al-Najjar",
+      "gender": "Female",
+      "email": "mariam.alnajjar@peersphere.ae",
+      "subjects": [
+        "Sociology",
+        "Anthropology"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-20",
+          "startTime": "9:30 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-22",
+          "startTime": "3:30 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-24",
+          "startTime": "5:00 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.8,
+      "hourlyRate": 130,
+      "bio": "Sociology major with a focus on cultural anthropology and social research.",
+      "yearOfStudy": 4,
+      "totalSessions": 22,
+      "reviews": 18,
+      "avatar": "https://i.pravatar.cc/150?img=35",
+      "status": "Approved"
+    },
+    {
+      "id": 18,
+      "firstName": "Faisal",
+      "lastName": "Al-Kuwaiti",
+      "gender": "Male",
+      "email": "faisal.alkuwaiti@peersphere.ae",
+      "subjects": [
+        "Programming",
+        "Web Development"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-21",
+          "startTime": "10:00 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-23",
+          "startTime": "1:30 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-25",
+          "startTime": "4:30 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.9,
+      "hourlyRate": 170,
+      "bio": "Software engineering student with expertise in web development and programming languages.",
+      "yearOfStudy": 5,
+      "totalSessions": 35,
+      "reviews": 30,
+      "avatar": "https://i.pravatar.cc/150?img=40",
+      "status": "Approved"
+    },
+    {
+      "id": 19,
+      "firstName": "Reem",
+      "lastName": "Al-Dhaheri",
+      "gender": "Female",
+      "email": "reem.aldhaheri@peersphere.ae",
+      "subjects": [
+        "Marketing",
+        "Business Strategy"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-20",
+          "startTime": "2:30 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-22",
+          "startTime": "11:30 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-24",
+          "startTime": "4:00 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.7,
+      "hourlyRate": 150,
+      "bio": "Business student specializing in marketing and strategic management.",
+      "yearOfStudy": 4,
+      "totalSessions": 28,
+      "reviews": 20,
+      "avatar": "https://i.pravatar.cc/150?img=50",
+      "status": "Approved"
+    },
+    {
+      "id": 20,
+      "firstName": "Omar",
+      "lastName": "Al-Mutawa",
+      "gender": "Male",
+      "email": "omar.almutawa@peersphere.ae",
+      "subjects": [
+        "Electrical Engineering",
+        "Circuits"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-21",
+          "startTime": "9:30 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-23",
+          "startTime": "3:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-25",
+          "startTime": "5:30 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.8,
+      "hourlyRate": 160,
+      "bio": "Electrical engineering student with a passion for teaching circuits and electronics.",
+      "yearOfStudy": 5,
+      "totalSessions": 30,
+      "reviews": 25,
+      "avatar": "https://i.pravatar.cc/150?img=60",
+      "status": "Approved"
+    },
+    {
+      "id": 21,
+      "firstName": "Amina",
+      "lastName": "Al-Mansoori",
+      "gender": "Female",
+      "email": "amina.almansoori@peersphere.ae",
+      "subjects": [
+        "Creative Writing",
+        "Poetry"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-20",
+          "startTime": "11:00 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-22",
+          "startTime": "2:30 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-24",
+          "startTime": "5:00 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.9,
+      "hourlyRate": 140,
+      "bio": "English major with a love for creative writing and poetry.",
+      "yearOfStudy": 4,
+      "totalSessions": 25,
+      "reviews": 20,
+      "avatar": "https://i.pravatar.cc/150?img=65",
+      "status": "Approved"
+    },
+    {
+      "id": 22,
+      "firstName": "Hassan",
+      "lastName": "Al-Mazrouei",
+      "gender": "Male",
+      "email": "hassan.almazrouei@peersphere.ae",
+      "subjects": [
+        "Machine Learning",
+        "Deep Learning"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-21",
+          "startTime": "10:30 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-23",
+          "startTime": "4:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-25",
+          "startTime": "2:00 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.9,
+      "hourlyRate": 180,
+      "bio": "AI researcher with expertise in machine learning and deep learning.",
+      "yearOfStudy": 6,
+      "totalSessions": 40,
+      "reviews": 35,
+      "avatar": "https://i.pravatar.cc/150?img=70",
+      "status": "Approved"
+    },
+    {
+      "id": 23,
+      "firstName": "Layla",
+      "lastName": "Al-Ketbi",
+      "gender": "Female",
+      "email": "layla.alketbi@peersphere.ae",
+      "subjects": [
+        "Psychology",
+        "Behavioral Science"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-20",
+          "startTime": "1:30 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-22",
+          "startTime": "10:00 AM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-24",
+          "startTime": "3:30 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.8,
+      "hourlyRate": 150,
+      "bio": "Psychology graduate student with a focus on behavioral science and mental health.",
+      "yearOfStudy": 5,
+      "totalSessions": 30,
+      "reviews": 25,
+      "avatar": "https://i.pravatar.cc/150?img=58",
+      "status": "Approved"
+    },
+    {
+      "id": 24,
+      "firstName": "Zaid",
+      "lastName": "Al-Qasimi",
+      "gender": "Male",
+      "email": "zaid.alqasimi@peersphere.ae",
+      "subjects": [
+        "Public Speaking",
+        "Debate"
+      ],
+      "availability": [
+        {
+          "date": "2025-04-21",
+          "startTime": "12:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-23",
+          "startTime": "3:00 PM",
+          "duration": 60
+        },
+        {
+          "date": "2025-04-25",
+          "startTime": "5:30 PM",
+          "duration": 60
+        }
+      ],
+      "rating": 4.7,
+      "hourlyRate": 130,
+      "bio": "Communication major with a passion for public speaking and debate coaching.",
+      "yearOfStudy": 4,
+      "totalSessions": 20,
+      "reviews": 15,
+      "avatar": "https://i.pravatar.cc/150?img=70",
+      "status": "Approved"
     }
 ]

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
-import { FaStar, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUser } from 'react-icons/fa';
+import { FaStar, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUser, FaChalkboardTeacher } from 'react-icons/fa';
 
 const StudentSessions = () => {
   const { getUserSessions, tutors } = useContext(AppContext);
@@ -56,7 +56,7 @@ const StudentSessions = () => {
           </div>
 
           {/* Session details */}
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          <div className="mt-3 grid grid-cols-2 gap-3">
             <div className="flex items-center text-sm text-gray-600">
               <FaCalendarAlt className="mr-2 text-gray-400" />
               {session.date}
@@ -75,11 +75,13 @@ const StudentSessions = () => {
             </div>
           </div>
 
-          {/* Session footer with price and actions */}
-          <div className="mt-4 flex justify-between items-center">
-            <div>
-              <span className="font-bold">{session.amount} AED</span>
-              <span className="text-xs text-gray-500 ml-1">/ hour</span>
+          {/* Session footer with teaching style and actions */}
+          <div className="mt-5 flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <FaChalkboardTeacher className="text-primary-600" />
+              <span className="text-sm text-gray-600">
+                {tutor.teachingStyle || 'Interactive, hands-on approach'}
+              </span>
             </div>
 
             {session.status === 'Upcoming' && (
