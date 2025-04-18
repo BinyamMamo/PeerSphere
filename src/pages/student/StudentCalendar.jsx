@@ -48,10 +48,10 @@ const StudentCalendar = () => {
   }, []);
 
   // Extract all unique subjects for filter
-  useEffect(() => {
-    const subjects = [...new Set(userSessions.map(session => session.subject))];
-    setAllSubjects(subjects);
-  }, [userSessions]);
+  // useEffect(() => {
+  //   const subjects = [...new Set(userSessions.map(session => session.subject))];
+  //   setAllSubjects(subjects);
+  // }, [userSessions]);
 
   // Apply filters to sessions
   const getFilteredSessions = () => {
