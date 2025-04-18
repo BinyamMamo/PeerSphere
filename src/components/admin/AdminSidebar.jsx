@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   FaHome,
   FaClipboardList,
@@ -7,18 +7,20 @@ import {
   FaCalendarCheck,
   FaChartBar
 } from 'react-icons/fa';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
 const AdminSidebar = () => {
   return (
     <div className="h-full w-64 bg-white shadow-md flex flex-col">
       {/* Logo */}
-      <div className="p-4 border-b">
-        <h1 className="text-xl font-bold text-accent-600 flex items-center">
-          <span className="bg-accent-600 text-white rounded-md p-1 mr-2">PS</span>
-          PeerSphere
-        </h1>
-        <div className="mt-2 inline-block px-2 py-1 rounded-md bg-accent-100 text-accent-800 text-xs font-medium">
-          Admin Mode
+      <div className="p-4 py-2 border-b pb-4">
+        <div className="flex items-center border-0 border-neutral-700"> {/* Changed yellow to neutral */}
+          <img src="/peersphere.png" className='h-16 p-3.5 pl-0' alt="" />
+          <Link to="/" className="font-bold text-xl text-neutral-600">PeerSphere</Link>
+        </div>
+        <div className="mt-2 flex items-center px-2 py-1 rounded-md bg-accent-100 text-accent-800 text-xs font-medium">
+          <span className='flex-grow'>Admin Mode</span>
+          <MdOutlineAdminPanelSettings className='text-accent-800 rounded-md ' />
         </div>
       </div>
 

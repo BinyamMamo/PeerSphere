@@ -7,7 +7,7 @@ const AdminRightbar = () => {
       {/* Profile Section */}
       <div className="flex items-center mb-6">
         <img
-          src="https://i.pravatar.cc/150?img=8"
+          src="https://i.pravatar.cc/150?img=1"
           alt="Admin Profile"
           className="w-12 h-12 rounded-full object-cover"
         />

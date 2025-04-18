@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { FaStar, FaHeart, FaCalendarAlt } from 'react-icons/fa';
+import { IoMdRemoveCircleOutline } from 'react-icons/io';
+import { MdOutlineBookmarkRemove } from 'react-icons/md';
 
 const FavoriteTutors = () => {
   const { currentUser, tutors, toggleFavoriteTutor } = useContext(AppContext);
@@ -34,14 +36,8 @@ const FavoriteTutors = () => {
                         onClick={() => toggleFavoriteTutor(tutor.id)}
                         className="text-red-500 hover:text-red-600"
                       >
-                        <FaHeart />
+                        <MdOutlineBookmarkRemove />
                       </button>
-                    </div>
-
-                    <div className="flex items-center mt-1">
-                      <FaStar className="text-yellow-500 mr-1" />
-                      <span className="text-sm">{tutor.rating.toFixed(1)}</span>
-                      <span className="text-xs text-gray-500 ml-1">({tutor.reviews} reviews)</span>
                     </div>
 
                     <p className="text-sm text-gray-600 mt-1">
@@ -80,9 +76,10 @@ const FavoriteTutors = () => {
 
                 {/* Actions */}
                 <div className="mt-4 flex justify-between items-center">
-                  <div>
-                    <span className="font-bold">{tutor.hourlyRate} AED</span>
-                    <span className="text-xs text-gray-500 ml-1">/ hour</span>
+                  <div className="flex items-center mt-1">
+                    <FaStar className="text-yellow-500 mr-1" />
+                    <span className="text-sm">{tutor.rating.toFixed(1)}</span>
+                    <span className="text-xs text-gray-500 ml-1">({tutor.reviews} reviews)</span>
                   </div>
 
                   <Link

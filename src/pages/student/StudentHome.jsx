@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { FaStar, FaSearch, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaStar, FaSearch, FaHeart, FaRegHeart, FaFilter, FaTimes } from 'react-icons/fa';
 import FilterTag from '../../components/shared/FilterTag';
+import CollapsibleFilterTags from '../../components/shared/CollapsibleFilterTags';
+import { MdOutlineBookmark, MdOutlineBookmarkAdd, MdOutlineBookmarkAdded, MdOutlineBookmarkBorder } from 'react-icons/md';
 
 const StudentHome = () => {
   const {
@@ -14,8 +16,8 @@ const StudentHome = () => {
     toggleFavoriteTutor
   } = useContext(AppContext);
 
-  // Local state for search
   const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
 
   // Get all available subjects (for filter dropdown)
   const allSubjects = [...new Set(tutors.flatMap(tutor => tutor.subjects))].sort();
@@ -64,172 +66,134 @@ const StudentHome = () => {
     tutorFilters.availability ||
     searchQuery;
 
+  // Get year label for display
+  const getYearLabel = (yearValue) => {
+    if (!yearValue) return '';
+    if (yearValue === '5') return 'Graduate';
+
+    const suffixes = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'];
+    const suffix = suffixes[parseInt(yearValue) % 10];
+    return `${yearValue}${suffix} Year`;
+  };
+
   return (
     <div className="h-full">
-      {/* Search Bar */}
-      <div className="relative mb-6">
-        <input
-          type="text"
-          className="w-full pl-10 pr-4 py-3 bg-white rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-primary-500"
-          placeholder="Search by tutor name or subject..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <FaSearch className="text-gray-400" />
+      {/* Search and Filter Controls */}
+      <div className="flex items-center gap-2 mb-4">
+        {/* Search Bar */}
+        <div className="relative flex-grow">
+          <input
+            type="text"
+            className="w-full pl-10 pr-4 py-2 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-500"
+            placeholder="Search by name or subject..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
+          </div>
+
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <FaTimes size={14} />
+            </button>
+          )}
         </div>
 
-        {searchQuery && (
-          <button
-            onClick={() => setSearchQuery('')}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-          >
-            ✕
-          </button>
-        )}
-      </div>
+        {/* Filter Toggle Button */}
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className={`p-2 rounded-lg shadow-sm ${showFilters ? 'bg-primary-100 text-primary-700' : 'bg-white text-gray-600'}`}
+        >
+          <FaFilter />
+        </button>
 
-      {/* Filters Section */}
-      <div className="bg-white p-5 rounded-lg shadow mb-6 space-y-4">
-        {/* Subject Filter */}
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-medium text-gray-700">Subject</h3>
-            {tutorFilters.subject && (
-              <button
-                className="text-xs text-primary-600 hover:text-primary-800"
-                onClick={() => handleFilterChange('subject', '')}
-              >
-                Clear
-              </button>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <FilterTag
-              isActive={!tutorFilters.subject}
-              onClick={() => handleFilterChange('subject', '')}
-            >
-              All Subjects
-            </FilterTag>
-
-            {allSubjects.map((subject, index) => (
-              <FilterTag
-                key={index}
-                isActive={tutorFilters.subject === subject}
-                onClick={() => handleFilterChange('subject', subject)}
-              >
-                {subject}
-              </FilterTag>
-            ))}
-          </div>
-        </div>
-
-        {/* Gender Filter */}
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-medium text-gray-700">Gender</h3>
-            {tutorFilters.gender && (
-              <button
-                className="text-xs text-primary-600 hover:text-primary-800"
-                onClick={() => handleFilterChange('gender', '')}
-              >
-                Clear
-              </button>
-            )}
-          </div>
-          <div className="flex gap-2">
-            <FilterTag
-              isActive={!tutorFilters.gender}
-              onClick={() => handleFilterChange('gender', '')}
-            >
-              All
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.gender === 'Male'}
-              onClick={() => handleFilterChange('gender', 'Male')}
-            >
-              Male
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.gender === 'Female'}
-              onClick={() => handleFilterChange('gender', 'Female')}
-            >
-              Female
-            </FilterTag>
-          </div>
-        </div>
-
-        {/* Year of Study Filter */}
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-medium text-gray-700">Year of Study</h3>
-            {tutorFilters.yearOfStudy && (
-              <button
-                className="text-xs text-primary-600 hover:text-primary-800"
-                onClick={() => handleFilterChange('yearOfStudy', '')}
-              >
-                Clear
-              </button>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <FilterTag
-              isActive={!tutorFilters.yearOfStudy}
-              onClick={() => handleFilterChange('yearOfStudy', '')}
-            >
-              All Years
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.yearOfStudy === '1'}
-              onClick={() => handleFilterChange('yearOfStudy', '1')}
-            >
-              1st Year
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.yearOfStudy === '2'}
-              onClick={() => handleFilterChange('yearOfStudy', '2')}
-            >
-              2nd Year
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.yearOfStudy === '3'}
-              onClick={() => handleFilterChange('yearOfStudy', '3')}
-            >
-              3rd Year
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.yearOfStudy === '4'}
-              onClick={() => handleFilterChange('yearOfStudy', '4')}
-            >
-              4th Year
-            </FilterTag>
-            <FilterTag
-              isActive={tutorFilters.yearOfStudy === '5'}
-              onClick={() => handleFilterChange('yearOfStudy', '5')}
-            >
-              Graduate
-            </FilterTag>
-          </div>
-        </div>
-
-        {/* Clear All Filters Button - Only show when at least one filter is active */}
-        {hasActiveFilters && (
-          <div className="pt-2 border-t">
+        {/* Active Filter Count Badge */}
+        {(tutorFilters.subject || tutorFilters.gender || tutorFilters.yearOfStudy) && (
+          <div className="flex">
             <button
               onClick={clearFilters}
-              className="text-sm text-primary-600 hover:text-primary-800 font-medium"
+              className="flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm"
             >
-              Clear all filters
+              <span>Clear</span>
+              <FaTimes size={10} />
             </button>
           </div>
         )}
       </div>
 
+      {/* Active Filter Pills - Only show when filters are active */}
+      {(tutorFilters.subject || tutorFilters.gender || tutorFilters.yearOfStudy) && (
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tutorFilters.subject && (
+            <div className="flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm">
+              <span>Subject: {tutorFilters.subject}</span>
+              <button onClick={() => handleFilterChange('subject', '')}>
+                <FaTimes size={10} />
+              </button>
+            </div>
+          )}
+
+          {tutorFilters.gender && (
+            <div className="flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm">
+              <span>Gender: {tutorFilters.gender}</span>
+              <button onClick={() => handleFilterChange('gender', '')}>
+                <FaTimes size={10} />
+              </button>
+            </div>
+          )}
+
+          {tutorFilters.yearOfStudy && (
+            <div className="flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm">
+              <span>Year: {getYearLabel(tutorFilters.yearOfStudy)}</span>
+              <button onClick={() => handleFilterChange('yearOfStudy', '')}>
+                <FaTimes size={10} />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Collapsible Filters Section */}
+      {showFilters && (
+        <div className="bg-white p-4 rounded-lg shadow mb-6 space-y-4">
+          {/* Subject Filter */}
+          <CollapsibleFilterTags
+            title="Subject"
+            options={allSubjects}
+            selectedValue={tutorFilters.subject}
+            onSelect={(value) => handleFilterChange('subject', value)}
+            allLabel="All Subjects"
+          />
+
+          {/* Gender Filter */}
+          <CollapsibleFilterTags
+            title="Gender"
+            options={['Male', 'Female']}
+            selectedValue={tutorFilters.gender}
+            onSelect={(value) => handleFilterChange('gender', value)}
+            allLabel="All Genders"
+          />
+
+          {/* Year of Study Filter */}
+          <CollapsibleFilterTags
+            title="Year of Study"
+            options={['1', '2', '3', '4', '5']}
+            selectedValue={tutorFilters.yearOfStudy}
+            onSelect={(value) => handleFilterChange('yearOfStudy', value)}
+            allLabel="All Years"
+          />
+        </div>
+      )}
+
       {/* Tutors List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredTutors.length > 0 ? (
           filteredTutors.map(tutor => (
-            <div key={tutor.id} className="bg-white rounded-lg shadow overflow-hidden">
+            <div key={tutor.id} className="bg-white/85 rounded-lg shadow overflow-hidden">
               {/* Tutor Card */}
               <div className="p-4 flex flex-col justify-between h-full">
                 <div className="flex items-start">
@@ -249,9 +213,9 @@ const StudentHome = () => {
                         className="text-gray-400 hover:text-red-500"
                       >
                         {isFavoriteTutor(tutor.id) ? (
-                          <FaHeart className="text-red-500" />
+                          <MdOutlineBookmark className="text-red-500" />
                         ) : (
-                          <FaRegHeart />
+                            <MdOutlineBookmarkAdd />
                         )}
                       </button>
                     </div>

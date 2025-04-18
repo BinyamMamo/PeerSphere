@@ -152,5 +152,44 @@
     "sessionsBooked": 4,
     "avatar": "https://i.pravatar.cc/150?img=27",
     "isTutor": false
+  },
+  {
+    "id": 9,
+    "firstName": "Ali",
+    "lastName": "Hassan",
+    "gender": "Male",
+    "email": "ali.hassan@peersphere.ae",
+    "interestedSubjects": [
+      "Machine Learning",
+      "Data Science",
+      "Big Data"
+    ],
+    "yearOfStudy": 4,
+    "favoriteTutors": [
+      5,
+      7
+    ],
+    "sessionsBooked": 10,
+    "avatar": "https://i.pravatar.cc/150?img=28",
+    "isTutor": false
+  },
+  {
+    "id": 10,
+    "firstName": "Layla",
+    "lastName": "Al-Zahra",
+    "gender": "Female",
+    "email": "layla.alzahra@peersphere.ae",
+    "interestedSubjects": [
+      "Graphic Design",
+      "Digital Marketing",
+      "UI/UX Design"
+    ],
+    "yearOfStudy": 3,
+    "favoriteTutors": [
+      6
+    ],
+    "sessionsBooked": 5,
+    "avatar": "https://i.pravatar.cc/150?img=29",
+    "isTutor": false
   }
 ]

@@ -29,7 +29,7 @@ const StudentSidebar = () => {
               end
             >
               <FaHome className="mr-3" />
-              <span>Home</span>
+              <span>Find Tutors</span>
             </NavLink>
           </li>
           <li>
@@ -39,7 +39,7 @@ const StudentSidebar = () => {
                 }`}
             >
               <FaCalendarAlt className="mr-3" />
-              <span>Calendar</span>
+              <span>My Calendar</span>
             </NavLink>
           </li>
           <li>
@@ -66,7 +66,7 @@ const StudentSidebar = () => {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t">
+      <div className="p-4 border-t-0">
         <p className="text-xs text-gray-500">© 2025 PeerSphere</p>
       </div>
     </div>

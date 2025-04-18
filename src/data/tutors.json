@@ -290,5 +290,151 @@
     "reviews": 22,
     "avatar": "https://i.pravatar.cc/150?img=44",
     "status": "Approved"
-  }
+  },
+  {
+    "id": 9,
+    "firstName": "Hassan",
+    "lastName": "Al-Nuaimi",
+    "gender": "Male",
+    "email": "hassan.alnuaimi@peersphere.ae",
+    "subjects": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Data Science"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-20",
+        "startTime": "11:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-22",
+        "startTime": "2:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-25",
+        "startTime": "4:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.9,
+    "hourlyRate": 180,
+    "bio": "Computer Science PhD candidate specializing in AI and data science with 5 years of teaching experience.",
+    "yearOfStudy": 6,
+    "totalSessions": 40,
+    "reviews": 35,
+    "avatar": "https://i.pravatar.cc/150?img=59",
+    "status": "Approved"
+  },
+  {
+    "id": 10,
+    "firstName": "Zainab",
+    "lastName": "Al-Qasimi",
+    "gender": "Female",
+    "email": "zainab.alqasimi@peersphere.ae",
+    "subjects": [
+      "English Literature",
+      "Creative Writing",
+      "Public Speaking"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-21",
+        "startTime": "10:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-23",
+        "startTime": "1:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-26",
+        "startTime": "3:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.8,
+    "hourlyRate": 140,
+    "bio": "English major with a passion for literature and helping students improve their writing and communication skills.",
+    "yearOfStudy": 4,
+    "totalSessions": 28,
+    "reviews": 20,
+    "avatar": "https://i.pravatar.cc/150?img=27",
+    "status": "Approved"
+  },
+  {
+    "id": 11,
+    "firstName": "Sara",
+    "lastName": "Al-Ketbi",
+    "gender": "Female",
+    "email": "sara.alketbi@peersphere.ae",
+    "subjects": [
+      "Environmental Science",
+      "Ecology"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-20",
+        "startTime": "10:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-22",
+        "startTime": "3:00 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-25",
+        "startTime": "1:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.7,
+    "hourlyRate": 125,
+    "bio": "Environmental Science graduate with a focus on sustainability and ecological research.",
+    "yearOfStudy": 4,
+    "totalSessions": 18,
+    "reviews": 14,
+    "avatar": "https://i.pravatar.cc/150?img=45",
+    "status": "Approved"
+  },
+  {
+    "id": 12,
+    "firstName": "Yousef",
+    "lastName": "Al-Hammadi",
+    "gender": "Male",
+    "email": "yousef.alhammadi@peersphere.ae",
+    "subjects": [
+      "History",
+      "Political Science"
+    ],
+    "availability": [
+      {
+        "date": "2025-04-21",
+        "startTime": "9:00 AM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-23",
+        "startTime": "2:30 PM",
+        "duration": 60
+      },
+      {
+        "date": "2025-04-26",
+        "startTime": "4:00 PM",
+        "duration": 60
+      }
+    ],
+    "rating": 4.6,
+    "hourlyRate": 115,
+    "bio": "History major with a deep understanding of political systems and historical events.",
+    "yearOfStudy": 3,
+    "totalSessions": 15,
+    "reviews": 10,
+    "avatar": "https://i.pravatar.cc/150?img=54",
+    "status": "Approved"
+    }
 ]

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { FaCalendarAlt, FaGraduationCap, FaArrowRight } from 'react-icons/fa';
+import { FaCalendarAlt, FaArrowRight, FaChalkboardTeacher, FaCalendarPlus } from 'react-icons/fa';
+import AccountStatusIndicator from '../shared/AccountStatusIndicator';
 
 const StudentRightbar = () => {
   const { currentUser } = useContext(AppContext);
@@ -17,33 +18,43 @@ const StudentRightbar = () => {
 
   return (
     <div className="h-full w-80 bg-transparent shadow-none flex flex-col p-4 overflow-auto">
-      {/* Profile Section */}
-      <div className="flex items-center mb-6">
-        <img
-          src={currentUser?.avatar || "https://i.pravatar.cc/150?img=4"}
-          alt="Profile"
-          className="w-12 h-12 rounded-full object-cover"
-        />
-        <div className="ml-3">
-          <h2 className="font-medium">Welcome, {currentUser?.firstName || 'Student'}</h2>
-          <p className="text-sm text-gray-500">Year {currentUser?.yearOfStudy || '1'}</p>
+      {/* Profile Section with Account Status */}
+      <div className="flex flex-col mb-6 mt-3.5">
+        <div className="flex items-center">
+          <img
+            src={currentUser?.avatar || "https://i.pravatar.cc/150?img=4"}
+            alt="Profile"
+            className="w-12 h-12 rounded-full object-cover"
+          />
+          <div className="ml-3 flex-grow space-y-1">
+            <h2 className="font-medium pl-1">{currentUser?.firstName || 'Student'} {currentUser?.lastName || ''} </h2>
+            <div className="flex items-end justify-between mt-0.5">
+              <AccountStatusIndicator />
+              {/* <p className="text-sm text-gray-500">Year {currentUser?.yearOfStudy || '1'}</p> */}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="mb-6">
+      <div className="mb-6 space-y-2.5">
         <Link
           to="/student/book"
-          className="block w-full bg-primary-600 text-white rounded-lg py-3 px-4 font-medium text-center mb-3 hover:bg-primary-700 transition"
+          className="flex items-center justify-center w-full bg-primary-600 text-white rounded-lg py-3 px-4 font-medium text-center mb-3 hover:bg-primary-700 transition"
         >
-          Book a Session
+          <FaCalendarPlus className="mr-2" />
+          <span className="">
+            Book a Session
+          </span>
         </Link>
-
         <Link
           to="/student/apply-tutor"
-          className="block w-full bg-white border border-primary-600 text-primary-600 rounded-lg py-3 px-4 font-medium text-center hover:bg-primary-50 transition"
+          className="flex items-center justify-center w-full bg-white border border-primary-600 text-primary-600 rounded-lg py-3 px-4 font-medium text-center hover:bg-neutral-100 transition"
         >
-          Become a Tutor
+          <FaChalkboardTeacher className="mr-2" />
+          <span className="">
+            Become a Tutor
+          </span>
         </Link>
       </div>
 
@@ -57,17 +68,17 @@ const StudentRightbar = () => {
         {upcomingSessions.length > 0 ? (
           <div className="space-y-3">
             {upcomingSessions.map(session => (
-              <div key={session.id} className="bg-gray-50 rounded-lg p-3">
+              <div key={session.id} className="bg-primary-100/50 rounded-lg p-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h4 className="font-medium">{session.subject}</h4>
+                    <h4 className="font-medium mb-1.5">{session.subject}</h4>
                     <p className="text-sm text-gray-600">{session.date}, {session.startTime}</p>
                   </div>
                 </div>
               </div>
             ))}
 
-            <Link to="/student/sessions" className="text-sm text-primary-600 flex items-center">
+            <Link to="/student/sessions" className="text-sm text-primary-600 font-medium flex items-center">
               View all sessions
               <FaArrowRight className="ml-1 text-xs" />
             </Link>
@@ -84,7 +95,7 @@ const StudentRightbar = () => {
           Calendar
         </h3>
 
-        <div className="bg-gray-50 p-3 rounded-lg">
+        <div className="bg-primary-50/55 p-3 rounded-lg">
           <div className="text-center mb-2">
             <p className="font-medium">April 2025</p>
           </div>
@@ -144,4 +155,3 @@ const StudentRightbar = () => {
 };
 
 export default StudentRightbar;
-

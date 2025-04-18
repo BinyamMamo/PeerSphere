@@ -50,6 +50,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
