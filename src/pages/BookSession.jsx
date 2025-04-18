@@ -117,7 +117,7 @@ const BookSession = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto my-8 px-4">
+    <div className=" mx-auto my-8 px-4">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="p-6 sm:p-8">
           <h3 className="text-2xl font-semibold mb-6 text-gray-800">Book a Tutoring Session</h3>

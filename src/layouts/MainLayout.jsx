@@ -20,13 +20,13 @@ const MainLayout = () => {
         return (
           <>
             <StudentSidebar />
-            <div className="w-3/4 overflow-auto p-4">
+            <div className="w-full mr-4 overflow-auto p-4">
               <div className="mb-4">
                 <RoleToggle />
               </div>
               <Outlet />
             </div>
-            <StudentRightbar />
+            {/* <StudentRightbar /> */}
           </>
         );
       case 'tutor':
@@ -65,7 +65,7 @@ const MainLayout = () => {
               </div>
               <Outlet />
             </div>
-            <StudentRightbar />
+            {/* <StudentRightbar /> */}
           </>
         );
     }

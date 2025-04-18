@@ -16,7 +16,7 @@ const RoleToggle = () => {
         onClick={() => switchRole('student')}
       >
         <FaUserGraduate />
-        <span>Student</span>
+        {/* <span>Student</span> */}
       </button>
 
       {(currentUser?.isTutor || userRole === 'tutor') && (
@@ -26,7 +26,7 @@ const RoleToggle = () => {
           onClick={() => switchRole('tutor')}
         >
           <FaChalkboardTeacher />
-          <span>Tutor</span>
+          {/* <span>Tutor</span> */}
         </button>
       )}
 
@@ -37,7 +37,7 @@ const RoleToggle = () => {
         onClick={() => switchRole('admin')}
       >
         <FaUserCog />
-        <span>Admin</span>
+        {/* <span>Admin</span> */}
       </button>
     </div>
   );

@@ -155,7 +155,7 @@ const TutorDashboard = () => {
             to="/tutor/calendar"
             className="block p-4 border rounded-lg hover:border-secondary-400 hover:bg-secondary-50"
           >
-            <div className="flex">
+            <div className="flex items-center">
               <div className="p-2 rounded-md bg-secondary-100 text-secondary-800">
                 <FaCalendarAlt />
               </div>
@@ -170,7 +170,7 @@ const TutorDashboard = () => {
             to="/tutor/sessions"
             className="block p-4 border rounded-lg hover:border-secondary-400 hover:bg-secondary-50"
           >
-            <div className="flex">
+            <div className="flex items-center">
               <div className="p-2 rounded-md bg-secondary-100 text-secondary-800">
                 <FaClock />
               </div>
@@ -185,7 +185,7 @@ const TutorDashboard = () => {
             to="/tutor/transactions"
             className="block p-4 border rounded-lg hover:border-secondary-400 hover:bg-secondary-50"
           >
-            <div className="flex">
+            <div className="flex items-center">
               <div className="p-2 rounded-md bg-secondary-100 text-secondary-800">
                 <FaMoneyBillWave />
               </div>

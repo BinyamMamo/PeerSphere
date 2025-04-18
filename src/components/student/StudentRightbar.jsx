@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-import { FaCalendarAlt, FaArrowRight, FaChalkboardTeacher, FaCalendarPlus } from 'react-icons/fa';
+import { FaCalendarAlt, FaArrowRight, FaChalkboardTeacher, FaCalendarPlus, FaCaretUp } from 'react-icons/fa';
 import AccountStatusIndicator from '../shared/AccountStatusIndicator';
+import { MdOpenInFull, MdOpenInNew, MdOutlineOpenInBrowser, MdOutlineReadMore } from 'react-icons/md';
+import { IoExpandSharp } from 'react-icons/io5';
+import { AiOutlineExpandAlt } from 'react-icons/ai';
+import { RiExpandLeftFill, RiExpandRightLine } from 'react-icons/ri';
 
 const StudentRightbar = () => {
   const { currentUser } = useContext(AppContext);
@@ -60,15 +64,22 @@ const StudentRightbar = () => {
 
       {/* Upcoming Sessions */}
       <div className="mb-6">
-        <h3 className="font-medium mb-2 flex items-center">
+        <div className='flex mb-2 items-center justify-between'>
+          <Link to="/student/sessions" className="font-medium flex items-center">
           <FaCalendarAlt className="mr-2 text-primary-600" />
           Upcoming Sessions
-        </h3>
+          </Link>
+          <Link to="/student/sessions" className="text-xs text-primary-600 font-medium flex items-center">
+            {/* View all sessions */}
+            {/* View all */}
+            <RiExpandRightLine className="ml-1 text-sm active:animate-ping" />
+          </Link>
+        </div>
 
         {upcomingSessions.length > 0 ? (
           <div className="space-y-3">
             {upcomingSessions.map(session => (
-              <div key={session.id} className="bg-primary-100/50 rounded-lg p-3">
+              <div key={session.id} className="bg-primary-100/45 rounded-lg p-3">
                 <div className="flex justify-between items-start">
                   <div>
                     <h4 className="font-medium mb-1.5">{session.subject}</h4>
@@ -77,11 +88,6 @@ const StudentRightbar = () => {
                 </div>
               </div>
             ))}
-
-            <Link to="/student/sessions" className="text-sm text-primary-600 font-medium flex items-center">
-              View all sessions
-              <FaArrowRight className="ml-1 text-xs" />
-            </Link>
           </div>
         ) : (
           <p className="text-sm text-gray-500">No upcoming sessions</p>
@@ -90,10 +96,15 @@ const StudentRightbar = () => {
 
       {/* Mini Calendar */}
       <div>
-        <h3 className="font-medium mb-2 flex items-center">
+        <div className='flex mb-2 items-center justify-between'>
+          <h3 className="font-medium flex items-center">
           <FaCalendarAlt className="mr-2 text-primary-600" />
           Calendar
         </h3>
+          <Link to="/student/calendar" className="text-xs text-primary-600 font-medium flex items-center">
+            <RiExpandRightLine className="ml-1 text-sm active:animate-ping" />
+          </Link>
+        </div>
 
         <div className="bg-primary-50/55 p-3 rounded-lg">
           <div className="text-center mb-2">

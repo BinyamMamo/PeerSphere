@@ -7,7 +7,8 @@ import {
   FaFileAlt,
   FaVenusMars // More appropriate icon for Gender
 } from 'react-icons/fa';
-import { BiBookAdd, BiSolidBookAdd } from 'react-icons/bi';
+import { BiBookAdd, BiSolidAddToQueue, BiSolidBookAdd } from 'react-icons/bi';
+import { RiAddLine, RiMenuAddFill } from 'react-icons/ri';
 
 const TutorApplication = ({ onSubmit, loading = false }) => {
   const [formData, setFormData] = useState({
@@ -130,9 +131,11 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
 
           {/* Subjects Section */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center text-sm font-medium text-gray-700 mb-2.5">
               <FaBook className="inline mr-2 text-gray-500" />
+              <span>
               Subjects you can teach <span className="text-red-500">*</span>
+              </span>
             </label>
             <div className="flex flex-wrap gap-2 mb-4"> {/* Increased bottom margin */}
               {subjectOptions.map((subject) => (
@@ -140,7 +143,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
                   key={subject}
                   type="button"
                   onClick={() => handleSubjectToggle(subject)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${formData.subjects.includes(subject)
+                  className={`px-3.5 leading-none py-2 rounded-2xl text-sm font-medium transition-all duration-200 border ${formData.subjects.includes(subject)
                     ? 'bg-primary-600 text-white border-primary-700 shadow-sm hover:bg-primary-700'
                     : 'bg-gray-100 text-gray-800 border-gray-300 hover:bg-gray-200 hover:border-gray-400'
                     }`}
@@ -170,10 +173,12 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
                 onClick={handleAddCustomSubject}
                 disabled={!customSubject.trim()}
                 // Improved Button Styling
-                className="inline-flex items-center px-5 py-3 bg-primary-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-primary-700 active:bg-primary-800 focus:outline-none focus:border-primary-900 focus:ring focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition ease-in-out duration-150 shadow-sm"
+                className="inline-flex items-center gap-1.5 px-5 py-3 bg-primary-600 border border-transparent rounded-md text-xs text-white uppercase tracking-widest hover:bg-primary-700 active:bg-primary-800 focus:outline-none focus:border-primary-900 focus:ring focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition ease-in-out duration-150 shadow-sm"
               >
-                <BiSolidBookAdd className="-ml-1 mr-1 text-sm" /> {/* Added Icon */}
+                <RiMenuAddFill className="text-xs" /> {/* Added Icon */}
+                <span>
                 Add
+                </span>
               </button>
             </div>
             {/* --- End Improved Section --- */}
@@ -188,15 +193,15 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
                 <p className="text-xs font-medium text-gray-600 uppercase tracking-wider">Selected:</p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.subjects.map((subject) => (
-                    <span key={subject} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 border border-primary-200">
+                    <span key={subject} className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800 border border-primary-200">
                       {subject}
                       <button
                         type="button"
                         onClick={() => handleSubjectToggle(subject)}
-                        className="ml-1.5 flex-shrink-0 text-primary-500 hover:text-primary-700 focus:outline-none focus:text-primary-800"
+                        className="ml-2 flex-shrink-0 text-primary-600 hover:text-primary-700 focus:outline-none focus:text-primary-800"
                         aria-label={`Remove ${subject}`}
                       >
-                        <svg className="h-3 w-3" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                        <svg className="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
                           <path strokeLinecap="round" strokeWidth="1.5" d="M1 1l6 6m0-6L1 7" />
                         </svg>
                       </button>
@@ -209,9 +214,11 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
 
           {/* Bio Section */}
           <div>
-            <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="bio" className="flex items-center text-sm mb-2 font-medium text-gray-700">
               <FaUser className="inline mr-2 text-gray-500" />
+              <span>
               Short Bio <span className="text-red-500">*</span>
+              </span>
             </label>
             <textarea
               id="bio"
@@ -232,7 +239,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Academic Year */}
             <div>
-              <label htmlFor="academicYear" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="academicYear" className="flex items-center text-sm mb-2 font-medium text-gray-700">
                 {/* <FaGraduationCap className="inline mr-2 text-gray-500" /> */}
                 Academic Year <span className="text-red-500">*</span>
               </label>
@@ -264,7 +271,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
 
             {/* Gender Dropdown */}
             <div>
-              <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="gender" className="flex items-center text-sm mb-2 font-medium text-gray-700">
                 {/* Changed Icon */}
                 {/* <FaVenusMars className="inline mr-2 text-gray-500" /> */}
                 Gender <span className="text-red-500">*</span>
@@ -297,7 +304,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
 
           {/* Academic Standing */}
           <div>
-            <label htmlFor="academicStanding" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="academicStanding" className="flex items-center text-sm mb-2 font-medium text-gray-700">
               {/* <FaGraduationCap className="inline mr-2 text-gray-500" /> */}
               Academic Standing <span className="text-red-500">*</span>
             </label>
@@ -323,9 +330,11 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
 
           {/* Cover Letter */}
           <div>
-            <label htmlFor="coverLetter" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="coverLetter" className="flex items-center text-sm mb-2 font-medium text-gray-700">
               <FaFileAlt className="inline mr-2 text-gray-500" />
+              <span>
               Cover Letter <span className="text-red-500">*</span>
+              </span>
             </label>
             <textarea
               id="coverLetter"
@@ -344,9 +353,11 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
 
           {/* Resume Upload */}
           <div>
-            <label htmlFor="resume" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="resume" className="flex items-center text-sm mb-2.5 font-medium text-gray-700">
               <FaFileAlt className="inline mr-2 text-gray-500" />
+              <span>
               Upload Resume (Optional)
+              </span>
             </label>
             <div className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 ${errors.resume ? 'border-red-400' : 'border-gray-300'} border-dashed rounded-md hover:border-primary-400 transition-colors duration-200`}>
               <div className="space-y-1 text-center">
@@ -355,7 +366,7 @@ const TutorApplication = ({ onSubmit, loading = false }) => {
                 <div className="flex text-sm text-gray-600 justify-center">
                   <label
                     htmlFor="file-upload"
-                    className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+                    className="relative cursor-pointer bg-white font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none"
                   >
                     <span>Upload a file</span>
                     <input

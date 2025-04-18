@@ -8,8 +8,10 @@ import {
   FaTimes,
   FaFileAlt,
   FaGraduationCap,
-  FaMoneyBillWave,
-  FaBook
+  FaBook,
+  FaSortUp,
+  FaSortDown,
+  FaSort
 } from 'react-icons/fa';
 
 const AdminApplications = () => {
@@ -17,6 +19,7 @@ const AdminApplications = () => {
   const [activeTab, setActiveTab] = useState('pending'); // 'pending', 'approved', 'rejected', 'all'
   const [searchQuery, setSearchQuery] = useState('');
   const [viewApplication, setViewApplication] = useState(null);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
   // Filter applications based on active tab and search query
   const filteredApplications = applications.filter(application => {
@@ -38,6 +41,50 @@ const AdminApplications = () => {
 
     return true;
   });
+
+  // Sort applications
+  const sortedApplications = [...filteredApplications].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+
+    let aValue = sortConfig.key === 'academicStanding'
+      ? parseFloat(a[sortConfig.key].replace('GPA: ', ''))
+      : a[sortConfig.key];
+    let bValue = sortConfig.key === 'academicStanding'
+      ? parseFloat(b[sortConfig.key].replace('GPA: ', ''))
+      : b[sortConfig.key];
+
+    if (sortConfig.key === 'dateApplied') {
+      aValue = new Date(aValue);
+      bValue = new Date(bValue);
+    }
+
+    if (aValue < bValue) {
+      return sortConfig.direction === 'ascending' ? -1 : 1;
+    }
+    if (aValue > bValue) {
+      return sortConfig.direction === 'ascending' ? 1 : -1;
+    }
+    return 0;
+  });
+
+  // Handle sort
+  const handleSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  // Get sort icon
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) {
+      return <FaSort className="inline ml-1" />;
+    }
+    return sortConfig.direction === 'ascending' ?
+      <FaSortUp className="inline ml-1" /> :
+      <FaSortDown className="inline ml-1" />;
+  };
 
   // Get student info by ID
   const getStudentInfo = (studentId) => {
@@ -72,11 +119,14 @@ const AdminApplications = () => {
 
   // Handle application rejection
   const handleReject = (applicationId) => {
-    updateApplicationStatus(applicationId, 'Rejected');
+    // Confirm rejection with user
+    if (window.confirm('Are you sure you want to reject this application?')) {
+      updateApplicationStatus(applicationId, 'Rejected');
 
-    // Close modal if open
-    if (viewApplication?.id === applicationId) {
-      setViewApplication(null);
+      // Close modal if open
+      if (viewApplication?.id === applicationId) {
+        setViewApplication(null);
+      }
     }
   };
 
@@ -91,9 +141,15 @@ const AdminApplications = () => {
 
       {/* Search & Filters */}
       <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="flex flex-wrap items-center mb-4">
-          <div className="flex items-center mr-4 w-full md:w-auto mb-2 md:mb-0">
-            <div className="relative flex-grow">
+        <div className="flex flex-wrap items-center">
+          <div className='w-full flex items-center justify-between'>
+            <div className="flex space-x-2">
+              <Tab id="pending" label="Pending" count={pendingCount} />
+              <Tab id="approved" label="Approved" count={approvedCount} />
+              <Tab id="rejected" label="Rejected" count={rejectedCount} />
+              <Tab id="all" label="All" count={applications.length} />
+            </div>
+            <div className="relative">
               <input
                 type="text"
                 className="pl-10 pr-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-accent-500 focus:border-accent-500"
@@ -106,37 +162,38 @@ const AdminApplications = () => {
               </div>
             </div>
           </div>
-
-          <div className="flex items-center">
-            <FaFilter className="text-accent-600 mr-2" />
-            <h2 className="font-medium">Status Filter</h2>
-          </div>
-        </div>
-
-        <div className="flex space-x-2">
-          <Tab id="pending" label="Pending" count={pendingCount} />
-          <Tab id="approved" label="Approved" count={approvedCount} />
-          <Tab id="rejected" label="Rejected" count={rejectedCount} />
-          <Tab id="all" label="All" count={applications.length} />
         </div>
       </div>
 
       {/* Applications List */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        {filteredApplications.length > 0 ? (
+        {sortedApplications.length > 0 ? (
           <>
             {/* Table Header */}
             <div className="grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 font-medium text-sm text-gray-600">
               <div className="col-span-3">Applicant</div>
               <div className="col-span-3">Subjects</div>
-              <div className="col-span-2">Proposed Rate</div>
-              <div className="col-span-2">Date Applied</div>
+              <div
+                className="col-span-2 cursor-pointer flex items-baseline"
+                onClick={() => handleSort('academicStanding')}
+              >
+                <span>
+                  Grade
+                </span>
+                {getSortIcon('academicStanding')}
+              </div>
+              <div
+                className="col-span-2 cursor-pointer"
+                onClick={() => handleSort('dateApplied')}
+              >
+                Date Applied {getSortIcon('dateApplied')}
+              </div>
               <div className="col-span-2 text-right">Actions</div>
             </div>
 
             {/* Table Body */}
             <div className="divide-y">
-              {filteredApplications.map(application => {
+              {sortedApplications.map(application => {
                 const student = getStudentInfo(application.studentId);
 
                 return (
@@ -170,8 +227,7 @@ const AdminApplications = () => {
                     </div>
 
                     <div className="col-span-2">
-                      <span className="font-medium">{application.proposedRate} AED</span>
-                      <span className="text-xs text-gray-500">/hour</span>
+                      <span className="text-sm">{application.academicStanding}</span>
                     </div>
 
                     <div className="col-span-2 text-sm text-gray-600">
@@ -243,7 +299,7 @@ const AdminApplications = () => {
                 onClick={() => setViewApplication(null)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                &times;
+                ×
               </button>
             </div>
 
@@ -298,12 +354,17 @@ const AdminApplications = () => {
 
               <div>
                 <h4 className="font-medium flex items-center mb-2">
-                  <FaMoneyBillWave className="text-accent-600 mr-2" />
-                  Proposed Rate
+                  <FaFileAlt className="text-accent-600 mr-2" />
+                  Resume
                 </h4>
-                <p className="text-2xl font-bold text-gray-800">
-                  {viewApplication.proposedRate} <span className="text-sm font-normal text-gray-500">AED/hour</span>
-                </p>
+                <a
+                  href={viewApplication.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent-600 hover:underline"
+                >
+                  View Resume (PDF)
+                </a>
               </div>
             </div>
 

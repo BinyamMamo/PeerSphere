@@ -104,7 +104,7 @@ const StudentHome = () => {
         <div className="relative flex-grow">
           <input
             type="text"
-            className="w-full pl-10 pr-4 py-2 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="w-full pl-10 pr-4 py-2 rounded-lg bg-neutral-100 border focus:outline-none placeholder:text-neutral-500 placeholder:scale-90 placeholder:origin-left focus:placeholder:scale-100 placeholder:transition ease-in-out focus:ring-1 focus:ring-primary-500"
             placeholder="Search by name or subject..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -123,7 +123,7 @@ const StudentHome = () => {
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`p-2 rounded-lg shadow-sm ${showFilters ? 'bg-primary-100 text-primary-700' : 'bg-white text-gray-600'}`}
+          className={`p-3 border rounded-lg ${showFilters ? 'text-primary-700/75 ring-1 bg-neutral-100' : 'bg-neutral-100 text-neutral-600'}`}
         >
           <FaFilter />
         </button>

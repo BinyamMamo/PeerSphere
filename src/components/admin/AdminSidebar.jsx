@@ -13,15 +13,15 @@ const AdminSidebar = () => {
   return (
     <div className="h-full w-64 flex flex-col">
       {/* Logo */}
-      <div className="p-4 py-2 border-b pb-4">
+      <div className="p-4 py-2 border-b">
         <div className="flex items-center border-0 border-neutral-700"> {/* Changed yellow to neutral */}
           <img src="/peersphere.png" className='h-16 p-3.5 pl-0' alt="" />
           <Link to="/" className="font-bold text-xl text-neutral-600">PeerSphere</Link>
         </div>
-        <div className="mt-2 flex items-center px-2 py-1 rounded-md bg-accent-100 text-accent-800 text-xs font-medium">
+        {/* <div className="mt-2 mb-2 flex items-center px-2 py-1 rounded-md bg-accent-100 text-accent-800 text-xs font-medium">
           <span className='flex-grow'>Admin Mode</span>
           <MdOutlineAdminPanelSettings className='text-accent-800 rounded-md ' />
-        </div>
+        </div> */}
       </div>
 
       {/* Navigation Links */}

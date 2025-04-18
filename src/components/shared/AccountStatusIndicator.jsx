@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { AppContext } from '../../context/AppContext';
-import { FaUserGraduate, FaChalkboardTeacher, FaCaretDown } from 'react-icons/fa';
+import { FaUserGraduate, FaChalkboardTeacher, FaCaretDown, FaCaretUp } from 'react-icons/fa';
 
 const AccountStatusIndicator = () => {
   const { userRole, switchRole, currentUser } = useContext(AppContext);
@@ -26,9 +26,10 @@ const AccountStatusIndicator = () => {
 
   // Handle role switch
   const handleRoleSwitch = (role) => {
-    if (role === 'tutor' && !canSwitchToTutor) return;
+    // if (role === 'tutor' && !canSwitchToTutor) return;
     if (userRole !== role) {
       switchRole(role);
+      localStorage.setItem('userRole', role);
     }
     setDropdownOpen(false);
   };
@@ -50,11 +51,11 @@ const AccountStatusIndicator = () => {
             <span>Tutor</span>
           </>
         )}
-        <FaCaretDown className="ml-1.5" size={10} />
+        <FaCaretUp className="ml-1.5" size={10} />
       </button>
 
       {dropdownOpen && (
-        <div className="absolute right-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10 w-24">
+        <div className="absolute bottom-0 right-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10 w-24">
           <button
             className={`w-full text-left px-3 py-1.5 text-xs flex items-center ${userRole === 'student'
               ? 'text-primary-700 font-medium'
@@ -67,13 +68,14 @@ const AccountStatusIndicator = () => {
           </button>
 
           <button
-            className={`w-full text-left px-3 py-1.5 text-xs flex items-center ${!canSwitchToTutor
-              ? 'text-gray-400 cursor-not-allowed'
-              : userRole === 'tutor'
+            // className={`w-full text-left px-3 py-1.5 text-xs flex items-center ${!canSwitchToTutor
+            //   ? 'text-gray-400 cursor-not-allowed'
+            className={`w-full text-left px-3 py-1.5 text-xs flex items-center ${userRole === 'tutor'
                 ? 'text-secondary-700 font-medium'
                 : 'text-gray-700 hover:bg-gray-100'
               }`}
-            onClick={() => canSwitchToTutor && handleRoleSwitch('tutor')}
+            // onClick={() => canSwitchToTutor && handleRoleSwitch('tutor')}
+            onClick={() => { localStorage.setItem('userRole', 'tutor'); location.href = '/tutor' }}
           >
             <FaChalkboardTeacher className="mr-2" size={10} />
             Tutor

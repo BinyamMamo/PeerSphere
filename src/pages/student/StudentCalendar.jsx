@@ -922,7 +922,7 @@ const StudentCalendar = () => {
             <button
               onClick={() => setCalendarView('month')}
               className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'month'
-                ? 'text-primary-600 ring font-bold ring-primary-600/5'
+                ? 'text-primary-900 ring font-bold ring-primary-600/5'
                 : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
@@ -934,7 +934,7 @@ const StudentCalendar = () => {
             <button
               onClick={() => setCalendarView('week')}
               className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'week'
-                ? 'text-primary-600 ring font-bold ring-primary-600/5'
+                ? 'text-primary-900 ring font-bold ring-primary-600/5'
                 : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
@@ -946,7 +946,7 @@ const StudentCalendar = () => {
             <button
               onClick={() => setCalendarView('day')}
               className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'day'
-                ? 'text-primary-600 ring font-bold ring-primary-600/5'
+                ? 'text-primary-900 ring font-bold ring-primary-600/5'
                 : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
