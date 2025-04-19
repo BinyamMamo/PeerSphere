@@ -6,7 +6,7 @@ const SessionRoom = () => {
   const { tutorId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { formData } = location.state || { formData: {} };
+  const { formData = {}, tutor: tutorData } = location.state || { formData: {}, tutor: null };
 
   // State for session controls
   const [isMicOn, setIsMicOn] = useState(true);
@@ -30,9 +30,9 @@ const SessionRoom = () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
         setTutor({
           id: parseInt(tutorId),
-          name: "Jane Doe",
-          subject: formData.subject || "Mathematics",
-          avatar: "/api/placeholder/100/100",
+          name: tutorData ? `${tutorData.firstName} ${tutorData.lastName}` : 'Unknown Tutor',
+          subject: formData.subject || 'General',
+          avatar: tutorData?.avatar || 'https://i.pravatar.cc/150?img=1',
         });
       } catch (error) {
         console.error('Error fetching tutor:', error);
@@ -41,7 +41,7 @@ const SessionRoom = () => {
       }
     };
     fetchTutor();
-  }, [tutorId, formData.subject]);
+  }, [tutorId, formData.subject, tutorData]);
 
   // Session timer
   useEffect(() => {
@@ -216,7 +216,7 @@ const SessionRoom = () => {
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
             <FiBook className="mr-2" />
-            <span className="font-medium">{formData.subject || 'Tutoring Session'}</span>
+            <span className="font-medium">{tutor.subject}</span>
           </div>
           <div className="flex items-center">
             <FiUsers className="mr-2" />
@@ -244,11 +244,28 @@ const SessionRoom = () => {
           {/* Tutor Video */}
           <div className="h-full w-full flex items-center justify-center">
             {isVideoOn ? (
-              <img
-                src="/api/placeholder/800/600"
-                alt="Tutor video placeholder"
-                className="max-h-full max-w-full"
-              />
+              loading ? (
+                <div className="text-white text-center">
+                  <svg className="animate-spin h-10 w-10 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <p>Loading tutor video...</p>
+                </div>
+              ) : (
+                <div className="text-white text-center">
+                  <svg className="animate-spin h-10 w-10 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <p>Loading tutor video...</p>
+                </div>
+                // <img
+                //   src="/api/placeholder/800/600"
+                //   alt="Tutor video placeholder"
+                //   className="max-h-full max-w-full"
+                // />
+              )
             ) : (
               <div className="text-white text-center">
                 <svg className="mx-auto h-20 w-20 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -261,13 +278,23 @@ const SessionRoom = () => {
 
           {/* Student Video (Webcam Preview) */}
           <div className="absolute bottom-4 right-4 w-1/4 h-1/4 bg-gray-800 border-2 border-gray-700 rounded-lg overflow-hidden">
-            {isVideoOn && stream ? (
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                className="w-full h-full object-cover"
-              />
+            {isVideoOn ? (
+              stream ? (
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-white">
+                  <svg className="animate-spin h-8 w-8 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <p className="text-sm">Loading webcam...</p>
+                </div>
+              )
             ) : (
               <div className="w-full h-full flex items-center justify-center text-white">
                 <svg className="h-10 w-10 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

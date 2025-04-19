@@ -1,20 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
 import {
   FaEdit,
   FaStar,
   FaGraduationCap,
   FaCalendarAlt,
-  FaMoneyBillWave,
+  FaMoneyBillWave, 
   FaChalkboardTeacher,
   FaUserGraduate,
   FaCheck,
-  FaClipboardList
+  FaClipboardList,
+  FaPlus,
+  FaTimes
 } from 'react-icons/fa';
 import AccountStatusIndicator from '../shared/AccountStatusIndicator';
 
 const TutorRightbar = () => {
   const { currentUser, tutors, sessions } = useContext(AppContext);
+  const [showBioEditor, setShowBioEditor] = useState(false);
+  const [bioText, setBioText] = useState("");
+  const [showSubjectModal, setShowSubjectModal] = useState(false);
+  const [newSubject, setNewSubject] = useState("");
 
   // Find tutor data (assuming currentUser has the same ID as a tutor)
   const tutorData = tutors?.find(tutor =>
@@ -35,6 +41,26 @@ const TutorRightbar = () => {
   const pendingEarnings = tutorData.pendingEarnings || 0;
   const completedSessions = tutorData.totalSessions || 0;
 
+  // Initialize bio on component mount
+  React.useEffect(() => {
+    setBioText(tutorData.bio || "Experienced tutor helping students master complex subjects through personalized learning approaches.");
+  }, [tutorData.bio]);
+
+  // Handle bio update
+  const handleBioSave = () => {
+    // In a real app, would save to backend
+    setShowBioEditor(false);
+  };
+
+  // Handle subject add
+  const handleAddSubject = () => {
+    if (newSubject.trim()) {
+      // In a real app, would save to backend
+      setNewSubject("");
+      setShowSubjectModal(false);
+    }
+  };
+
   return (
     <div className="h-full w-80 bg-transparent shadow-none flex flex-col p-4 overflow-auto">
       {/* Profile Stats Card */}
@@ -48,16 +74,13 @@ const TutorRightbar = () => {
           <div className="ml-3 flex-grow">
             <div className="flex items-center justify-between">
               <h2 className="font-medium">Welcome, {currentUser?.firstName || 'Tutor'}</h2>
-              {/* <button className="text-gray-500 hover:text-secondary-600">
-                <FaEdit size={14} />
-              </button> */}
             </div>
-            <div className="flex items-center justify-between mt-0.5">
+            <div className="flex items-center justify-between mt-1">
               <div className="flex items-center">
                 <FaStar className="text-yellow-500 mr-1" size={12} />
                 <span className="text-sm text-gray-600">{tutorData.rating?.toFixed(1) || '4.5'}</span>
               </div>
-              {/* <AccountStatusIndicator /> */}
+              <div className="bg-green-100 px-1.5 py-0.5 rounded text-xs text-green-700">Top Tutor</div>
             </div>
           </div>
         </div>
@@ -75,7 +98,7 @@ const TutorRightbar = () => {
             <p className="font-semibold text-secondary-700">{completedSessions}</p>
           </div>
         </div>
-        <div className=" border-gray-100 px-3 py-2">
+        <div className="px-3 py-2">
           <div className="flex justify-between items-center text-xs">
             <span className="text-gray-500">Pending earnings</span>
             <span className="font-medium text-secondary-600">{pendingEarnings} AED</span>
@@ -121,7 +144,12 @@ const TutorRightbar = () => {
             <FaChalkboardTeacher className="text-secondary-600 mr-2" size={14} />
             <h3 className="text-sm font-medium text-gray-700">My Subjects</h3>
           </div>
-          <button className="text-xs text-secondary-600">Edit</button>
+          <button
+            className="text-xs text-secondary-600"
+            onClick={() => setShowSubjectModal(true)}
+          >
+            Add Subject
+          </button>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -135,6 +163,36 @@ const TutorRightbar = () => {
               </div>
             )}
         </div>
+
+        {/* Subject Modal */}
+        {showSubjectModal && (
+          <div className="mt-3 p-3 border border-secondary-100 rounded-lg">
+            <div className="flex justify-between items-center mb-2">
+              <h4 className="text-sm font-medium">Add New Subject</h4>
+              <button
+                onClick={() => setShowSubjectModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <FaTimes size={14} />
+              </button>
+            </div>
+            <div className="flex">
+              <input
+                type="text"
+                value={newSubject}
+                onChange={(e) => setNewSubject(e.target.value)}
+                placeholder="Enter subject name"
+                className="flex-grow p-2 text-sm border border-gray-200 rounded-l focus:outline-none focus:ring-1 focus:ring-secondary-300"
+              />
+              <button
+                onClick={handleAddSubject}
+                className="bg-secondary-600 text-white px-3 rounded-r hover:bg-secondary-700"
+              >
+                <FaPlus size={12} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Availability Summary */}
@@ -167,6 +225,40 @@ const TutorRightbar = () => {
           <div className="bg-secondary-50/25 rounded-lg p-3 text-sm text-gray-500">
             No availability set
           </div>
+        )}
+      </div>
+
+      {/* Bio */}
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-sm font-medium text-gray-700">Bio</h3>
+          <button
+            className="text-xs text-secondary-600"
+            onClick={() => setShowBioEditor(!showBioEditor)}
+          >
+            {showBioEditor ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
+
+        {showBioEditor ? (
+          <div>
+            <textarea
+              value={bioText}
+              onChange={(e) => setBioText(e.target.value)}
+              className="w-full p-2 text-sm border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-secondary-300"
+              rows={4}
+            />
+            <button
+              onClick={handleBioSave}
+              className="mt-2 bg-secondary-600 text-white px-3 py-1 rounded text-xs hover:bg-secondary-700"
+            >
+              Save Changes
+            </button>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-800">
+            {bioText}
+          </p>
         )}
       </div>
 
