@@ -15,7 +15,7 @@
     "studentId": 1,
     "subjects": ["Physics I"],
     "proposedRate": 120,
-    "status": "Pending",
+    "status": "Approved",
     "dateApplied": "2025-04-16",
     "resume": "resume_link.pdf",
     "coverLetter": "I'm passionate about physics and want to help first-year students understand the fundamental concepts.",

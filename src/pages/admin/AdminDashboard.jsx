@@ -10,6 +10,8 @@ import {
   FaChartBar,
   FaExpand,
   FaTimes,
+  FaTrophy,
+  FaGraduationCap,
 } from 'react-icons/fa';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import {
@@ -92,6 +94,13 @@ const sampleData = {
     { location: 'Sharjah', count: 200 },
     { location: 'Ajman', count: 100 },
   ],
+  tutorPerformance: [
+    { id: 1, name: 'John Doe', rating: 4.8, sessions: 50 },
+    { id: 2, name: 'Jane Smith', rating: 4.6, sessions: 45 },
+    { id: 3, name: 'Mike Brown', rating: 4.9, sessions: 60 },
+    { id: 4, name: 'Sara Lee', rating: 4.7, sessions: 40 },
+    { id: 5, name: 'Alex Kim', rating: 4.5, sessions: 35 },
+  ],
 };
 
 // --- Full-Screen Chart Modal Component ---
@@ -148,8 +157,8 @@ const AdminDashboard = () => {
 
   const sessionsPerWeekData = filterDataByPeriod(data.sessionsPerWeek, timePeriod);
   const revenueByMonthData = filterDataByPeriod(data.revenueByMonth, timePeriod);
-  const subjectPopularityData = data.subjectPopularity || [];
   const sessionsByLocationData = data.sessionsByLocation || [];
+  const tutorPerformanceData = data.tutorPerformance || [];
 
   // Calculate key metrics
   const totalStudents = students.length;
@@ -224,26 +233,6 @@ const AdminDashboard = () => {
     ],
   };
 
-  // Popular Subjects (Bar Chart, top 5)
-  const popularSubjectsChartData = {
-    labels: subjectPopularityData
-      .sort((a, b) => b.sessions - a.sessions)
-      .slice(0, 5)
-      .map(item => item.subject),
-    datasets: [
-      {
-        label: 'Sessions',
-        data: subjectPopularityData
-          .sort((a, b) => b.sessions - a.sessions)
-          .slice(0, 5)
-          .map(item => Number(item.sessions) || 0),
-        backgroundColor: colorMap.purple,
-        borderColor: colorMap.purple,
-        borderWidth: 1,
-      },
-    ],
-  };
-
   // Sessions Over Time (Bar Chart)
   const sessionsChartData = {
     labels: sessionsPerWeekData.map(item => item.week),
@@ -258,38 +247,18 @@ const AdminDashboard = () => {
     ],
   };
 
-  // Revenue Trends (Area Chart using Line with fill)
-  const revenueChartData = {
+  // Payment Summary (Area Chart using Line with fill)
+  const paymentChartData = {
     labels: revenueByMonthData.map(item => item.month),
     datasets: [
       {
-        label: 'Revenue (AED)',
+        label: 'Tutor Payments (AED)',
         data: revenueByMonthData.map(item => Number(item.amount) || 0),
         backgroundColor: `${colorMap.green}80`, // Semi-transparent fill
         borderColor: colorMap.green,
         borderWidth: 2,
         fill: true,
         tension: 0.3,
-      },
-    ],
-  };
-
-  // Subject Popularity (Bar Chart, top 8)
-  const subjectChartData = {
-    labels: subjectPopularityData
-      .sort((a, b) => b.sessions - a.sessions)
-      .slice(0, 8)
-      .map(item => item.subject),
-    datasets: [
-      {
-        label: 'Sessions',
-        data: subjectPopularityData
-          .sort((a, b) => b.sessions - a.sessions)
-          .slice(0, 8)
-          .map(item => Number(item.sessions) || 0),
-        backgroundColor: colorMap.secondary,
-        borderColor: colorMap.secondary,
-        borderWidth: 1,
       },
     ],
   };
@@ -313,6 +282,36 @@ const AdminDashboard = () => {
         ],
         borderColor: ['#ffffff'],
         borderWidth: 2,
+      },
+    ],
+  };
+
+  // Top Tutor Performance
+  const tutorPerformanceChartData = {
+    labels: tutorPerformanceData
+      .sort((a, b) => b.rating - a.rating || b.sessions - a.sessions)
+      .slice(0, 5)
+      .map(item => item.name),
+    datasets: [
+      {
+        label: 'Rating',
+        data: tutorPerformanceData
+          .sort((a, b) => b.rating - a.rating || b.sessions - a.sessions)
+          .slice(0, 5)
+          .map(item => Number(item.rating) || 0),
+        backgroundColor: colorMap.yellow,
+        borderColor: colorMap.yellow,
+        borderWidth: 1,
+      },
+      {
+        label: 'Sessions',
+        data: tutorPerformanceData
+          .sort((a, b) => b.rating - a.rating || b.sessions - a.sessions)
+          .slice(0, 5)
+          .map(item => Number(item.sessions) / 10 || 0), // Scaled for visualization
+        backgroundColor: colorMap.purple,
+        borderColor: colorMap.purple,
+        borderWidth: 1,
       },
     ],
   };
@@ -416,10 +415,10 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow overflow-hidden relative">
           <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-medium">Revenue Overview</h2>
+            <h2 className="text-lg font-medium">Tutor Payment Summary</h2>
             <button
               onClick={() =>
-                openFullScreen('revenue-overview', 'Revenue Overview', revenueOverviewChartData, chartOptions, Line)
+                openFullScreen('revenue', 'Tutor Payment Summary', paymentChartData, chartOptions, Line)
               }
               className="text-gray-500 hover:text-gray-700 transition-colors"
               title="View Full Screen"
@@ -427,24 +426,12 @@ const AdminDashboard = () => {
               <FaExpand size={16} />
             </button>
           </div>
-          <div className="p-4">
-            <div className="h-[200px]">
-              {revenueByMonthData.length > 0 ? (
-                <Line data={revenueOverviewChartData} options={chartOptions} />
-              ) : (
-                <div className="text-center text-gray-500">No data available</div>
-              )}
-            </div>
-            <div className="flex justify-between items-center mt-6 px-2">
-              <div>
-                <p className="text-gray-500 mb-2">Total Revenue</p>
-                <h3 className="text-2xl font-bold">{totalRevenue} AED</h3>
-              </div>
-              <div>
-                <p className="text-gray-500 mb-2">Completed Sessions</p>
-                <h3 className="text-2xl font-bold">{completedSessions}</h3>
-              </div>
-            </div>
+          <div className="p-4 h-[350px]">
+            {revenueByMonthData.length > 0 ? (
+              <Line data={paymentChartData} options={chartOptions} />
+            ) : (
+              <div className="text-center text-gray-500">No data available</div>
+            )}
           </div>
         </div>
 
@@ -494,14 +481,14 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Popular Subjects and Recent Sessions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      {/* Additional Analytics Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow overflow-hidden relative">
           <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-medium">Popular Subjects</h2>
+            <h2 className="text-lg font-medium">Sessions Over Time</h2>
             <button
               onClick={() =>
-                openFullScreen('popular-subjects', 'Popular Subjects', popularSubjectsChartData, chartOptions, Bar)
+                openFullScreen('sessions', 'Sessions Over Time', sessionsChartData, chartOptions, Bar)
               }
               className="text-gray-500 hover:text-gray-700 transition-colors"
               title="View Full Screen"
@@ -509,11 +496,108 @@ const AdminDashboard = () => {
               <FaExpand size={16} />
             </button>
           </div>
-          <div className="p-4 h-[200px]">
-            {subjectPopularityData.length > 0 ? (
-              <Bar data={popularSubjectsChartData} options={chartOptions} />
+          <div className="p-4 h-[350px]">
+            {sessionsPerWeekData.length > 0 ? (
+              <Bar data={sessionsChartData} options={chartOptions} />
             ) : (
               <div className="text-center text-gray-500">No data available</div>
+            )}
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow overflow-hidden relative">
+          <div className="p-4 border-b flex justify-between items-center">
+            <h2 className="text-lg font-medium">Sessions by Location</h2>
+            <button
+              onClick={() =>
+                openFullScreen(
+                  'location',
+                  'Sessions by Location',
+                  locationChartData,
+                  doughnutOptions,
+                  Doughnut,
+                  true
+                )
+              }
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+              title="View Full Screen"
+            >
+              <FaExpand size={16} />
+            </button>
+          </div>
+          <div className="p-4 h-[350px] flex justify-center">
+            {sessionsByLocationData.length > 0 ? (
+              <div className="w-full max-w-[300px]">
+                <Doughnut data={locationChartData} options={doughnutOptions} />
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">No data available</div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Top Tutor Performance List */}
+        <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="p-4 border-b flex justify-between items-center">
+            <h2 className="text-lg font-medium">Top Tutor Performance</h2>
+            <Link
+              to="/admin/tutors"
+              className="text-sm text-accent-600 hover:text-accent-800"
+            >
+              View All
+            </Link>
+          </div>
+          <div className="overflow-y-auto">
+            {tutorPerformanceData.length > 0 ? (
+              <div className="divide-y">
+                {tutorPerformanceData
+                  .sort((a, b) => b.rating - a.rating || b.sessions - a.sessions)
+                  .slice(0, 6)
+                  .map(tutor => (
+                    <div key={tutor.id} className="p-4 hover:bg-gray-50">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <div className="p-2 rounded-full bg-yellow-100 text-yellow-800 mr-3">
+                            <FaTrophy size={16} />
+                          </div>
+                          <div>
+                            <h3 className="font-medium">{tutor.name}</h3>
+                            <div className="flex items-center mt-1">
+                              <div className="flex text-yellow-400">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <svg
+                                    key={star}
+                                    className={`h-4 w-4 ${star <= Math.floor(tutor.rating) ? 'fill-current' : 'text-gray-300'}`}
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                  </svg>
+                                ))}
+                                <span className="ml-1 text-sm text-gray-600">{tutor.rating.toFixed(1)}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end">
+                          <span className="text-sm font-medium">{tutor.sessions} sessions</span>
+                          <div className="mt-2 w-20 bg-gray-200 rounded-full h-1.5">
+                            <div
+                              className="bg-gradient-to-r from-green-400 to-blue-300 h-1.5 rounded-full"
+                              style={{
+                                width: `${(tutor.sessions / Math.max(...tutorPerformanceData.map(t => t.sessions))) * 100}%`
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              <div className="p-6 text-center text-gray-500">
+                <p>No tutor performance data available</p>
+              </div>
             )}
           </div>
         </div>
@@ -548,10 +632,10 @@ const AdminDashboard = () => {
                     </div>
                     <div>
                       <span className={`px-2 py-1 rounded-full text-xs ${session.status === 'Upcoming'
-                          ? 'bg-green-100 text-green-800'
-                          : session.status === 'Completed'
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'bg-red-100 text-red-800'
+                        ? 'bg-green-100 text-green-800'
+                        : session.status === 'Completed'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-red-100 text-red-800'
                         }`}>
                         {session.status}
                       </span>
@@ -560,103 +644,6 @@ const AdminDashboard = () => {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Analytics Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow overflow-hidden relative">
-          <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-medium">Sessions Over Time</h2>
-            <button
-              onClick={() =>
-                openFullScreen('sessions', 'Sessions Over Time', sessionsChartData, chartOptions, Bar)
-              }
-              className="text-gray-500 hover:text-gray-700 transition-colors"
-              title="View Full Screen"
-            >
-              <FaExpand size={16} />
-            </button>
-          </div>
-          <div className="p-4 h-[350px]">
-            {sessionsPerWeekData.length > 0 ? (
-              <Bar data={sessionsChartData} options={chartOptions} />
-            ) : (
-              <div className="text-center text-gray-500">No data available</div>
-            )}
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow overflow-hidden relative">
-          <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-medium">Revenue Trends</h2>
-            <button
-              onClick={() =>
-                openFullScreen('revenue', 'Revenue Trends', revenueChartData, chartOptions, Line)
-              }
-              className="text-gray-500 hover:text-gray-700 transition-colors"
-              title="View Full Screen"
-            >
-              <FaExpand size={16} />
-            </button>
-          </div>
-          <div className="p-4 h-[350px]">
-            {revenueByMonthData.length > 0 ? (
-              <Line data={revenueChartData} options={chartOptions} />
-            ) : (
-              <div className="text-center text-gray-500">No data available</div>
-            )}
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow overflow-hidden relative">
-          <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-medium">Subject Popularity</h2>
-            <button
-              onClick={() =>
-                openFullScreen('subject', 'Subject Popularity', subjectChartData, chartOptions, Bar)
-              }
-              className="text-gray-500 hover:text-gray-700 transition-colors"
-              title="View Full Screen"
-            >
-              <FaExpand size={16} />
-            </button>
-          </div>
-          <div className="p-4 h-[350px]">
-            {subjectPopularityData.length > 0 ? (
-              <Bar data={subjectChartData} options={chartOptions} />
-            ) : (
-              <div className="text-center text-gray-500">No data available</div>
-            )}
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow overflow-hidden relative">
-          <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-medium">Sessions by Location</h2>
-            <button
-              onClick={() =>
-                openFullScreen(
-                  'location',
-                  'Sessions by Location',
-                  locationChartData,
-                  doughnutOptions,
-                  Doughnut,
-                  true
-                )
-              }
-              className="text-gray-500 hover:text-gray-700 transition-colors"
-              title="View Full Screen"
-            >
-              <FaExpand size={16} />
-            </button>
-          </div>
-          <div className="p-4 h-[350px] flex justify-center">
-            {sessionsByLocationData.length > 0 ? (
-              <div className="w-full max-w-[300px]">
-                <Doughnut data={locationChartData} options={doughnutOptions} />
-              </div>
-            ) : (
-              <div className="text-center text-gray-500">No data available</div>
-            )}
           </div>
         </div>
       </div>

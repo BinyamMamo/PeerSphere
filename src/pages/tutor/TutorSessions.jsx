@@ -35,7 +35,7 @@ const TutorSessions = () => {
   // Tab component for cleaner rendering
   const Tab = ({ id, label, count }) => (
     <button
-      className={`px-4 py-2 font-medium text-sm rounded-md ${activeTab === id
+      className={`px-4 py-2 font-medium text-sm rounded-md flex items-center justify-center ${activeTab === id
           ? 'bg-secondary-100 text-secondary-700'
           : 'text-gray-600 hover:bg-gray-100'
         }`}
@@ -51,11 +51,11 @@ const TutorSessions = () => {
 
     return (
       <div className="bg-white rounded-lg shadow overflow-hidden mb-4">
-        <div className="p-4">
+        <div className="p-5">
           {/* Session header */}
-          <div className="flex justify-between items-start">
-            <h3 className="font-medium">{session.subject}</h3>
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${session.status === 'Upcoming'
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="font-medium text-lg">{session.subject}</h3>
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${session.status === 'Upcoming'
                 ? 'bg-green-100 text-green-800'
                 : session.status === 'Completed'
                   ? 'bg-blue-100 text-blue-800'
@@ -66,40 +66,40 @@ const TutorSessions = () => {
           </div>
 
           {/* Session details */}
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex items-center text-sm text-gray-600">
-              <FaCalendarAlt className="mr-2 text-gray-400" />
-              {session.date}
+              <FaCalendarAlt className="mr-2 text-gray-400 flex-shrink-0" />
+              <span>{session.date}</span>
             </div>
             <div className="flex items-center text-sm text-gray-600">
-              <FaClock className="mr-2 text-gray-400" />
-              {session.startTime}
+              <FaClock className="mr-2 text-gray-400 flex-shrink-0" />
+              <span>{session.startTime}</span>
             </div>
             <div className="flex items-center text-sm text-gray-600">
-              <FaMapMarkerAlt className="mr-2 text-gray-400" />
-              {session.location}
+              <FaMapMarkerAlt className="mr-2 text-gray-400 flex-shrink-0" />
+              <span>{session.location}</span>
             </div>
             <div className="flex items-center text-sm text-gray-600">
-              <FaUserGraduate className="mr-2 text-gray-400" />
-              {student.firstName} {student.lastName}
+              <FaUserGraduate className="mr-2 text-gray-400 flex-shrink-0" />
+              <span>{student.firstName} {student.lastName}</span>
             </div>
           </div>
 
           {/* Session footer with price and actions */}
-          <div className="mt-4 flex justify-between items-center">
+          <div className="mt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <span className="font-bold">{session.amount} AED</span>
+              <span className="font-bold text-lg">{session.amount} AED</span>
             </div>
 
             {session.status === 'Upcoming' && (
-              <div className="space-x-2">
-                <button className="px-3 py-1 bg-secondary-600 text-white rounded-md text-sm flex items-center">
-                  <FaCheckCircle className="mr-1" />
-                  Mark Complete
+              <div className="flex space-x-2 w-full sm:w-auto">
+                <button className="px-3 py-1 bg-secondary-600 text-white rounded-md text-sm flex items-center justify-center">
+                  <FaCheckCircle className="mr-1 flex-shrink-0" />
+                  <span>Mark Complete</span>
                 </button>
-                <button className="px-3 py-1 bg-white border border-red-600 text-red-600 rounded-md text-sm flex items-center">
-                  <FaTimesCircle className="mr-1" />
-                  Cancel
+                <button className="px-3 py-1 bg-white border border-red-600 text-red-600 rounded-md text-sm flex items-center justify-center">
+                  <FaTimesCircle className="mr-1 flex-shrink-0" />
+                  <span>Cancel</span>
                 </button>
               </div>
             )}
@@ -135,12 +135,12 @@ const TutorSessions = () => {
   const cancelledCount = tutorSessions.filter(s => s.status === 'Cancelled').length;
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">Manage Sessions</h1>
 
       {/* Tabs */}
       <div className="bg-white rounded-lg shadow mb-6">
-        <div className="p-2 flex space-x-2">
+        <div className="p-2 flex flex-wrap gap-2">
           <Tab id="upcoming" label="Upcoming" count={upcomingCount} />
           <Tab id="completed" label="Completed" count={completedCount} />
           <Tab id="cancelled" label="Cancelled" count={cancelledCount} />

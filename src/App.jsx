@@ -39,12 +39,11 @@ import './App.css';
 
 function App() {
   return (
-    <AppProvider>
-      <Router>
+    <Router>
+      <AppProvider>
         <Routes>
           {/* Redirect root to student home */}
           <Route path="/" element={<Navigate to="/student" replace />} />
-
 
           {/* Booking Flow */}
           {/* Student Routes */}
@@ -89,8 +88,8 @@ function App() {
           {/* Catch all - redirect to student home */}
           <Route path="*" element={<Navigate to="/student" replace />} />
         </Routes>
-      </Router>
-    </AppProvider>
+      </AppProvider>
+    </Router>
   );
 }
 

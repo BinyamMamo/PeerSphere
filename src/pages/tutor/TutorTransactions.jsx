@@ -64,12 +64,12 @@ const TutorTransactions = () => {
   }, [filteredTransactions]);
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">Earnings & Transactions</h1>
 
       {/* Summary Card */}
       <div className="bg-white rounded-lg shadow p-6 mb-6">
-        <div className="flex flex-wrap items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <h2 className="text-lg font-medium">Total Earnings</h2>
             <div className="text-3xl font-bold mt-2">{totalEarnings} AED</div>
@@ -78,15 +78,15 @@ const TutorTransactions = () => {
             </p>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <div>
-              <label htmlFor="period" className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="flex flex-col sm:flex-row items-end sm:items-end gap-4">
+            <div className="w-full sm:w-auto">
+              <label htmlFor="period" className="block text-sm font-medium text-gray-700 mb-2">
                 Filter Period
               </label>
               <div className="relative">
                 <select
                   id="period"
-                  className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-500"
+                  className="w-full sm:w-auto pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-500"
                   value={filterPeriod}
                   onChange={(e) => setFilterPeriod(e.target.value)}
                 >
@@ -100,9 +100,9 @@ const TutorTransactions = () => {
               </div>
             </div>
 
-            <button className="bg-secondary-600 hover:bg-secondary-700 text-white rounded-md px-4 py-2 flex items-center">
-              <FaDownload className="mr-2" />
-              Export
+            <button className="w-full sm:w-auto mt-2 sm:mt-0 bg-secondary-600 hover:bg-secondary-700 text-white rounded-md px-4 py-2 flex items-center justify-center">
+              <FaDownload className="mr-2 flex-shrink-0" />
+              <span>Export</span>
             </button>
           </div>
         </div>
@@ -124,21 +124,21 @@ const TutorTransactions = () => {
               {/* Transaction list */}
               <div className="divide-y">
                 {monthData.sessions.map(session => (
-                  <div key={session.id} className="p-4 flex justify-between items-center">
+                  <div key={session.id} className="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
                     <div>
                       <h4 className="font-medium">{session.subject}</h4>
                       <div className="text-sm text-gray-500 flex items-center mt-1">
-                        <FaCalendarAlt className="mr-1 text-gray-400" />
-                        {session.date}, {session.startTime}
+                        <FaCalendarAlt className="mr-1 text-gray-400 flex-shrink-0" />
+                        <span>{session.date}, {session.startTime}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center">
+                    <div className="flex items-center self-end sm:self-auto">
                       <div className="mr-4 text-right">
                         <div className="font-medium">{session.amount} AED</div>
                         <div className="text-xs text-green-600">Completed</div>
                       </div>
-                      <FaMoneyBillWave className="text-green-500" />
+                      <FaMoneyBillWave className="text-green-500 flex-shrink-0" />
                     </div>
                   </div>
                 ))}

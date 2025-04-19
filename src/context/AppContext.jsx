@@ -1,5 +1,7 @@
 // src/context/AppContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { getRoleFromURL } from '../utils/roleUtils';
 
 // Import mock data
 import mockTutors from '../data/tutors.json';
@@ -11,9 +13,11 @@ import mockAnalytics from '../data/analytics.json';
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const location = useLocation();
+
   // User state
   const [currentUser, setCurrentUser] = useState(null);
-  const [userRole, setUserRole] = useState('student'); // 'student', 'tutor', 'admin'
+  const [userRole, setUserRole] = useState(() => getRoleFromURL()); // Initialize from URL
   
   // Data state
   const [tutors, setTutors] = useState(mockTutors);
@@ -30,10 +34,15 @@ export const AppProvider = ({ children }) => {
     availability: ''
   });
 
+  // Update role when URL changes
+  useEffect(() => {
+    const roleFromURL = getRoleFromURL();
+    setUserRole(roleFromURL);
+  }, [location.pathname]);
+
   // Initialize currentUser from localStorage on load
   useEffect(() => {
     const savedUser = localStorage.getItem('currentUser');
-    const savedRole = localStorage.getItem('userRole');
     
     if (savedUser) {
       setCurrentUser(JSON.parse(savedUser));
@@ -42,31 +51,20 @@ export const AppProvider = ({ children }) => {
       setCurrentUser(mockStudents[0]);
       localStorage.setItem('currentUser', JSON.stringify(mockStudents[0]));
     }
-    
-    if (savedRole) {
-      setUserRole(savedRole);
-    } else {
-      // Default to student role
-      setUserRole('student');
-      localStorage.setItem('userRole', 'student');
-    }
   }, []);
 
-  // Save user and role to localStorage when they change
+  // Save user to localStorage when it changes
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
   }, [currentUser]);
-  
-  useEffect(() => {
-    localStorage.setItem('userRole', userRole);
-  }, [userRole]);
 
-  // Function to switch user role
+  // Function to switch user role (now also navigates)
   const switchRole = (role) => {
     if (['student', 'tutor', 'admin'].includes(role)) {
-      setUserRole(role);
+      // Navigate to the corresponding URL
+      window.location.href = `/${role}`;
     }
   };
 

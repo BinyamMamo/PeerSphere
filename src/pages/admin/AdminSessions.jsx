@@ -82,9 +82,14 @@ const AdminSessions = () => {
       <h1 className="text-2xl font-bold mb-6">Sessions Management</h1>
 
       {/* Search & Filters */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="flex flex-wrap items-center mb-4">
-          <div className="flex items-center mr-4 w-full md:w-auto mb-2 md:mb-0">
+      <div className="bg-white p-4 rounded-lg shadow mb-6 flex items-center justify-between">
+        <div className="flex space-x-2">
+          <Tab id="all" label="All" count={sessions.length} />
+          <Tab id="upcoming" label="Upcoming" count={upcomingCount} />
+          <Tab id="completed" label="Completed" count={completedCount} />
+          <Tab id="cancelled" label="Cancelled" count={cancelledCount} />
+        </div>
+        <div className="flex items-center w-full md:w-auto mb-2 md:mb-0">
             <div className="relative flex-grow">
               <input
                 type="text"
@@ -94,22 +99,9 @@ const AdminSessions = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaSearch className="text-gray-400" />
-              </div>
+              <FaSearch className="text-gray-400" />
             </div>
           </div>
-
-          <div className="flex items-center">
-            <FaFilter className="text-accent-600 mr-2" />
-            <h2 className="font-medium">Status Filter</h2>
-          </div>
-        </div>
-
-        <div className="flex space-x-2">
-          <Tab id="all" label="All" count={sessions.length} />
-          <Tab id="upcoming" label="Upcoming" count={upcomingCount} />
-          <Tab id="completed" label="Completed" count={completedCount} />
-          <Tab id="cancelled" label="Cancelled" count={cancelledCount} />
         </div>
       </div>
 
