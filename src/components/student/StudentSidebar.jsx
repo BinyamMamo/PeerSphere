@@ -1,13 +1,39 @@
+// src/components/student/StudentSidebar.jsx
 import React, { useState, useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaHome, FaCalendarAlt, FaListAlt, FaStar, FaCaretLeft, FaChalkboardTeacher, FaCalendarPlus, FaExchangeAlt, FaUserGraduate } from 'react-icons/fa';
+import {
+  FaHome,
+  FaCalendarAlt,
+  FaListAlt,
+  FaStar,
+  FaCaretLeft,
+  FaChalkboardTeacher,
+  FaCalendarPlus,
+  FaExchangeAlt,
+  FaUserGraduate,
+  FaTimes
+} from 'react-icons/fa';
 import { AppContext } from '../../context/AppContext';
-import AccountStatusIndicator from '../shared/AccountStatusIndicator';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const StudentSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { currentUser, sessions } = useContext(AppContext);
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Track window resize for responsive design
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setIsCollapsed(false); // Reset collapse state on desktop
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -27,41 +53,35 @@ const StudentSidebar = () => {
     navigate('/tutor');
   };
 
-  // Get upcoming sessions (first 3)
-  const upcomingSessions = sessions
-    .filter(session =>
-      session.studentId === currentUser?.id &&
-      session.status === 'Upcoming'
-    )
-    .slice(0, 3);
-
   return (
-    <div className={`h-full bg-white/25 shadow-sm flex flex-col transition-all duration-300 ${isCollapsed ? 'w-24' : 'w-80'}`}>
+    <div className={`h-full bg-white/25 shadow-sm flex flex-col transition-all duration-300 ${isCollapsed && !isMobile ? 'w-24' : (isMobile ? 'w-full' : 'w-80')}`}>
       {/* Logo */}
-      <div className={`p-4 my-2 flex items-center justify-between ${isCollapsed ? 'px-2' : ''}`}>
+      <div className={`p-4 my-2 flex items-center justify-between ${isCollapsed && !isMobile ? 'px-2' : ''}`}>
         <div className="flex items-center">
           <img
             src="/peersphere.png"
-            className={`${isCollapsed ? 'w-10 h-10 ml-2' : 'h-8 w-8 mx-2'}`}
+            className={`${isCollapsed && !isMobile ? 'w-10 h-10 ml-2' : 'h-8 w-8 mx-2'}`}
             alt="PeerSphere Logo"
           />
-          {!isCollapsed && (
+          {(!isCollapsed || isMobile) && (
             <Link to="/" className="font-bold text-xl text-neutral-700 ml-0.5">
               PeerSphere
             </Link>
           )}
         </div>
-        <div
-          onClick={toggleSidebar}
-          className="text-gray-600 hover:text-primary-700 focus:outline-none cursor-pointer"
-          aria-label={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-        >
-          <FaCaretLeft className={`text-xl transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`} />
-        </div>
+        {!isMobile && (
+          <div
+            onClick={toggleSidebar}
+            className="text-gray-600 hover:text-primary-700 focus:outline-none cursor-pointer"
+            aria-label={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+          >
+            <FaCaretLeft className={`text-xl transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`} />
+          </div>
+        )}
       </div>
 
       {/* Navigation Links */}
-      <nav className={`${isCollapsed ? 'p-2' : 'p-4 pt-0 pl-6'}`}>
+      <nav className={`${isCollapsed && !isMobile ? 'p-2' : 'p-4 pt-0 pl-6'}`}>
         <ul className="space-y-2">
           <li>
             <NavLink
@@ -73,10 +93,10 @@ const StudentSidebar = () => {
                 }`
               }
               end
-              title={isCollapsed ? 'Find Tutors' : ''}
+              title={isCollapsed && !isMobile ? 'Find Tutors' : ''}
             >
-              <FaHome className={`${isCollapsed ? 'mx-auto' : 'mr-3'}`} />
-              {!isCollapsed && <span>Find Tutors</span>}
+              <FaHome className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
+              {(!isCollapsed || isMobile) && <span>Find Tutors</span>}
             </NavLink>
           </li>
           <li>
@@ -88,10 +108,10 @@ const StudentSidebar = () => {
                   : 'text-gray-600 hover:bg-gray-100'
                 }`
               }
-              title={isCollapsed ? 'My Calendar' : ''}
+              title={isCollapsed && !isMobile ? 'My Calendar' : ''}
             >
-              <FaCalendarAlt className={`${isCollapsed ? 'mx-auto' : 'mr-3'}`} />
-              {!isCollapsed && <span>My Calendar</span>}
+              <FaCalendarAlt className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
+              {(!isCollapsed || isMobile) && <span>My Calendar</span>}
             </NavLink>
           </li>
           <li>
@@ -103,10 +123,10 @@ const StudentSidebar = () => {
                   : 'text-gray-600 hover:bg-gray-100'
                 }`
               }
-              title={isCollapsed ? 'My Sessions' : ''}
+              title={isCollapsed && !isMobile ? 'My Sessions' : ''}
             >
-              <FaListAlt className={`${isCollapsed ? 'mx-auto' : 'mr-3'}`} />
-              {!isCollapsed && <span>My Sessions</span>}
+              <FaListAlt className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
+              {(!isCollapsed || isMobile) && <span>My Sessions</span>}
             </NavLink>
           </li>
           <li>
@@ -118,19 +138,19 @@ const StudentSidebar = () => {
                   : 'text-gray-600 hover:bg-gray-100'
                 }`
               }
-              title={isCollapsed ? 'Favorite Tutors' : ''}
+              title={isCollapsed && !isMobile ? 'Favorite Tutors' : ''}
             >
-              <FaStar className={`${isCollapsed ? 'mx-auto' : 'mr-3'}`} />
-              {!isCollapsed && <span>Favorite Tutors</span>}
+              <FaStar className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
+              {(!isCollapsed || isMobile) && <span>Favorite Tutors</span>}
             </NavLink>
           </li>
         </ul>
       </nav>
 
       {/* Quick Actions and Cards Section */}
-      <div className={`${isCollapsed ? 'p-2' : 'px-6 py-4'} space-y-4`}>
+      <div className={`${isCollapsed && !isMobile ? 'p-2' : 'px-6 py-4'} space-y-4 pt-0`}>
         {/* Instant Booking */}
-        {isCollapsed ? (
+        {isCollapsed && !isMobile ? (
           <div
             onClick={handleInstantBookingClick}
             className="cursor-pointer group flex items-center justify-center rounded-lg p-3 transition-all duration-300"
@@ -139,11 +159,18 @@ const StudentSidebar = () => {
             <FaCalendarPlus className="text-primary-600 text-lg mx-auto group-hover:scale-110 transition-transform duration-300" />
           </div>
         ) : (
-          <div className="group text-sm bg-gradient-to-r from-primary-400 to-primary-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
+            <div className="group text-sm bg-gradient-to-r from-primary-400 to-primary-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
             <h3 className="font-medium text-white mb-4">Find Your Perfect Tutor</h3>
+
+              {/* <DotLottieReact
+                src="https://lottie.host/2c3958d2-ecf5-4d1e-9230-129fb8981a0d/KmfgtpWGdj.lottie"
+                loop
+                autoplay
+              /> */}
+
             <div
               onClick={handleInstantBookingClick}
-              className="inline-flex items-center bg-white text-primary-600 px-4 py-2 rounded font-medium shadow hover:bg-neutral-100 transition duration-300 cursor-pointer"
+                className="flex justify-center items-center bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-neutral-100 transition duration-300 cursor-pointer"
             >
               <FaCalendarPlus className="mr-2" />
               Instant Booking
@@ -152,7 +179,7 @@ const StudentSidebar = () => {
         )}
 
         {/* Become a Tutor */}
-        {isCollapsed ? (
+        {isCollapsed && !isMobile ? (
           <div
             onClick={handleApplyTutorClick}
             className="cursor-pointer group flex items-center justify-center rounded p-3 transition-all duration-300"
@@ -163,9 +190,17 @@ const StudentSidebar = () => {
         ) : (
           <div className="group text-sm bg-gradient-to-r from-accent-400 to-accent-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
             <h3 className="font-medium text-white mb-2">Share Your Knowledge</h3>
+
+              <DotLottieReact
+                src="https://lottie.host/6dad63ba-1cf5-4078-8d30-20d2b8a856e4/5cAjPbg9tH.lottie"
+                loop
+                autoplay
+                className='hidden md:flex'
+              />
+
             <div
               onClick={handleApplyTutorClick}
-              className="inline-flex items-center border-0 bg-white text-accent-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
+                className="mt-2 flex justify-center items-center border-0 bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
             >
               <FaChalkboardTeacher className="mr-2" />
               Apply for Tutoring
@@ -175,8 +210,8 @@ const StudentSidebar = () => {
       </div>
 
       {/* User Mode Switch Section */}
-      <div className={`mt-auto pt-3 border-t border-gray-200 ${isCollapsed ? 'p-2' : 'p-4'}`}>
-        {isCollapsed ? (
+      <div className={`mt-auto pt-3 border-t border-gray-200 ${isCollapsed && !isMobile ? 'p-2' : 'p-4'}`}>
+        {isCollapsed && !isMobile ? (
           <div
             className="flex flex-col items-center group cursor-pointer"
             onClick={handleSwitchToTutor}
@@ -206,8 +241,7 @@ const StudentSidebar = () => {
                 <h2 className="font-semibold text-sm text-gray-800">
                   {currentUser?.firstName || 'Student'} {currentUser?.lastName || ''}
                 </h2>
-              </div>
-              {/* <AccountStatusIndicator /> */}
+                </div>
               <div
                 className="text-xs flex items-center text-gray-500 hover:text-primary-600 transition duration-200 mt-1 cursor-pointer"
                 onClick={handleSwitchToTutor}
