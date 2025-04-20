@@ -898,7 +898,7 @@ const StudentCalendar = () => {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {/* Calendar Header */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-center p-4 border-b">
-          <div className="flex items-center mb-4 md:mb-0">
+          <div className="flex items-center justify-center mb-4 md:mb-0">
             <button
               onClick={navigatePrevious}
               className="text-gray-600 hover:text-primary-600 mr-4"
@@ -918,11 +918,11 @@ const StudentCalendar = () => {
             </button>
           </div>
 
-          <div className="inline-flex bg-gray-100 rounded-md overflow-hidden">
+          <div className="inline-flex items-center justify-center bg-gray-100 rounded-md overflow-hidden">
             <button
               onClick={() => setCalendarView('month')}
-              className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'month'
-                ? 'text-primary-900 ring font-bold ring-primary-600/5'
+              className={`w-full px-4 justify-center transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'month'
+                ? 'text-primary-900 font-bold bg-primary-600/5'
                 : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
@@ -933,8 +933,8 @@ const StudentCalendar = () => {
             </button>
             <button
               onClick={() => setCalendarView('week')}
-              className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'week'
-                ? 'text-primary-900 ring font-bold ring-primary-600/5'
+              className={`w-full px-4 justify-center transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'week'
+                ? 'text-primary-900 font-bold bg-primary-600/5'
                 : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >
@@ -945,8 +945,8 @@ const StudentCalendar = () => {
             </button>
             <button
               onClick={() => setCalendarView('day')}
-              className={`px-4 transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'day'
-                ? 'text-primary-900 ring font-bold ring-primary-600/5'
+              className={`w-full px-4 justify-center transition ease-in-out flex items-center py-2 text-sm ${calendarView === 'day'
+                ? 'text-primary-900 font-bold bg-primary-600/5'
                 : 'text-gray-700 hover:bg-primary-100/75  font-medium'
                 }`}
             >

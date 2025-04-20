@@ -42,7 +42,7 @@ const RoleToggle = ({ isMobile = false }) => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className={`flex items-center justify-center p-3 rounded-full ${userRole === 'admin' ? "bg-accent-600" : userRole === 'tutor' ? "bg-emerald-600" : "bg-primary-600"} text-white shadow-lg`}
+          className={`flex items-center justify-center p-5 rounded-full ${userRole === 'admin' ? "bg-accent-600" : userRole === 'tutor' ? "bg-emerald-600" : "bg-primary-600"} text-white shadow-xl ring-2 active:ring  transition ease-in-out`}
           aria-label="Switch role"
         >
           {userRole === 'student' ? (
@@ -96,7 +96,7 @@ const RoleToggle = ({ isMobile = false }) => {
 
   // Desktop version
   return (
-    <div className="z-30 fixed bottom-4 right-3 flex items-center space-x-4 p-2 bg-orange-200 opacity-75 rounded-lg shadow px-4 py-2.5" ref={dropdownRef}>
+    <div className="z-30 fixed bottom-3 right-3 flex items-center space-x-4 p-2 bg-orange-200 opacity-75 rounded-lg shadow px-4 py-2.5" ref={dropdownRef}>
       <button
         className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-md ${userRole === 'student' ? 'bg-orange-100 text-orange-700' : 'text-gray-600 hover:bg-gray-100'
           }`}
