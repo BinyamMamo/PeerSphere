@@ -15,6 +15,7 @@ import {
 import { AppContext } from '../../context/AppContext';
 import AccountStatusIndicator from '../shared/AccountStatusIndicator';
 import { TbCalendarCog } from 'react-icons/tb';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const TutorSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -153,7 +154,7 @@ const TutorSidebar = () => {
       </nav>
 
       {/* Quick Actions and Cards Section */}
-      <div className={`${isCollapsed ? 'p-2' : 'px-6 py-4'} space-y-4`}>
+      <div className={`${isCollapsed ? 'p-2' : 'px-6 py-4'} space-y-4 pt-0`}>
         {/* Set Availability */}
         {isCollapsed ? (
           <div
@@ -166,9 +167,17 @@ const TutorSidebar = () => {
         ) : (
           <div className="group text-sm bg-gradient-to-r from-secondary-400 to-secondary-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
             <h3 className="font-medium text-white mb-4">Set Your Availability</h3>
+
+              <DotLottieReact
+                src="https://lottie.host/2c3958d2-ecf5-4d1e-9230-129fb8981a0d/KmfgtpWGdj.lottie"
+                loop
+                autoplay
+                className='hidden md:flex -mt-2 -ml-2 mb-1'
+              />
+
             <div
               onClick={handleAvailabilityClick}
-              className="inline-flex items-center bg-white text-secondary-600 px-4 py-2 rounded shadow hover:bg-neutral-100 transition duration-300 cursor-pointer"
+                className="flex justify-center items-center bg-white text-neutral-600 px-4 py-2 rounded shadow hover:bg-neutral-100 transition duration-300 cursor-pointer"
             >
               <TbCalendarCog className="mr-2 text-sm" />
               Manage Availability
@@ -176,27 +185,27 @@ const TutorSidebar = () => {
           </div>
         )}
 
-        {/* Manage Subjects */}
+        {/* Manage Subjects
         {isCollapsed ? (
           <div
             onClick={handleManageSubjectsClick}
             className="cursor-pointer group flex items-center justify-center rounded p-3 transition-all duration-300"
             title="Manage Subjects"
           >
-            <FaChalkboardTeacher className="text-teal-600 text-lg mx-auto group-hover:scale-110 transition-transform duration-300" />
+            <FaChalkboardTeacher className="text-accent-600 text-lg mx-auto group-hover:scale-110 transition-transform duration-300" />
           </div>
         ) : (
-          <div className="group text-sm bg-gradient-to-r from-teal-400 to-teal-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
+            <div className="group text-sm bg-gradient-to-r from-accent-400 to-accent-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
             <h3 className="font-medium text-white mb-4">Update Your Skills</h3>
             <div
               onClick={handleManageSubjectsClick}
-              className="inline-flex items-center border-0 bg-white text-teal-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
+                className="flex justify-center items-center border-0 bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
             >
               <FaChalkboardTeacher className="mr-2" />
               Manage Subjects
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* User Mode Switch Section */}
