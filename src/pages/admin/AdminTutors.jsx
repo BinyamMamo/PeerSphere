@@ -53,7 +53,7 @@ const AdminTutors = () => {
   // Filter component for cleaner rendering
   const FilterButton = ({ id, label }) => (
     <button
-      className={`px-4 py-2 font-medium text-sm rounded-md ${activeFilter === id
+      className={`px-3 py-2 font-medium text-sm rounded-md ${activeFilter === id
           ? 'bg-accent-100 text-accent-700'
           : 'text-gray-600 hover:bg-gray-100'
         }`}
@@ -64,14 +64,13 @@ const AdminTutors = () => {
   );
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Tutors Management</h1>
+    <div className="px-2 sm:px-0">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Tutors Management</h1>
 
       {/* Search & Filters */}
-      <div className="hidden bg-white p-4 rounded-lg shadow mb-6">
-        <div className="flex flex-wrap items-center mb-4">
-          <div className="flex items-center mr-4 w-full md:w-auto mb-2 md:mb-0">
-            <div className="relative flex-grow">
+      <div className="bg-white p-3 sm:p-4 rounded-lg shadow pt-4 mb-4 sm:mb-6 flex md:flex-row flex-col gap-4 justify-between w-full items-center">
+        <div className="flex-grow w-full md:w-auto">
+          <div className="relative">
               <input
                 type="text"
                 className="pl-10 pr-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-accent-500 focus:border-accent-500"
@@ -83,16 +82,9 @@ const AdminTutors = () => {
                 <FaSearch className="text-gray-400" />
               </div>
             </div>
-          </div>
-
-          <div className="flex items-center">
-            <FaFilter className="text-accent-600 mr-2" />
-            <h2 className="font-medium">Filters</h2>
-          </div>
         </div>
-
-        <div className="flex space-x-2">
-          <FilterButton id="all" label="All Tutors" />
+        <div className="flex gap-2">
+          <FilterButton id="all" label="All" />
           <FilterButton id="high-rating" label="High Rating (4.5+)" />
           <FilterButton id="low-rating" label="Low Rating (<4.0)" />
         </div>
@@ -102,8 +94,8 @@ const AdminTutors = () => {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {filteredTutors.length > 0 ? (
           <>
-            {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 font-medium text-sm text-gray-600">
+            {/* Table Header - Hidden on Mobile */}
+            <div className="hidden sm:grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 font-medium text-sm text-gray-600">
               <div className="col-span-3">Tutor</div>
               <div className="col-span-3">Subjects</div>
               <div className="col-span-2">Rating</div>
@@ -111,27 +103,45 @@ const AdminTutors = () => {
               <div className="col-span-2 text-right">Actions</div>
             </div>
 
-            {/* Table Body */}
+            {/* Table Body - Cards on Mobile */}
             <div className="divide-y">
               {filteredTutors.map(tutor => (
                 <div
                   key={tutor.id}
-                  className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-gray-50"
+                  className="p-4 hover:bg-gray-50"
                 >
-                  <div className="col-span-3 flex items-center">
-                    <img
-                      src={tutor.avatar}
-                      alt={`${tutor.firstName} ${tutor.lastName}`}
-                      className="w-10 h-10 rounded-full object-cover mr-3"
-                    />
-                    <div>
-                      <h3 className="font-medium">{tutor.firstName} {tutor.lastName}</h3>
-                      <p className="text-xs text-gray-500">Year {tutor.yearOfStudy} Student</p>
+                  {/* Mobile View */}
+                  <div className="block sm:hidden">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center">
+                        <img
+                          src={tutor.avatar}
+                          alt={`${tutor.firstName} ${tutor.lastName}`}
+                          className="w-10 h-10 rounded-full object-cover mr-3"
+                        />
+                        <div>
+                          <h3 className="font-medium">{tutor.firstName} {tutor.lastName}</h3>
+                          <p className="text-xs text-gray-500">Year {tutor.yearOfStudy} Student</p>
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => setViewTutor(tutor)}
+                          className="p-2 text-gray-500 hover:text-accent-600 rounded"
+                          title="View Tutor Details"
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="p-2 text-gray-500 hover:text-accent-600 rounded"
+                          title="Edit Tutor"
+                        >
+                          <FaEdit />
+                        </button>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="col-span-3">
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1 mb-3">
                       {tutor.subjects.map((subject, index) => (
                         <span
                           key={index}
@@ -141,46 +151,99 @@ const AdminTutors = () => {
                         </span>
                       ))}
                     </div>
+
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div className="flex items-center">
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map(star => (
+                              <svg
+                                key={star}
+                                className={`h-4 w-4 ${star <= tutor.rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ))}
+                          </div>
+                          <span className="ml-1 text-sm">{tutor.rating.toFixed(1)}</span>
+                        </div>
+                        <p className="text-xs text-gray-500">{tutor.reviews} reviews</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium">{tutor.totalSessions} total</p>
+                        <p className="text-xs text-gray-500">{getTutorEarnings(tutor.id)} AED earned</p>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="col-span-2">
-                    <div className="flex items-center">
-                      <div className="flex">
-                        {[1, 2, 3, 4, 5].map(star => (
-                          <svg
-                            key={star}
-                            className={`h-4 w-4 ${star <= tutor.rating ? 'text-yellow-500' : 'text-gray-300'}`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
+                  {/* Desktop View */}
+                  <div className="hidden sm:grid grid-cols-12 gap-4 items-center">
+                    <div className="col-span-3 flex items-center">
+                      <img
+                        src={tutor.avatar}
+                        alt={`${tutor.firstName} ${tutor.lastName}`}
+                        className="w-10 h-10 rounded-full object-cover mr-3"
+                      />
+                      <div>
+                        <h3 className="font-medium">{tutor.firstName} {tutor.lastName}</h3>
+                        <p className="text-xs text-gray-500">Year {tutor.yearOfStudy} Student</p>
+                      </div>
+                    </div>
+
+                    <div className="col-span-3">
+                      <div className="flex flex-wrap gap-1">
+                        {tutor.subjects.map((subject, index) => (
+                          <span
+                            key={index}
+                            className="px-2 py-1 bg-accent-50 text-accent-700 rounded-md text-xs"
                           >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
+                            {subject}
+                          </span>
                         ))}
                       </div>
-                      <span className="ml-1 text-sm">{tutor.rating.toFixed(1)}</span>
                     </div>
-                    <p className="text-xs text-gray-500">{tutor.reviews} reviews</p>
-                  </div>
 
-                  <div className="col-span-2">
-                    <p className="font-medium">{tutor.totalSessions} total</p>
-                    <p className="text-xs text-gray-500">{getTutorEarnings(tutor.id)} AED earned</p>
-                  </div>
+                    <div className="col-span-2">
+                      <div className="flex items-center">
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map(star => (
+                            <svg
+                              key={star}
+                              className={`h-4 w-4 ${star <= tutor.rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <span className="ml-1 text-sm">{tutor.rating.toFixed(1)}</span>
+                      </div>
+                      <p className="text-xs text-gray-500">{tutor.reviews} reviews</p>
+                    </div>
 
-                  <div className="col-span-2 flex justify-end space-x-2">
-                    <button
-                      onClick={() => setViewTutor(tutor)}
-                      className="p-2 text-gray-500 hover:text-accent-600 rounded"
-                      title="View Tutor Details"
-                    >
-                      <FaEye />
-                    </button>
-                    <button
-                      className="p-2 text-gray-500 hover:text-accent-600 rounded"
-                      title="Edit Tutor"
-                    >
-                      <FaEdit />
-                    </button>
+                    <div className="col-span-2">
+                      <p className="font-medium">{tutor.totalSessions} total</p>
+                      <p className="text-xs text-gray-500">{getTutorEarnings(tutor.id)} AED earned</p>
+                    </div>
+
+                    <div className="col-span-2 flex justify-end space-x-2">
+                      <button
+                        onClick={() => setViewTutor(tutor)}
+                        className="p-2 text-gray-500 hover:text-accent-600 rounded"
+                        title="View Tutor Details"
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        className="p-2 text-gray-500 hover:text-accent-600 rounded"
+                        title="Edit Tutor"
+                      >
+                        <FaEdit />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -195,15 +258,15 @@ const AdminTutors = () => {
 
       {/* Tutor Details Modal */}
       {viewTutor && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-medium">
                 Tutor Details
               </h2>
               <button
                 onClick={() => setViewTutor(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
               >
                 &times;
               </button>
@@ -211,11 +274,11 @@ const AdminTutors = () => {
 
             {/* Tutor header */}
             <div className="border-b pb-4 mb-4">
-              <div className="flex items-center">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <img
                   src={viewTutor.avatar}
                   alt={`${viewTutor.firstName} ${viewTutor.lastName}`}
-                  className="w-16 h-16 rounded-full object-cover mr-4"
+                  className="w-16 h-16 rounded-full object-cover"
                 />
                 <div>
                   <h3 className="text-xl font-medium">{viewTutor.firstName} {viewTutor.lastName}</h3>
@@ -300,7 +363,7 @@ const AdminTutors = () => {
                 <div className="border rounded-lg divide-y">
                   {getTutorSessions(viewTutor.id).slice(0, 5).map(session => (
                     <div key={session.id} className="p-3 hover:bg-gray-50">
-                      <div className="flex justify-between">
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-2">
                         <div>
                           <h5 className="font-medium">{session.subject}</h5>
                           <div className="text-sm text-gray-500 flex items-center">

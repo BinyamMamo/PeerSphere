@@ -79,11 +79,11 @@ const AdminApplications = () => {
   // Get sort icon
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) {
-      return <FaSort className="inline ml-1" />;
+      return <FaSort className="inline ml-1" size={14} />;
     }
     return sortConfig.direction === 'ascending' ?
-      <FaSortUp className="inline ml-1" /> :
-      <FaSortDown className="inline ml-1" />;
+      <FaSortUp className="inline ml-1" size={14} /> :
+      <FaSortDown className="inline ml-1" size={14} />;
   };
 
   // Get student info by ID
@@ -97,7 +97,7 @@ const AdminApplications = () => {
   // Tab component for cleaner rendering
   const Tab = ({ id, label, count }) => (
     <button
-      className={`px-4 py-2 font-medium text-sm rounded-md ${activeTab === id
+      className={`px-4 py-2 font-medium text-sm rounded-md whitespace-nowrap transition-colors duration-200 ${activeTab === id
           ? 'bg-accent-100 text-accent-700'
           : 'text-gray-600 hover:bg-gray-100'
         }`}
@@ -110,8 +110,6 @@ const AdminApplications = () => {
   // Handle application approval
   const handleApprove = (applicationId) => {
     updateApplicationStatus(applicationId, 'Approved');
-
-    // Close modal if open
     if (viewApplication?.id === applicationId) {
       setViewApplication(null);
     }
@@ -119,11 +117,8 @@ const AdminApplications = () => {
 
   // Handle application rejection
   const handleReject = (applicationId) => {
-    // Confirm rejection with user
     if (window.confirm('Are you sure you want to reject this application?')) {
       updateApplicationStatus(applicationId, 'Rejected');
-
-      // Close modal if open
       if (viewApplication?.id === applicationId) {
         setViewApplication(null);
       }
@@ -136,31 +131,27 @@ const AdminApplications = () => {
   const rejectedCount = applications.filter(a => a.status === 'Rejected').length;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Tutor Applications</h1>
+    <div className="px-4 sm:px-6 lg:px-8 py-4">
+      <h1 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6">Tutor Applications</h1>
 
       {/* Search & Filters */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="flex flex-wrap items-center">
-          <div className='w-full flex items-center justify-between'>
-            <div className="flex space-x-2">
-              <Tab id="pending" label="Pending" count={pendingCount} />
-              <Tab id="approved" label="Approved" count={approvedCount} />
-              <Tab id="rejected" label="Rejected" count={rejectedCount} />
-              <Tab id="all" label="All" count={applications.length} />
-            </div>
-            <div className="relative">
-              <input
-                type="text"
-                className="pl-10 pr-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-accent-500 focus:border-accent-500"
-                placeholder="Search applications..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaSearch className="text-gray-400" />
-              </div>
-            </div>
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 flex flex-col gap-4">
+        <div className="flex overflow-x-auto gap-2 sm:gap-3">
+          <Tab id="pending" label="Pending" count={pendingCount} />
+          <Tab id="approved" label="Approved" count={approvedCount} />
+          <Tab id="rejected" label="Rejected" count={rejectedCount} />
+          <Tab id="all" label="All" count={applications.length} />
+        </div>
+        <div className="relative flex items-center w-full">
+          <input
+            type="text"
+            className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 text-sm"
+            placeholder="Search applications..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" size={16} />
           </div>
         </div>
       </div>
@@ -169,24 +160,23 @@ const AdminApplications = () => {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {sortedApplications.length > 0 ? (
           <>
-            {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 font-medium text-sm text-gray-600">
+            {/* Table Header - Hidden on Mobile */}
+            <div className="hidden md:grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 font-medium text-sm text-gray-600">
               <div className="col-span-3">Applicant</div>
               <div className="col-span-3">Subjects</div>
               <div
                 className="col-span-2 cursor-pointer flex items-baseline"
                 onClick={() => handleSort('academicStanding')}
               >
-                <span>
-                  Grade
-                </span>
+                <span>Grade</span>
                 {getSortIcon('academicStanding')}
               </div>
               <div
-                className="col-span-2 cursor-pointer"
+                className="col-span-2 cursor-pointer flex items-baseline"
                 onClick={() => handleSort('dateApplied')}
               >
-                Date Applied {getSortIcon('dateApplied')}
+                <span>Date Applied</span>
+                {getSortIcon('dateApplied')}
               </div>
               <div className="col-span-2 text-right">Actions</div>
             </div>
@@ -199,81 +189,167 @@ const AdminApplications = () => {
                 return (
                   <div
                     key={application.id}
-                    className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-gray-50"
+                    className="p-4 hover:bg-gray-50 transition-colors duration-150"
                   >
-                    <div className="col-span-3 flex items-center">
-                      <img
-                        src={student.avatar || "https://i.pravatar.cc/150?img=1"}
-                        alt={`${student.firstName} ${student.lastName}`}
-                        className="w-10 h-10 rounded-full object-cover mr-3"
-                      />
-                      <div>
-                        <h3 className="font-medium">{student.firstName} {student.lastName}</h3>
-                        <p className="text-xs text-gray-500">Year {student.yearOfStudy}</p>
+                    {/* Mobile View */}
+                    <div className="block md:hidden">
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="flex items-center">
+                          <img
+                            src={student.avatar || "https://i.pravatar.cc/150?img=1"}
+                            alt={`${student.firstName} ${student.lastName}`}
+                            className="w-10 h-10 rounded-full object-cover mr-3"
+                            loading="lazy"
+                          />
+                          <div>
+                            <h3 className="font-medium text-base">{student.firstName} {student.lastName}</h3>
+                            <p className="text-xs text-gray-500">Year {student.yearOfStudy}</p>
+                          </div>
+                        </div>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${application.status === 'Pending'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : application.status === 'Approved'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
+                          }`}>
+                          {application.status}
+                        </span>
+                      </div>
+
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="text-sm font-medium text-gray-600">Subjects</h4>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {application.subjects?.map((subject, index) => (
+                              <span
+                                key={index}
+                                className="px-2 py-1 bg-accent-50 text-accent-700 rounded-md text-xs"
+                              >
+                                {subject}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-12">
+                          <div>
+                            <h4 className="text-sm font-medium text-gray-600">Grade</h4>
+                            <p className="text-sm">{application.academicStanding}</p>
+                          </div>
+
+                          <div>
+                            <h4 className="text-sm font-medium text-gray-600">Date Applied</h4>
+                            <p className="text-sm text-gray-600">{application.dateApplied}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end space-x-2">
+                          <button
+                            onClick={() => setViewApplication(application)}
+                            className="p-3 text-gray-500 hover:text-accent-600 rounded-full transition-colors duration-200"
+                            title="View Application"
+                          >
+                            <FaEye size={18} />
+                          </button>
+
+                          {application.status === 'Pending' && (
+                            <>
+                              <button
+                                onClick={() => handleApprove(application.id)}
+                                className="p-3 text-green-500 hover:text-green-600 rounded-full transition-colors duration-200"
+                                title="Approve"
+                              >
+                                <FaCheck size={18} />
+                              </button>
+                              <button
+                                onClick={() => handleReject(application.id)}
+                                className="p-3 text-red-500 hover:text-red-600 rounded-full transition-colors duration-200"
+                                title="Reject"
+                              >
+                                <FaTimes size={18} />
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="col-span-3">
-                      <div className="flex flex-wrap gap-1">
-                        {application.subjects?.map((subject, index) => (
-                          <span
-                            key={index}
-                            className="px-2 py-1 bg-accent-50 text-accent-700 rounded-md text-xs"
-                          >
-                            {subject}
+                    {/* Desktop View */}
+                    <div className="hidden md:grid grid-cols-12 gap-4 items-center">
+                      <div className="col-span-3 flex items-center">
+                        <img
+                          src={student.avatar || "https://i.pravatar.cc/150?img=1"}
+                          alt={`${student.firstName} ${student.lastName}`}
+                          className="w-10 h-10 rounded-full object-cover mr-3"
+                          loading="lazy"
+                        />
+                        <div>
+                          <h3 className="font-medium text-base">{student.firstName} {student.lastName}</h3>
+                          <p className="text-xs text-gray-500">Year {student.yearOfStudy}</p>
+                        </div>
+                      </div>
+
+                      <div className="col-span-3">
+                        <div className="flex flex-wrap gap-1">
+                          {application.subjects?.map((subject, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 bg-accent-50 text-accent-700 rounded-md text-xs"
+                            >
+                              {subject}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="col-span-2">
+                        <span className="text-sm">{application.academicStanding}</span>
+                      </div>
+
+                      <div className="col-span-2 text-sm text-gray-600">
+                        {application.dateApplied}
+                      </div>
+
+                      <div className="col-span-2 flex justify-end space-x-2">
+                        <button
+                          onClick={() => setViewApplication(application)}
+                          className="p-3 text-gray-500 hover:text-accent-600 rounded-full transition-colors duration-200"
+                          title="View Application"
+                        >
+                          <FaEye size={18} />
+                        </button>
+
+                        {application.status === 'Pending' && (
+                          <>
+                            <button
+                              onClick={() => handleApprove(application.id)}
+                              className="p-3 text-green-500 hover:text-green-600 rounded-full transition-colors duration-200"
+                              title="Approve"
+                            >
+                              <FaCheck size={18} />
+                            </button>
+                            <button
+                              onClick={() => handleReject(application.id)}
+                              className="p-3 text-red-500 hover:text-red-600 rounded-full transition-colors duration-200"
+                              title="Reject"
+                            >
+                              <FaTimes size={18} />
+                            </button>
+                          </>
+                        )}
+
+                        {application.status === 'Approved' && (
+                          <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                            Approved
                           </span>
-                        ))}
+                        )}
+
+                        {application.status === 'Rejected' && (
+                          <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">
+                            Rejected
+                          </span>
+                        )}
                       </div>
-                    </div>
-
-                    <div className="col-span-2">
-                      <span className="text-sm">{application.academicStanding}</span>
-                    </div>
-
-                    <div className="col-span-2 text-sm text-gray-600">
-                      {application.dateApplied}
-                    </div>
-
-                    <div className="col-span-2 flex justify-end space-x-2">
-                      <button
-                        onClick={() => setViewApplication(application)}
-                        className="p-2 text-gray-500 hover:text-accent-600 rounded"
-                        title="View Application"
-                      >
-                        <FaEye />
-                      </button>
-
-                      {application.status === 'Pending' && (
-                        <>
-                          <button
-                            onClick={() => handleApprove(application.id)}
-                            className="p-2 text-green-500 hover:text-green-600 rounded"
-                            title="Approve"
-                          >
-                            <FaCheck />
-                          </button>
-
-                          <button
-                            onClick={() => handleReject(application.id)}
-                            className="p-2 text-red-500 hover:text-red-600 rounded"
-                            title="Reject"
-                          >
-                            <FaTimes />
-                          </button>
-                        </>
-                      )}
-
-                      {application.status === 'Approved' && (
-                        <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
-                          Approved
-                        </span>
-                      )}
-
-                      {application.status === 'Rejected' && (
-                        <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">
-                          Rejected
-                        </span>
-                      )}
                     </div>
                   </div>
                 );
@@ -281,23 +357,21 @@ const AdminApplications = () => {
             </div>
           </>
         ) : (
-          <div className="p-8 text-center text-gray-500">
-            <p>No applications found matching your filters.</p>
+            <div className="p-6 sm:p-8 text-center text-gray-500">
+              <p className="text-sm sm:text-base">No applications found matching your filters.</p>
           </div>
         )}
       </div>
 
       {/* Application Details Modal */}
       {viewApplication && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md sm:max-w-lg md:max-w-xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-medium">
-                Application Details
-              </h2>
+              <h2 className="text-lg font-medium">Application Details</h2>
               <button
                 onClick={() => setViewApplication(null)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
               >
                 ×
               </button>
@@ -305,39 +379,40 @@ const AdminApplications = () => {
 
             {/* Applicant details */}
             <div className="border-b pb-4 mb-4">
-              <div className="flex items-center">
-                <img
-                  src={getStudentInfo(viewApplication.studentId).avatar || "https://i.pravatar.cc/150?img=1"}
-                  alt={`${getStudentInfo(viewApplication.studentId).firstName} ${getStudentInfo(viewApplication.studentId).lastName}`}
-                  className="w-16 h-16 rounded-full object-cover mr-4"
-                />
-                <div>
-                  <h3 className="text-xl font-medium">
-                    {getStudentInfo(viewApplication.studentId).firstName} {getStudentInfo(viewApplication.studentId).lastName}
-                  </h3>
-                  <p className="text-gray-600">Year {getStudentInfo(viewApplication.studentId).yearOfStudy} Student</p>
-                  <p className="text-sm text-gray-500">
-                    Applied on: {viewApplication.dateApplied}
-                  </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="flex items-center">
+                  <img
+                    src={getStudentInfo(viewApplication.studentId).avatar || "https://i.pravatar.cc/150?img=1"}
+                    alt={`${getStudentInfo(viewApplication.studentId).firstName} ${getStudentInfo(viewApplication.studentId).lastName}`}
+                    className="w-12 h-12 rounded-full object-cover mr-3"
+                    loading="lazy"
+                  />
+                  <div>
+                    <h3 className="text-lg font-medium">
+                      {getStudentInfo(viewApplication.studentId).firstName} {getStudentInfo(viewApplication.studentId).lastName}
+                    </h3>
+                    <p className="text-sm text-gray-600">Year {getStudentInfo(viewApplication.studentId).yearOfStudy} Student</p>
+                    <p className="text-xs text-gray-500">
+                      Applied on: {viewApplication.dateApplied}
+                    </p>
+                  </div>
                 </div>
-                <div className="ml-auto">
-                  <span className={`px-3 py-1 rounded-full text-sm ${viewApplication.status === 'Pending'
-                      ? 'bg-yellow-100 text-yellow-800'
-                      : viewApplication.status === 'Approved'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                    {viewApplication.status}
-                  </span>
-                </div>
+                <span className={`self-start sm:self-center px-3 py-1 rounded-full text-xs font-medium ${viewApplication.status === 'Pending'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : viewApplication.status === 'Approved'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                  }`}>
+                  {viewApplication.status}
+                </span>
               </div>
             </div>
 
             {/* Application details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="space-y-6 mb-6">
               <div>
-                <h4 className="font-medium flex items-center mb-2">
-                  <FaBook className="text-accent-600 mr-2" />
+                <h4 className="font-medium flex items-center mb-2 text-sm">
+                  <FaBook className="text-accent-600 mr-2" size={16} />
                   Subjects
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -353,38 +428,38 @@ const AdminApplications = () => {
               </div>
 
               <div>
-                <h4 className="font-medium flex items-center mb-2">
-                  <FaFileAlt className="text-accent-600 mr-2" />
+                <h4 className="font-medium flex items-center mb-2 text-sm">
+                  <FaFileAlt className="text-accent-600 mr-2" size={16} />
                   Resume
                 </h4>
                 <a
                   href={viewApplication.resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-accent-600 hover:underline"
+                  className="text-accent-600 hover:underline text-sm"
                 >
                   View Resume (PDF)
                 </a>
               </div>
-            </div>
 
-            <div className="mb-6">
-              <h4 className="font-medium flex items-center mb-2">
-                <FaGraduationCap className="text-accent-600 mr-2" />
-                Academic Standing
-              </h4>
-              <p className="text-gray-800">
-                {viewApplication.academicStanding}
-              </p>
-            </div>
+              <div>
+                <h4 className="font-medium flex items-center mb-2 text-sm">
+                  <FaGraduationCap className="text-accent-600 mr-2" size={16} />
+                  Academic Standing
+                </h4>
+                <p className="text-sm text-gray-800">
+                  {viewApplication.academicStanding}
+                </p>
+              </div>
 
-            <div className="mb-6">
-              <h4 className="font-medium flex items-center mb-2">
-                <FaFileAlt className="text-accent-600 mr-2" />
-                Cover Letter
-              </h4>
-              <div className="p-4 bg-gray-50 rounded-lg text-gray-800">
-                {viewApplication.coverLetter}
+              <div>
+                <h4 className="font-medium flex items-center mb-2 text-sm">
+                  <FaFileAlt className="text-accent-600 mr-2" size={16} />
+                  Cover Letter
+                </h4>
+                <div className="p-3 bg-gray-50 rounded-lg text-sm text-gray-800">
+                  {viewApplication.coverLetter}
+                </div>
               </div>
             </div>
 
@@ -393,13 +468,13 @@ const AdminApplications = () => {
               <div className="flex justify-end space-x-2">
                 <button
                   onClick={() => handleReject(viewApplication.id)}
-                  className="px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50"
+                  className="px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 text-sm font-medium transition-colors duration-200"
                 >
                   Reject
                 </button>
                 <button
                   onClick={() => handleApprove(viewApplication.id)}
-                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-medium transition-colors duration-200"
                 >
                   Approve
                 </button>

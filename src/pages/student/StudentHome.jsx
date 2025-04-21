@@ -269,7 +269,7 @@ const StudentHome = () => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 mt-6 text-xs">
+        <div className="flex justify-center items-center gap-2 py-6 text-xs">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}

@@ -1,5 +1,4 @@
-// src/components/student/StudentSidebar.jsx
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   FaHome,
@@ -21,12 +20,15 @@ const StudentSidebar = () => {
   const { currentUser, sessions } = useContext(AppContext);
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Track window resize for responsive design
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+      setIsMobile(width < 768);
+      if (width >= 768) {
         setIsCollapsed(false); // Reset collapse state on desktop
       }
     };
@@ -52,6 +54,15 @@ const StudentSidebar = () => {
   const handleSwitchToTutor = () => {
     navigate('/tutor');
   };
+
+  // Determine Lottie sizing based on screen width
+  const getLottieSize = () => {
+    if (windowWidth < 350) return { width: 60, height: 60 };
+    if (windowWidth < 500) return { width: 100, height: 100 };
+    return { width: 150, height: 150 };
+  };
+
+  const lottieSize = getLottieSize();
 
   return (
     <div className={`h-full bg-white/25 shadow-sm flex flex-col transition-all duration-300 ${isCollapsed && !isMobile ? 'w-24' : (isMobile ? 'w-full' : 'w-80')}`}>
@@ -162,12 +173,6 @@ const StudentSidebar = () => {
             <div className="group text-sm bg-gradient-to-r from-primary-400 to-primary-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
             <h3 className="font-medium text-white mb-4">Find Your Perfect Tutor</h3>
 
-              {/* <DotLottieReact
-                src="https://lottie.host/2c3958d2-ecf5-4d1e-9230-129fb8981a0d/KmfgtpWGdj.lottie"
-                loop
-                autoplay
-              /> */}
-
             <div
               onClick={handleInstantBookingClick}
                 className="flex justify-center items-center bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-neutral-100 transition duration-300 cursor-pointer"
@@ -189,21 +194,26 @@ const StudentSidebar = () => {
           </div>
         ) : (
           <div className="group text-sm bg-gradient-to-r from-accent-400 to-accent-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
-            <h3 className="font-medium text-white mb-2">Share Your Knowledge</h3>
+              <div className="flex-1 flex-col items-center">
+                <h3 className="font-medium text-white mb-2">Share Your Knowledge</h3>
 
-              <DotLottieReact
-                src="https://lottie.host/6dad63ba-1cf5-4078-8d30-20d2b8a856e4/5cAjPbg9tH.lottie"
-                loop
-                autoplay
-                className='hidden md:flex'
-              />
-
-            <div
-              onClick={handleApplyTutorClick}
-                className="mt-2 flex justify-center items-center border-0 bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
-            >
-              <FaChalkboardTeacher className="mr-2" />
-              Apply for Tutoring
+                {/* Lottie animation with responsive sizing */}
+                <div className="md:flex justify-center flex-1 my-2 sm:mt-0 hidden">
+                  <DotLottieReact
+                    src="https://lottie.host/6dad63ba-1cf5-4078-8d30-20d2b8a856e4/5cAjPbg9tH.lottie"
+                    loop
+                    autoplay
+                    style={lottieSize}
+                    className="mx-auto"
+                  />
+                </div>
+                <div
+                  onClick={handleApplyTutorClick}
+                  className="mt-2 flex justify-center items-center border-0 bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
+                >
+                  <FaChalkboardTeacher className="mr-2" />
+                  Apply for Tutoring
+                </div>
             </div>
           </div>
         )}

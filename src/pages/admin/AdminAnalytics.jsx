@@ -374,7 +374,7 @@ const AdminAnalytics = () => {
               className={`px-4 py-2 text-sm font-medium border border-gray-300 rounded-r-md focus:z-10 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 ${timePeriod === 'all' ? 'bg-accent-600 text-white hover:bg-accent-700' : 'bg-white text-gray-700 hover:bg-gray-50'
                 }`}
             >
-              All Time
+              Yearly
             </button>
           </div>
           <button

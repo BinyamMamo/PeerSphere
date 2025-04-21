@@ -1,20 +1,18 @@
-// src/layouts/MainLayout.jsx
 import React, { useContext, useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import StudentSidebar from '../components/student/StudentSidebar';
 import TutorSidebar from '../components/tutor/TutorSidebar';
 import AdminSidebar from '../components/admin/AdminSidebar';
-import StudentRightbar from '../components/student/StudentRightbar';
-import TutorRightbar from '../components/tutor/TutorRightbar';
-import AdminRightbar from '../components/admin/AdminRightbar';
 import RoleToggle from '../components/shared/RoleToggle';
 import { FaBars, FaTimes, FaUser } from 'react-icons/fa';
+import JoinWaitlist from '../components/shared/JoinWaitlist';
+import { PiListStarDuotone, PiListStarLight } from 'react-icons/pi';
 
 const MainLayout = () => {
   const { userRole } = useContext(AppContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [rightbarOpen, setRightbarOpen] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // Check screen size on mount and resize
@@ -24,7 +22,6 @@ const MainLayout = () => {
       if (window.innerWidth >= 768) {
         // Close mobile menus when resizing to desktop
         setSidebarOpen(false);
-        setRightbarOpen(false);
       }
     };
 
@@ -33,10 +30,10 @@ const MainLayout = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Close sidebar/rightbar when clicking outside on mobile
+  // Close sidebar/waitlist when clicking outside on mobile
   const handleOverlayClick = () => {
     if (sidebarOpen) setSidebarOpen(false);
-    if (rightbarOpen) setRightbarOpen(false);
+    if (waitlistOpen) setWaitlistOpen(false);
   };
 
   // Render appropriate sidebar based on user role
@@ -50,20 +47,6 @@ const MainLayout = () => {
         return <AdminSidebar />;
       default:
         return <StudentSidebar />;
-    }
-  };
-
-  // Render appropriate rightbar based on user role
-  const renderRightbar = () => {
-    switch (userRole) {
-      case 'student':
-        return <StudentRightbar />;
-      case 'tutor':
-        return <TutorRightbar />;
-      case 'admin':
-        return <AdminRightbar />;
-      default:
-        return null;
     }
   };
 
@@ -82,21 +65,20 @@ const MainLayout = () => {
           <div className="flex items-center -ml-5">
             <img src="/peersphere.png" className="h-7 w-7" alt="PeerSphere" />
             <h1 className="font-bold text-xl text-gray-800 ml-2">PeerSphere</h1>
-            {/* <h1 className="font-bold text-lg text-gray-800">Find the best Tutors</h1> */}
           </div>
           <button
-            onClick={() => setRightbarOpen(true)}
-            className="p-2 rounded-md text-gray-600 hover:bg-gray-100"
-            aria-label="Open profile menu"
+            onClick={() => setWaitlistOpen(true)}
+            className="px-3 py-1.5 bg-primary-600 text-white text-sm rounded-md hover:bg-primary-700 shadow-sm"
+            aria-label="Join Waitlist"
           >
-            <FaUser />
+            Join Waitlist
           </button>
         </header>
       )}
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Overlay for mobile when sidebar/rightbar is open */}
-        {isMobile && (sidebarOpen || rightbarOpen) && (
+        {/* Overlay for mobile when sidebar/waitlist is open */}
+        {isMobile && (sidebarOpen || waitlistOpen) && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-20"
             onClick={handleOverlayClick}
@@ -109,55 +91,42 @@ const MainLayout = () => {
           ${isMobile ? (sidebarOpen ? 'left-0' : '-left-80') : ''} 
           transition-all duration-300 ease-in-out
         `}>
-          {/* {isMobile && sidebarOpen && (
-            <div className="absolute top-3 right-3">
-              <button
-                onClick={() => setSidebarOpen(false)}
-                className="p-2 rounded-full bg-gray-200 text-gray-600"
-              >
-                <FaTimes />
-              </button>
-            </div>
-          )} */}
           {renderSidebar()}
         </div>
 
-        {/* Main content area - takes full width on mobile, partial width on desktop */}
+        {/* Main content area */}
         <div className="flex-1 overflow-auto p-4">
           {!isMobile && (
-            <div className="mb-4">
+            <div className="mb-4 flex justify-between items-center">
               <RoleToggle />
             </div>
           )}
           <Outlet />
         </div>
 
-        {/* Rightbar - always visible on desktop for tutor/admin, hidden by default on mobile
-        {(isMobile || userRole !== 'student') && (
-          <div className={`
-            ${isMobile ? 'fixed z-30 h-full bg-white right-0 w-80' : 'h-full'}
-            ${isMobile ? (rightbarOpen ? 'right-0' : '-right-80') : ''}
-            transition-all duration-300 ease-in-out
-          `}>
-            {isMobile && rightbarOpen && (
-              <div className="absolute top-4 left-4">
-                <button
-                  onClick={() => setRightbarOpen(false)}
-                  className="p-2 rounded-full bg-gray-200 text-gray-600"
-                >
-                  <FaTimes />
-                </button>
-              </div>
-            )}
-            {renderRightbar()}
-          </div>
-        )} */}
+        {/* Waitlist Modal */}
+        {waitlistOpen && (
+          <JoinWaitlist onClose={() => setWaitlistOpen(false)} />
+        )}
       </div>
 
       {/* Mobile role toggle button - only shown on mobile */}
       {isMobile && (
         <div className="fixed bottom-4 right-4 z-10">
           <RoleToggle isMobile={true} />
+        </div>
+      )}
+
+      {/* Desktop floating waitlist button - only shown on desktop when scrolling */}
+      {!isMobile && (
+        <div className="fixed top-6 right-6 z-50">
+          <button
+            onClick={() => setWaitlistOpen(true)}
+            className="group ring-4 px-4 py-3 bg-primary-600/95 text-white rounded-3xl hover:ring-2 active:scale-95 transition-all duration-300 transform flex items-center gap-1.5"
+          >
+            <PiListStarDuotone className='text-xl' />
+            <span className='leading-none'>Join Waitlist</span>
+          </button>
         </div>
       )}
     </div>

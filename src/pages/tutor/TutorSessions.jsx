@@ -135,7 +135,7 @@ const TutorSessions = () => {
   const cancelledCount = tutorSessions.filter(s => s.status === 'Cancelled').length;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto">
       <h1 className="text-2xl font-bold mb-6">Manage Sessions</h1>
 
       {/* Tabs */}
