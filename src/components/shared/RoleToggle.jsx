@@ -42,7 +42,7 @@ const RoleToggle = ({ isMobile = false }) => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className={`active:scale-95 transition ease-in-out flex items-center justify-center p-5 rounded-full ${userRole === 'admin' ? "bg-accent-600" : userRole === 'tutor' ? "bg-emerald-600" : "bg-primary-600"} text-white shadow-xl ring-2 active:ring  transition ease-in-out`}
+          className={`active:scale-95 transition ease-in-out flex items-center justify-center p-5 rounded-full ${userRole === 'admin' ? "bg-accent-600 ring-accent-600/65" : userRole === 'tutor' ? "bg-secondary-600 ring-secondary-600/65" : "bg-primary-600 ring-primary-600/65"} text-white shadow-xl ring-2 active:ring transition ease-in-out`}
           aria-label="Switch role"
         >
           {userRole === 'student' ? (

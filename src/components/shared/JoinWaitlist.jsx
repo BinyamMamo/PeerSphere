@@ -20,13 +20,18 @@ const JoinWaitlist = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Feedback options
+  // Updated feedback options related to platform features
   const feedbackOptions = [
-    { id: 'peer-learning', label: 'Peer-to-peer learning model' },
-    { id: 'flexibility', label: 'Flexible scheduling' },
-    // { id: 'affordability', label: 'Affordable tutoring' },
-    { id: 'subject-variety', label: 'Variety of subjects' },
-    { id: 'interface', label: 'User-friendly interface' }
+    { id: 'tutor-search', label: 'Finding tutors by subject & preferences' },
+    { id: 'tutor-profiles', label: 'Tutor profiles with ratings & reviews' },
+    { id: 'booking-system', label: 'Simple session booking process' },
+    { id: 'calendar-integration', label: 'Calendar integration for scheduling' },
+    { id: 'tutor-application', label: 'Ability to apply as a peer tutor' },
+    { id: 'favorite-tutors', label: 'Saving favorite tutors for quick booking' },
+    { id: 'session-management', label: 'Managing upcoming/past sessions' },
+    { id: 'virtual-sessions', label: 'Virtual session rooms with video/chat' },
+    { id: 'mobile-friendly', label: 'Mobile-friendly experience' },
+    { id: 'earnings-tracking', label: 'Earnings tracking for tutors' }
   ];
 
   // Pre-fill form with user data
@@ -107,7 +112,8 @@ const JoinWaitlist = ({ onClose }) => {
           timestamp: serverTimestamp()
         });
       } else {
-        throw new Error('Firebase not initialized');
+        // Simulate successful submission for demo/development without firebase
+        await new Promise(resolve => setTimeout(resolve, 1500));
       }
 
       setSubmitted(true);
@@ -151,7 +157,7 @@ const JoinWaitlist = ({ onClose }) => {
             </p>
             <button
               onClick={onClose}
-              className="inline-flex justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex justify-center px-6 py-3 text-base font-medium text-white bg-primary-600 border border-transparent rounded-lg hover:bg-primary-700 transition-colors"
             >
               Close
             </button>
@@ -162,7 +168,7 @@ const JoinWaitlist = ({ onClose }) => {
               <p className="mb-6 text-gray-600 text-center">
                 {formData.isAnonymous
                   ? 'Tell us what you think about PeerSphere!'
-                  : 'Get early access to our revolutionary tutoring platform!'}
+                    : 'Get early access to our peer tutoring platform!'}
               </p>
 
               {/* Anonymous toggle */}
@@ -172,7 +178,7 @@ const JoinWaitlist = ({ onClose }) => {
                     type="checkbox"
                     checked={formData.isAnonymous}
                     onChange={handleAnonymousToggle}
-                    className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                   />
                   <span className="text-sm text-gray-700">
                     Submit anonymously (just share feedback without joining waitlist)
@@ -191,7 +197,7 @@ const JoinWaitlist = ({ onClose }) => {
                       type="text"
                       id="name"
                       name="name"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="Your full name"
                       value={formData.name}
                       onChange={handleInputChange}
@@ -207,7 +213,7 @@ const JoinWaitlist = ({ onClose }) => {
                       type="email"
                       id="email"
                       name="email"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="your.email@university.com"
                       value={formData.email}
                       onChange={handleInputChange}
@@ -224,7 +230,7 @@ const JoinWaitlist = ({ onClose }) => {
                         name="isDubaiUni"
                         checked={formData.isDubaiUni}
                         onChange={handleInputChange}
-                        className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                          className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                       />
                       <label htmlFor="isDubaiUni" className="ml-2 text-sm font-medium text-gray-700">
                         I am from University of Dubai
@@ -234,7 +240,7 @@ const JoinWaitlist = ({ onClose }) => {
                       <input
                         type="text"
                         name="university"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                         placeholder="Enter your university name"
                         value={formData.university}
                         onChange={handleInputChange}
@@ -244,19 +250,19 @@ const JoinWaitlist = ({ onClose }) => {
                 </>
               )}
 
-              {/* Feedback options */}
+                {/* Feature-specific feedback options */}
               <div className="mb-5">
                 <p className="block text-sm font-medium text-gray-700 mb-3">
-                  What excites you about PeerSphere? (Select all that apply)
+                    Which features of PeerSphere interest you most? (Select all that apply)
                 </p>
-                <div className="grid grid-cols-1 gap-2">
+                  <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
                   {feedbackOptions.map(option => (
                     <label key={option.id} className="flex items-center space-x-3">
                       <input
                         type="checkbox"
                         checked={formData.feedbackTypes.includes(option.id)}
                         onChange={() => toggleFeedback(option.id)}
-                        className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                       />
                       <span className="text-sm text-gray-700">{option.label}</span>
                     </label>
@@ -264,10 +270,49 @@ const JoinWaitlist = ({ onClose }) => {
                 </div>
               </div>
 
+                {/* User role experience question */}
+                <div className="mb-5">
+                  <p className="block text-sm font-medium text-gray-700 mb-2">
+                    How would you primarily use PeerSphere?
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <label className="flex items-center border rounded-lg p-3 hover:bg-gray-50">
+                      <input
+                        type="radio"
+                        name="userPreference"
+                        value="student"
+                        onChange={handleInputChange}
+                        className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">As a student seeking tutoring</span>
+                    </label>
+                    <label className="flex items-center border rounded-lg p-3 hover:bg-gray-50">
+                      <input
+                        type="radio"
+                        name="userPreference"
+                        value="tutor"
+                        onChange={handleInputChange}
+                        className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">As a tutor helping others</span>
+                    </label>
+                    <label className="flex items-center border rounded-lg p-3 hover:bg-gray-50 sm:col-span-2">
+                      <input
+                        type="radio"
+                        name="userPreference"
+                        value="both"
+                        onChange={handleInputChange}
+                        className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Both as student and tutor</span>
+                    </label>
+                  </div>
+                </div>
+
               {/* Rating */}
               <div className="mb-5">
                 <p className="block text-sm font-medium text-gray-700 mb-3">
-                  How excited are you about PeerSphere?
+                    How excited are you about using PeerSphere?
                 </p>
                 <div className="flex items-center justify-center gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -292,17 +337,17 @@ const JoinWaitlist = ({ onClose }) => {
                 </div>
               </div>
 
-              {/* Comment */}
+                {/* Comment - enhanced with more specific prompts */}
               <div className="mb-6">
                 <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-2">
-                  Any thoughts or suggestions?
+                    Additional feedback
                 </label>
                 <textarea
                   id="comment"
                   name="comment"
                   rows="4"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="Share your thoughts about PeerSphere..."
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    placeholder="What other features would you like to see? How would PeerSphere help your academic journey?"
                   value={formData.comment}
                   onChange={handleInputChange}
                 ></textarea>
@@ -320,7 +365,7 @@ const JoinWaitlist = ({ onClose }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 px-4 text-base font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`w-full py-3 px-4 text-base font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 {loading ? 'Submitting...' : formData.isAnonymous ? 'Submit Feedback' : 'Join Waitlist'}
               </button>

@@ -259,7 +259,7 @@ const TutorCalendar = () => {
                 : isPastDay(day)
                   ? 'bg-gray-50 text-gray-400 cursor-not-allowed'
                   : isToday(day)
-                    ? 'bg-primary-50 border-primary-200 cursor-pointer hover:bg-primary-100'
+                    ? 'bg-secondary-50 border-secondary-200 cursor-pointer hover:bg-secondary-100'
                     : 'cursor-pointer hover:bg-gray-50'
                 }`}
               onClick={() => handleDayClick(day)}
@@ -269,7 +269,7 @@ const TutorCalendar = () => {
                   <div className="text-right flex justify-end items-center">
                     <span
                       className={`inline-block w-5 h-5 sm:w-6 sm:h-6 rounded-full text-center leading-5 sm:leading-6 text-xs sm:text-sm ${isToday(day)
-                        ? 'bg-primary-600 text-white'
+                        ? 'bg-secondary-600 text-white'
                         : isPastDay(day)
                           ? 'text-gray-400'
                           : 'text-gray-700'
@@ -279,7 +279,7 @@ const TutorCalendar = () => {
                     </span>
                     <div className="flex ml-1">
                       {hasAvailability(day) && (
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary-500 mr-1" title="Available"></div>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-secondary-500 mr-1" title="Available"></div>
                       )}
                       {hasBookedSessions(day) && (
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500" title="Booked"></div>
@@ -290,7 +290,7 @@ const TutorCalendar = () => {
                     {getAvailabilityForDay(day).map((slot, slotIndex) => (
                       <div
                         key={slotIndex}
-                        className="text-xs p-1 rounded bg-primary-100 text-primary-800 flex justify-between items-center"
+                        className="text-xs p-1 rounded bg-secondary-100 text-secondary-800 flex justify-between items-center"
                       >
                         <span>{slot.startTime}</span>
                         <button
@@ -339,7 +339,7 @@ const TutorCalendar = () => {
                 <div
                   key={index}
                   className={`text-center text-xs sm:text-sm ${isTodayFlag
-                    ? 'bg-primary-50 border-b-2 border-primary-500'
+                    ? 'bg-secondary-50 border-b-2 border-secondary-500'
                     : isPast
                       ? 'text-gray-400'
                       : ''
@@ -347,7 +347,7 @@ const TutorCalendar = () => {
                 >
                   <div className="font-medium">{weekdays[index]}</div>
                   <div
-                    className={`text-base sm:text-lg font-semibold ${isTodayFlag ? 'text-primary-600' : ''
+                    className={`text-base sm:text-lg font-semibold ${isTodayFlag ? 'text-secondary-600' : ''
                       }`}
                   >
                     {day.date}
@@ -388,13 +388,13 @@ const TutorCalendar = () => {
                         : isAvailable
                           ? isBooked
                             ? 'bg-green-50'
-                            : 'bg-primary-50 cursor-pointer hover:bg-primary-100'
+                            : 'bg-secondary-50 cursor-pointer hover:bg-secondary-100'
                           : 'cursor-pointer hover:bg-gray-50'
                         }`}
                       onClick={() => !isPast && handleDayClick(day.date, day.month, day.year)}
                     >
                       {isAvailable && !isBooked && (
-                        <div className="text-xs bg-primary-100 text-primary-800 p-1 rounded">
+                        <div className="text-xs bg-secondary-100 text-secondary-800 p-1 rounded">
                           Available
                         </div>
                       )}
@@ -449,13 +449,13 @@ const TutorCalendar = () => {
                     : isAvailable1
                       ? session1
                         ? 'bg-green-100'
-                        : 'bg-primary-100 cursor-pointer hover:bg-primary-200'
+                        : 'bg-secondary-100 cursor-pointer hover:bg-secondary-200'
                       : 'cursor-pointer hover:bg-gray-100'
                     }`}
                   onClick={() => !isPast1 && !session1 && handleTimeSlotClick(hour.hour)}
                 >
                   {isAvailable1 && !session1 && (
-                    <div className="flex justify-between items-center text-primary-800 text-xs sm:text-sm px-2">
+                    <div className="flex justify-between items-center text-secondary-800 text-xs sm:text-sm px-2">
                       <span>Available</span>
                       <button className="text-red-500 hover:text-red-700">
                         <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -488,13 +488,13 @@ const TutorCalendar = () => {
                     : isAvailable2
                       ? session2
                         ? 'bg-green-100'
-                        : 'bg-primary-100 cursor-pointer hover:bg-primary-200'
+                        : 'bg-secondary-100 cursor-pointer hover:bg-secondary-200'
                       : 'cursor-pointer hover:bg-gray-100'
                     }`}
                   onClick={() => !isPast2 && !session2 && handleTimeSlotClick(hour.hour)}
                 >
                   {isAvailable2 && !session2 && (
-                    <div className="flex justify-between items-center text-primary-800 text-xs sm:text-sm px-2">
+                    <div className="flex justify-between items-center text-secondary-800 text-xs sm:text-sm px-2">
                       <span>Available</span>
                       <button className="text-red-500 hover:text-red-700">
                         <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -530,7 +530,7 @@ const TutorCalendar = () => {
         <h1 className="text-xl sm:text-2xl font-bold">Calendar</h1>
         <button
           onClick={() => setShowBulkAdd(true)}
-          className="flex items-center bg-primary-600 gap-1 text-white px-3 py-2 rounded-md hover:bg-primary-700 text-sm"
+          className="flex items-center bg-secondary-600 gap-1 text-white px-3 py-2 rounded-md hover:bg-secondary-700 text-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -546,7 +546,7 @@ const TutorCalendar = () => {
           <div className="flex items-center">
             <button
               onClick={navigatePrevious}
-              className="text-gray-600 hover:text-primary-600 mr-3 sm:mr-4 p-2"
+              className="text-gray-600 hover:text-secondary-600 mr-3 sm:mr-4 p-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -557,7 +557,7 @@ const TutorCalendar = () => {
             </h2>
             <button
               onClick={navigateNext}
-              className="text-gray-600 hover:text-primary-600 p-2"
+              className="text-gray-600 hover:text-secondary-600 p-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -568,7 +568,7 @@ const TutorCalendar = () => {
             <button
               onClick={() => setCalendarView('month')}
               className={`px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${calendarView === 'month'
-                ? 'text-primary-800 font-bold bg-primary-50'
+                ? 'text-secondary-800 font-bold bg-secondary-50'
                 : 'text-gray-700 hover:bg-gray-200 font-medium'
                 }`}
             >
@@ -582,7 +582,7 @@ const TutorCalendar = () => {
             <button
               onClick={() => setCalendarView('week')}
               className={`px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${calendarView === 'week'
-                ? 'text-primary-800 font-bold bg-primary-50'
+                ? 'text-secondary-800 font-bold bg-secondary-50'
                 : 'text-gray-700 hover:bg-gray-200 font-medium'
                 }`}
             >
@@ -596,7 +596,7 @@ const TutorCalendar = () => {
             <button
               onClick={() => setCalendarView('day')}
               className={`px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${calendarView === 'day'
-                ? 'text-primary-800 font-bold bg-primary-50'
+                ? 'text-secondary-800 font-bold bg-secondary-50'
                 : 'text-gray-700 hover:bg-gray-200 font-medium'
                 }`}
             >
@@ -648,7 +648,7 @@ const TutorCalendar = () => {
                   <select
                     id="startTime"
                     name="startTime"
-                    className="pl-10 px-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-sm"
+                    className="pl-10 px-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 text-sm"
                     value={newSlot.startTime}
                     onChange={handleInputChange}
                     required
@@ -689,7 +689,7 @@ const TutorCalendar = () => {
                 <select
                   id="duration"
                   name="duration"
-                  className="px-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-sm"
+                  className="px-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 text-sm"
                   value={newSlot.duration}
                   onChange={handleInputChange}
                   required
@@ -710,7 +710,7 @@ const TutorCalendar = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 text-sm"
+                  className="px-3 sm:px-4 py-2 bg-secondary-600 text-white rounded-md hover:bg-secondary-700 text-sm"
                 >
                   Add Slot
                 </button>

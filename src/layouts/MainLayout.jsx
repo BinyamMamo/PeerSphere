@@ -7,6 +7,7 @@ import AdminSidebar from '../components/admin/AdminSidebar';
 import RoleToggle from '../components/shared/RoleToggle';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { PiListStarDuotone } from 'react-icons/pi';
+import JoinWaitlist from '../components/shared/JoinWaitlist';
 
 const MainLayout = () => {
   const { userRole } = useContext(AppContext);
@@ -79,7 +80,6 @@ const MainLayout = () => {
   // Close sidebar/waitlist when clicking outside on mobile
   const handleOverlayClick = () => {
     if (sidebarOpen) setSidebarOpen(false);
-    if (waitlistOpen) setWaitlistOpen(false);
   };
 
   // Render appropriate sidebar based on user role
@@ -113,18 +113,20 @@ const MainLayout = () => {
           </div>
           <button
             onClick={() => setWaitlistOpen(true)}
-            className="px-3 py-2 bg-primary-600 text-white text-sm rounded-md hover:bg-primary-700 shadow-sm flex items-center"
+            className={`px-3 py-2 text-white text-sm rounded-md shadow-sm flex items-center
+            ${userRole === 'admin' ? "bg-accent-600 hover:bg-accent-700 ring-accent-600/65" :
+                userRole === 'tutor' ? "bg-secondary-600 hover:bg-secondary-700 ring-secondary-600/65" :
+                  "bg-primary-600 hover:bg-primary-700 ring-primary-600/65"}`}
             aria-label="Join Waitlist"
           >
-            <span className="hidden sm:inline mr-1">Join</span>
-            <span>List</span>
+            <span className="">Join Waitlist</span>
           </button>
         </header>
       )}
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Overlay for mobile when sidebar/waitlist is open */}
-        {isMobile && (sidebarOpen || waitlistOpen) && (
+        {/* Overlay for mobile when sidebar is open */}
+        {isMobile && sidebarOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-20"
             onClick={handleOverlayClick}
@@ -151,60 +153,7 @@ const MainLayout = () => {
         </div>
 
         {/* Waitlist Modal */}
-        {waitlistOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-            <div className="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-gray-800">Join Our Waitlist</h2>
-                <button
-                  onClick={() => setWaitlistOpen(false)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  <FaTimes />
-                </button>
-              </div>
-
-              <p className="mb-4 text-gray-600">
-                Get early access to PeerSphere and connect with peer tutors at your university.
-              </p>
-
-              <form>
-                <div className="mb-4">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="your@university.edu"
-                    required
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="university" className="block text-sm font-medium text-gray-700 mb-1">
-                    University
-                  </label>
-                  <input
-                    type="text"
-                    id="university"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Your University"
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition duration-200"
-                >
-                  Join Waitlist
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
+        {waitlistOpen && <JoinWaitlist onClose={() => setWaitlistOpen(false)} />}
       </div>
 
       {/* Mobile role toggle button - only shown on mobile */}
@@ -219,7 +168,10 @@ const MainLayout = () => {
         <div className="fixed bottom-16 mb-2 right-2 z-50">
           <button
             onClick={() => setWaitlistOpen(true)}
-            className="group flex items-center gap-2 bg-primary-600 text-white px-5 py-3 rounded-full hover:bg-primary-700 shadow-lg hover:shadow-xl transition-all duration-300"
+            className={`group flex items-center gap-2 text-white px-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300
+            ${userRole === 'admin' ? "bg-accent-600 hover:bg-accent-700 ring-1 ring-accent-600/65" :
+                userRole === 'tutor' ? "bg-secondary-600 hover:bg-secondary-700 ring-1 ring-secondary-600/65" :
+                  "bg-primary-600 hover:bg-primary-700 ring-1 ring-primary-600/65"}`}
           >
             <PiListStarDuotone className="text-xl" />
             <span className="font-medium">Join Waitlist</span>
