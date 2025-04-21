@@ -1,27 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FaTimes, FaCheckCircle } from 'react-icons/fa';
 import { AppContext } from '../../context/AppContext';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyABC123_REPLACE_WITH_YOUR_API_KEY",
-  authDomain: "peersphere-tutoring.firebaseapp.com",
-  projectId: "peersphere-tutoring",
-  storageBucket: "peersphere-tutoring.appspot.com"
-};
-
-// Initialize Firebase
-let app;
-let db;
-
-try {
-  app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-} catch (error) {
-  console.error("Firebase initialization error:", error);
-}
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const JoinWaitlist = ({ onClose }) => {
   const { currentUser } = useContext(AppContext);
@@ -126,8 +107,7 @@ const JoinWaitlist = ({ onClose }) => {
           timestamp: serverTimestamp()
         });
       } else {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log('Firebase not initialized, simulating submission');
+        throw new Error('Firebase not initialized');
       }
 
       setSubmitted(true);
