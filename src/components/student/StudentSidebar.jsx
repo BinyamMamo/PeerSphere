@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   FaHome,
   FaCalendarAlt,
@@ -15,10 +15,11 @@ import {
 import { AppContext } from '../../context/AppContext';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-const StudentSidebar = () => {
+const StudentSidebar = ({ closeMobileSidebar }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { currentUser, sessions } = useContext(AppContext);
+  const { currentUser } = useContext(AppContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -41,32 +42,40 @@ const StudentSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
+  // Navigation with mobile sidebar closing
+  const handleNavigation = (path) => {
+    navigate(path);
+    if (isMobile) {
+      closeMobileSidebar();
+    }
+  };
+
   // Navigation handlers
   const handleInstantBookingClick = () => {
-    navigate('/book-session');
+    handleNavigation('/book-session');
   };
 
   const handleApplyTutorClick = () => {
-    navigate('/student/apply-tutor');
+    handleNavigation('/student/apply-tutor');
   };
 
   // Handler for switching to tutor mode
   const handleSwitchToTutor = () => {
-    navigate('/tutor');
+    handleNavigation('/tutor');
   };
 
   // Determine Lottie sizing based on screen width
   const getLottieSize = () => {
     if (windowWidth < 350) return { width: 60, height: 60 };
-    if (windowWidth < 500) return { width: 100, height: 100 };
-    return { width: 150, height: 150 };
+    if (windowWidth < 500) return { width: 80, height: 80 };
+    return { width: 120, height: 120 };
   };
 
   const lottieSize = getLottieSize();
 
   return (
-    <div className={`h-full bg-white/25 shadow-sm flex flex-col transition-all duration-300 ${isCollapsed && !isMobile ? 'w-24' : (isMobile ? 'w-full' : 'w-80')}`}>
-      {/* Logo */}
+    <div className={`h-full bg-white/25 shadow-sm flex flex-col transition-all duration-300 ${isCollapsed && !isMobile ? 'w-24' : (isMobile ? 'w-80' : 'w-80')}`}>
+      {/* Logo and mobile close button */}
       <div className={`p-4 my-2 flex items-center justify-between ${isCollapsed && !isMobile ? 'px-2' : ''}`}>
         <div className="flex items-center">
           <img
@@ -80,7 +89,16 @@ const StudentSidebar = () => {
             </Link>
           )}
         </div>
-        {!isMobile && (
+
+        {isMobile ? (
+          <button
+            onClick={closeMobileSidebar}
+            className="text-gray-600 hover:text-gray-800 p-1"
+            aria-label="Close sidebar"
+          >
+            <FaTimes size={20} />
+          </button>
+        ) : (
           <div
             onClick={toggleSidebar}
             className="text-gray-600 hover:text-primary-700 focus:outline-none cursor-pointer"
@@ -105,6 +123,7 @@ const StudentSidebar = () => {
               }
               end
               title={isCollapsed && !isMobile ? 'Find Tutors' : ''}
+              onClick={() => isMobile && closeMobileSidebar()}
             >
               <FaHome className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
               {(!isCollapsed || isMobile) && <span>Find Tutors</span>}
@@ -120,6 +139,7 @@ const StudentSidebar = () => {
                 }`
               }
               title={isCollapsed && !isMobile ? 'My Calendar' : ''}
+              onClick={() => isMobile && closeMobileSidebar()}
             >
               <FaCalendarAlt className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
               {(!isCollapsed || isMobile) && <span>My Calendar</span>}
@@ -135,6 +155,7 @@ const StudentSidebar = () => {
                 }`
               }
               title={isCollapsed && !isMobile ? 'My Sessions' : ''}
+              onClick={() => isMobile && closeMobileSidebar()}
             >
               <FaListAlt className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
               {(!isCollapsed || isMobile) && <span>My Sessions</span>}
@@ -150,6 +171,7 @@ const StudentSidebar = () => {
                 }`
               }
               title={isCollapsed && !isMobile ? 'Favorite Tutors' : ''}
+              onClick={() => isMobile && closeMobileSidebar()}
             >
               <FaStar className={`${isCollapsed && !isMobile ? 'mx-auto' : 'mr-3'}`} />
               {(!isCollapsed || isMobile) && <span>Favorite Tutors</span>}
@@ -194,11 +216,11 @@ const StudentSidebar = () => {
           </div>
         ) : (
           <div className="group text-sm bg-gradient-to-r from-accent-400 to-accent-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
-              <div className="flex-1 flex-col items-center">
+              <div className="flex flex-col">
                 <h3 className="font-medium text-white mb-2">Share Your Knowledge</h3>
 
                 {/* Lottie animation with responsive sizing */}
-                <div className="md:flex justify-center flex-1 my-2 sm:mt-0 hidden">
+                <div className="flex justify-center items-center my-2">
                   <DotLottieReact
                     src="https://lottie.host/6dad63ba-1cf5-4078-8d30-20d2b8a856e4/5cAjPbg9tH.lottie"
                     loop
@@ -207,6 +229,7 @@ const StudentSidebar = () => {
                     className="mx-auto"
                   />
                 </div>
+
                 <div
                   onClick={handleApplyTutorClick}
                   className="mt-2 flex justify-center items-center border-0 bg-white text-neutral-600 px-4 py-2 rounded font-medium shadow hover:bg-slate-50 transition duration-300 cursor-pointer"
@@ -233,7 +256,7 @@ const StudentSidebar = () => {
                 alt="User"
                 className="w-10 h-10 rounded-full object-cover group-hover:ring-2 group-hover:ring-primary-300 transition duration-300"
               />
-              <div className="absolute -bottom-5 -right-5 w-3 h-3 rounded-full bg-green-500 border-2 border-white"></div>
+              <div className="absolute bottom-0 right-0 rounded-full bg-green-500 text-white w-3 h-3 flex items-center justify-center border-2 border-white"></div>
             </div>
           </div>
         ) : (
@@ -244,7 +267,9 @@ const StudentSidebar = () => {
                 alt="User"
                 className="w-12 h-12 rounded-full object-cover"
               />
-              <div className="absolute bottom-0 right-0 rounded-full bg-white opacity-90 text-neutral-700 border-2 border-neutral-700 flex items-center justify-center p-[3px]"><FaUserGraduate size={8} className='' /></div>
+                <div className="absolute bottom-0 right-0 rounded-full bg-white opacity-90 text-neutral-700 border-2 border-neutral-700 flex items-center justify-center p-[3px]">
+                  <FaUserGraduate size={8} />
+                </div>
             </div>
             <div className="ml-4 flex-grow flex flex-col gap-1">
               <div className="flex items-center justify-between">

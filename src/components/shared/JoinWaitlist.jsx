@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FaTimes, FaCheckCircle } from 'react-icons/fa';
 import { AppContext } from '../../context/AppContext';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { db } from '../../firebase'; // Import the db from your firebase.js file
 
 const JoinWaitlist = ({ onClose }) => {
   const { currentUser } = useContext(AppContext);
@@ -24,7 +24,7 @@ const JoinWaitlist = ({ onClose }) => {
   const feedbackOptions = [
     { id: 'peer-learning', label: 'Peer-to-peer learning model' },
     { id: 'flexibility', label: 'Flexible scheduling' },
-    { id: 'affordability', label: 'Affordable tutoring' },
+    // { id: 'affordability', label: 'Affordable tutoring' },
     { id: 'subject-variety', label: 'Variety of subjects' },
     { id: 'interface', label: 'User-friendly interface' }
   ];
