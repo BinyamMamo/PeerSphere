@@ -265,7 +265,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 p-2 md:p-0">
-      <div className="select-none bg-white rounded-lg shadow-xl w-full max-w-4xl flex flex-col overflow-hidden">
+      <div className="select-none bg-white rounded-lg shadow-xl w-full max-w-4xl flex flex-col">
         <div className="flex justify-between items-center p-3 md:p-4 border-b-0">
           <h2 className="text-lg md:text-xl text-secondary-800 font-bold flex items-center">
             <TbCalendarCog className="mr-1 md:mr-2 text-xl md:text-2xl" />
@@ -290,7 +290,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
               onTouchEnd={handleMouseUp}
               style={{ touchAction: 'none' }}
             >
-              <div className="flex justify-between w-full items-center mb-2 font-medium text-xl">
+              <div className="flex justify-between w-full items-center mb-3 font-medium text-xl">
                 <button
                   onClick={() => changeActiveDay(-1)}
                   className="p-2 text-secondary-600"
@@ -298,7 +298,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
                   <FaAngleLeft /> 
                 </button>
                 <div
-                  className={`text-center p-2 uppercase rounded-md w-40
+                  className={`text-center w-48 p-2.5 uppercase rounded-md
                     ${disabledDays.includes(activeDay)
                       ? 'bg-gray-100 text-gray-500'
                     : 'bg-secondary-100 text-secondary-900'
@@ -315,7 +315,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-[auto_1fr] gap-1 w-full px-4 py-2">
+              <div className="grid grid-cols-[auto_1fr] gap-1 w-full px-4 pl-2 py-2">
                 {timeSlots.map((slot, rowIndex) => (
                   <React.Fragment key={rowIndex}>
                     <div className="text-xs w-16 text-right pr-2 py-2 font-medium text-gray-600">
