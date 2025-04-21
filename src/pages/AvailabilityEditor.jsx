@@ -265,8 +265,8 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 p-2 md:p-0">
-      <div className="select-none bg-white rounded-lg shadow-xl w-full max-w-4xl flex flex-col overflow-hidden max-h-screen">
-        <div className="flex justify-between items-center p-3 md:p-4 border-b bg-white sticky top-0 z-10">
+      <div className="select-none bg-white rounded-lg shadow-xl w-full max-w-4xl flex flex-col overflow-">
+        <div className="flex justify-between items-center p-3 md:p-4 border-b-0">
           <h2 className="text-lg md:text-xl text-secondary-800 font-bold flex items-center">
             <TbCalendarCog className="mr-1 md:mr-2 text-xl md:text-2xl" />
             <span className='leading-none'>
@@ -281,10 +281,10 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
           </button>
         </div>
 
-        <div className="p-2 md:p-4 overflow-auto flex-1">
+        <div className="p-2 md:p-4 overflow-auto">
           {isMobile ? (
             <div
-              className="select-none overflow-hidden flex flex-col items-center" 
+              className="select-none overflow-hidden flex flex-col items-center"
               ref={gridRef}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleMouseUp}
@@ -315,8 +315,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-[auto_1fr] gap-1 w-full px-4 pl-2 py-2 overflow-y-auto"
-                style={{ height: 'auto', maxHeight: 'calc(100vh - 210px)' }}>
+              <div className="grid grid-cols-[auto_1fr] gap-1 w-full px-4 pl-2 py-2">
                 {timeSlots.map((slot, rowIndex) => (
                   <React.Fragment key={rowIndex}>
                     <div className="text-xs w-16 text-right pr-2 py-2 font-medium text-gray-600">
@@ -393,7 +392,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
           )}
         </div>
 
-        <div className="p-2 md:p-4 border-t bg-gray-50 flex flex-wrap md:flex-nowrap justify-between gap-2">
+        <div className="p-2 md:p-4 border-t bg-gray-50 flex justify-between gap-2">
           <button
             type="button"
             onClick={onClose}
@@ -401,7 +400,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
           >
             Cancel
           </button>
-          <div className="flex gap-2 order-first md:order-none w-full md:w-auto justify-center">
+          <div className="flex gap-2 md:order-none w-full md:w-auto justify-center">
             <div className="flex bg-gray-100 rounded-md overflow-hidden">
               <button
                 type="button"
