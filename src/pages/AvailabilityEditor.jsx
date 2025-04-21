@@ -7,9 +7,9 @@ import {
   FaUndo,
   FaRedo,
   FaTrash,
-  FaCalendarAlt
+  FaAngleRight,
+  FaAngleLeft,
 } from 'react-icons/fa';
-import { IoCalendarOutline } from 'react-icons/io5';
 import { TbCalendarCog } from 'react-icons/tb';
 
 const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
@@ -24,8 +24,8 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
   const [activeDay, setActiveDay] = useState(0);
 
   const gridRef = useRef(null);
+  const cellRefs = useRef({});
   const lastCell = useRef(null);
-  const touchTimeout = useRef(null);
 
   const weekdays = [
     { short: 'Sun', full: 'Sunday' },
@@ -91,42 +91,85 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
     );
   };
 
+  // Helper function to save current state to history
+  const saveToHistory = () => {
+    setHistory(prev => {
+      const newHistory = prev.slice(0, historyIndex + 1);
+      newHistory.push(JSON.parse(JSON.stringify(timeGrid)));
+      return newHistory;
+    });
+    setHistoryIndex(prev => prev + 1);
+  };
+
+  // Get cell coordinates from touch event
+  const getCellFromTouch = (touchEvent) => {
+    const touch = touchEvent.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    if (!element) return null;
+
+    // Check if the element has a data attribute with cell coordinates
+    const cellId = element.getAttribute('data-cell-id');
+    if (cellId) {
+      const [rowIndex, colIndex] = cellId.split('-').map(Number);
+      return { rowIndex, colIndex: isMobile ? activeDay : colIndex };
+    }
+
+    return null;
+  };
+
+  const handleCellStateChange = (rowIndex, colIndex, newValue = null) => {
+    if (rowIndex >= timeGrid.length || disabledDays.includes(colIndex)) return;
+
+    // If newValue is not explicitly provided, use the tool mode
+    const cellValue = newValue !== null ? newValue : (toolMode === 'brush');
+
+    // Only update if the cell is different from the last one we modified
+    if (!lastCell.current ||
+      lastCell.current.row !== rowIndex ||
+      lastCell.current.col !== colIndex) {
+
+      const newGrid = [...timeGrid];
+      newGrid[rowIndex][colIndex] = cellValue;
+      setTimeGrid(newGrid);
+      lastCell.current = { row: rowIndex, col: colIndex };
+    }
+  };
+
   const handleMouseDown = (rowIndex, colIndex) => {
     const actualColIndex = isMobile ? activeDay : colIndex;
 
     if (rowIndex >= timeGrid.length || disabledDays.includes(actualColIndex)) return;
-    const newValue = toolMode === 'brush' ? true : false;
-    const newGrid = [...timeGrid];
 
-    newGrid[rowIndex][actualColIndex] = newValue;
-    setTimeGrid(newGrid);
+    // Get the current value of the cell to determine drag mode
+    const currentValue = timeGrid[rowIndex][actualColIndex];
+    const newValue = toolMode === 'brush' ? true : false;
+
+    // Set drag mode based on current cell state and tool
     setDragMode(newValue ? 'add' : 'remove');
     setIsDragging(true);
-    lastCell.current = { row: rowIndex, col: actualColIndex };
+
+    // Update the cell
+    handleCellStateChange(rowIndex, actualColIndex, newValue);
+  };
+
+  const handleTouchStart = (e, rowIndex) => {
+    e.preventDefault(); // Prevent default touch behavior
+
+    const cell = getCellFromTouch(e);
+    if (cell) {
+      handleMouseDown(cell.rowIndex, cell.colIndex);
+    }
   };
 
   const handleTouchMove = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent scrolling
+
     if (!isDragging) return;
 
-    const touch = e.touches[0];
-    const element = document.elementFromPoint(touch.clientX, touch.clientY);
-
-    if (element && gridRef.current.contains(element)) {
-      const rect = element.getBoundingClientRect();
-      const rowIndex = Math.floor((touch.clientY - rect.top) / (rect.height / timeSlots.length));
-
-      if (rowIndex >= 0 && rowIndex < timeGrid.length &&
-        (!lastCell.current || lastCell.current.row !== rowIndex)) {
-        if (touchTimeout.current) clearTimeout(touchTimeout.current);
-
-        touchTimeout.current = setTimeout(() => {
-          const newGrid = [...timeGrid];
-          newGrid[rowIndex][activeDay] = dragMode === 'add';
-          setTimeGrid(newGrid);
-          lastCell.current = { row: rowIndex, col: activeDay };
-        }, 50);
-      }
+    const cell = getCellFromTouch(e);
+    if (cell) {
+      handleCellStateChange(cell.rowIndex, cell.colIndex, dragMode === 'add');
     }
   };
 
@@ -134,30 +177,21 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
     const actualColIndex = isMobile ? activeDay : colIndex;
 
     if (!isDragging || disabledDays.includes(actualColIndex) || rowIndex >= timeGrid.length) return;
-    const newGrid = [...timeGrid];
-    newGrid[rowIndex][actualColIndex] = dragMode === 'add';
-    setTimeGrid(newGrid);
-    lastCell.current = { row: rowIndex, col: actualColIndex };
+
+    handleCellStateChange(rowIndex, actualColIndex, dragMode === 'add');
   };
 
   const handleMouseUp = () => {
     if (isDragging) {
       setIsDragging(false);
-      setHistory(prev => {
-        const newHistory = prev.slice(0, historyIndex + 1);
-        newHistory.push([...timeGrid]);
-        return newHistory;
-      });
-      setHistoryIndex(prev => prev + 1);
-      if (touchTimeout.current) {
-        clearTimeout(touchTimeout.current);
-      }
+      saveToHistory();
     }
   };
 
   useEffect(() => {
     document.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('touchend', handleMouseUp);
+
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('touchend', handleMouseUp);
@@ -167,14 +201,14 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
   const handleUndo = () => {
     if (historyIndex > 0) {
       setHistoryIndex(prev => prev - 1);
-      setTimeGrid([...history[historyIndex - 1]]);
+      setTimeGrid(JSON.parse(JSON.stringify(history[historyIndex - 1])));
     }
   };
 
   const handleRedo = () => {
     if (historyIndex < history.length - 1) {
       setHistoryIndex(prev => prev + 1);
-      setTimeGrid([...history[historyIndex + 1]]);
+      setTimeGrid(JSON.parse(JSON.stringify(history[historyIndex + 1])));
     }
   };
 
@@ -182,12 +216,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
     if (window.confirm('Are you sure you want to clear all time slots?')) {
       const newGrid = initializeTimeGrid();
       setTimeGrid(newGrid);
-      setHistory(prev => {
-        const newHistory = prev.slice(0, historyIndex + 1);
-        newHistory.push(newGrid);
-        return newHistory;
-      });
-      setHistoryIndex(prev => prev + 1);
+      saveToHistory();
     }
   };
 
@@ -226,6 +255,12 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
     onClose();
   };
 
+  // Register cell reference
+  const registerCellRef = (rowIndex, colIndex, element) => {
+    if (!element) return;
+    cellRefs.current[`${rowIndex}-${colIndex}`] = element;
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -248,16 +283,22 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
 
         <div className="p-2 md:p-4 overflow-auto">
           {isMobile ? (
-            <div className="select-none overflow-hidden flex flex-col items-center" ref={gridRef}>
-              <div className="flex justify-between w-full items-center mb-2">
+            <div
+              className="select-none overflow-hidden flex flex-col items-center"
+              ref={gridRef}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleMouseUp}
+              style={{ touchAction: 'none' }}
+            >
+              <div className="flex justify-between w-full items-center mb-2 font-medium text-xl">
                 <button
                   onClick={() => changeActiveDay(-1)}
                   className="p-2 text-secondary-600"
                 >
-                  ◀
+                  <FaAngleLeft /> 
                 </button>
                 <div
-                  className={`text-center p-2 rounded-md w-40 font-medium
+                  className={`text-center p-2 uppercase rounded-md w-40
                     ${disabledDays.includes(activeDay)
                       ? 'bg-gray-100 text-gray-500'
                     : 'bg-secondary-100 text-secondary-900'
@@ -270,24 +311,22 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
                   onClick={() => changeActiveDay(1)}
                   className="p-2 text-secondary-600"
                 >
-                  ▶
+                  <FaAngleRight />
                 </button>
               </div>
 
-              <div
-                className="grid grid-cols-[auto_1fr] gap-1 w-full px-8 py-2"
-                onTouchMove={handleTouchMove}
-                style={{ touchAction: 'none' }}
-              >
+              <div className="grid grid-cols-[auto_1fr] gap-1 w-full px-4 py-2">
                 {timeSlots.map((slot, rowIndex) => (
                   <React.Fragment key={rowIndex}>
-                    <div className="text-xs w-fit text-right pr-2 py-2 font-medium text-gray-600">
+                    <div className="text-xs w-16 text-right pr-2 py-2 font-medium text-gray-600">
                       {slot.label}
                     </div>
                     <div
                       key={`${rowIndex}-${activeDay}`}
-                      className={`w-full h-10 rounded ${rowIndex < timeGrid.length && timeGrid[rowIndex][activeDay]
-                        ? 'bg-blue-500 hover:bg-blue-600'
+                      data-cell-id={`${rowIndex}-${activeDay}`}
+                      ref={(el) => registerCellRef(rowIndex, activeDay, el)}
+                      className={`w-full h-12 rounded ${rowIndex < timeGrid.length && timeGrid[rowIndex][activeDay]
+                        ? 'bg-secondary-500 hover:bg-secondary-600'
                         : 'bg-gray-200 hover:bg-gray-300'
                         } ${disabledDays.includes(activeDay)
                           ? 'opacity-35 cursor-not-allowed'
@@ -297,7 +336,9 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
                       onMouseEnter={() => rowIndex < timeGrid.length && handleMouseEnter(rowIndex, activeDay)}
                       onTouchStart={(e) => {
                         e.preventDefault();
-                        rowIndex < timeGrid.length && handleMouseDown(rowIndex, activeDay);
+                        if (rowIndex < timeGrid.length) {
+                          handleTouchStart(e, rowIndex);
+                        }
                       }}
                     ></div>
                   </React.Fragment>
@@ -305,7 +346,10 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
               </div>
             </div>
           ) : (
-            <div className="select-none overflow-x-auto" ref={gridRef}>
+              <div
+                className="select-none overflow-x-auto"
+                ref={gridRef}
+              >
               <div className="grid grid-cols-8 gap-1 min-w-max">
                 <div className="w-20"></div>
                 {weekdays.map((day, index) => (
@@ -328,8 +372,10 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
                       {[0, 1, 2, 3, 4, 5, 6].map(colIndex => (
                         <div
                           key={`${rowIndex}-${colIndex}`}
+                          data-cell-id={`${rowIndex}-${colIndex}`}
+                          ref={(el) => registerCellRef(rowIndex, colIndex, el)}
                           className={`h-8 peer rounded ${rowIndex < timeGrid.length && timeGrid[rowIndex][colIndex]
-                            ? 'bg-blue-500 hover:bg-blue-600'
+                            ? 'bg-secondary-500 hover:bg-secondary-600'
                             : 'bg-gray-200 hover:bg-gray-300'
                             } ${disabledDays.includes(colIndex)
                               ? 'opacity-35 cursor-not-allowed'
@@ -346,7 +392,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
           )}
         </div>
 
-        <div className="p-2 md:p-4 border-t bg-gray-50 flex justify-between space-y-2 md:space-y-0 md:space-x-3">
+        <div className="p-2 md:p-4 border-t bg-gray-50 flex justify-between gap-2">
           <button
             type="button"
             onClick={onClose}
@@ -354,12 +400,12 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
           >
             Cancel
           </button>
-          <div className="flex space-x-2">
+          <div className="flex gap-2 md:order-none w-full md:w-auto justify-center">
             <div className="flex bg-gray-100 rounded-md overflow-hidden">
               <button
                 type="button"
                 className={`p-2 md:p-3 flex items-center text-sm ${toolMode === 'brush'
-                  ? 'bg-blue-100 text-blue-700'
+                  ? 'bg-secondary-100 text-secondary-700'
                   : 'text-gray-700 hover:bg-gray-200'
                   }`}
                 onClick={() => setToolMode('brush')}
@@ -370,7 +416,7 @@ const AvailabilityEditor = ({ isOpen, onClose, onSave, initialData }) => {
               <button
                 type="button"
                 className={`p-2 md:p-3 flex items-center text-sm ${toolMode === 'eraser'
-                  ? 'bg-blue-100 text-blue-700'
+                  ? 'bg-secondary-100 text-secondary-700'
                   : 'text-gray-700 hover:bg-gray-200'
                   }`}
                 onClick={() => setToolMode('eraser')}
