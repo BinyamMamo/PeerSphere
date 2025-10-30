@@ -164,20 +164,6 @@ const MainLayout = () => {
       )}
 
       {/* Desktop floating waitlist button - only shown on desktop */}
-      {!isMobile && (
-        <div className="fixed bottom-16 mb-2 right-2 z-50">
-          <button
-            onClick={() => setWaitlistOpen(true)}
-            className={`group flex items-center gap-2 text-white px-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300
-            ${userRole === 'admin' ? "bg-accent-600 hover:bg-accent-700 ring-1 ring-accent-600/65" :
-                userRole === 'tutor' ? "bg-secondary-600 hover:bg-secondary-700 ring-1 ring-secondary-600/65" :
-                  "bg-primary-600 hover:bg-primary-700 ring-1 ring-primary-600/65"}`}
-          >
-            <PiListStarDuotone className="text-xl" />
-            <span className="font-medium">Join Waitlist</span>
-          </button>
-        </div>
-      )}
     </div>
   );
 };
